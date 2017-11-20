@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.lang.model.element.PackageElement;
@@ -38,22 +39,31 @@ public class PreferenceComponentAnnotatedClass {
     public final TypeName typeName;
     public final String clazzName;
     public final List<String> entities;
+    public final List<String> keyNames;
 
-    public PreferenceComponentAnnotatedClass(@NonNull TypeElement annotatedElement, @NonNull Elements elementUtils) throws VerifyException {
+    public PreferenceComponentAnnotatedClass(@NonNull TypeElement annotatedElement, @NonNull Elements elementUtils, @NonNull Map<String, String> annotatedEntityTypeMap) throws VerifyException {
         PackageElement packageElement = elementUtils.getPackageOf(annotatedElement);
         this.packageName = packageElement.isUnnamed() ? null : packageElement.getQualifiedName().toString();
         this.annotatedElement = annotatedElement;
         this.typeName = TypeName.get(annotatedElement.asType());
         this.clazzName = annotatedElement.getSimpleName().toString();
         this.entities = new ArrayList<>();
+        this.keyNames = new ArrayList<>();
 
         Set<String> entitySet = new HashSet<>();
         annotatedElement.getAnnotationMirrors().forEach(annotationMirror -> {
             annotationMirror.getElementValues().forEach((type, value) -> {
                 String[] values = value.getValue().toString().split(",");
-                List<String> valueList =  Arrays.asList(values);
+                List<String> valueList = Arrays.asList(values);
                 entitySet.addAll(valueList);
             });
+        });
+
+        entitySet.forEach(value -> {
+            if(!annotatedEntityTypeMap.containsKey(value))
+                throw new VerifyException(String.format("%s is not a preference entity.", value));
+            else
+                keyNames.add(annotatedEntityTypeMap.get(value));
         });
 
         entities.addAll(entitySet);

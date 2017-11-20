@@ -52,7 +52,6 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
 
     private Map<String, String> annotatedEntityTypeMap;
     private Map<String, PreferenceEntityAnnotatedClass> annotatedEntityMap;
-    private Map<String, PreferenceComponentAnnotatedClass> annotatedComponentMap;
     private Messager messager;
 
     @Override
@@ -60,7 +59,6 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
         super.init(processingEnv);
         annotatedEntityMap = new HashMap<>();
         annotatedEntityTypeMap = new HashMap<>();
-        annotatedComponentMap = new HashMap<>();
         messager = processingEnv.getMessager();
     }
 
@@ -77,7 +75,6 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
                     try {
                         checkValidEntityType(annotatedType);
                         processEntity(annotatedType);
-                        generateProcessEntity();
                     } catch (IllegalAccessException e) {
                         messager.printMessage(ERROR, e.getMessage(), annotatedType);
                     }
@@ -101,6 +98,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
         try {
             PreferenceEntityAnnotatedClass annotatedClazz = new PreferenceEntityAnnotatedClass(annotatedType, processingEnv.getElementUtils());
             checkDuplicatedPreferenceEntity(annotatedClazz);
+            generateProcessEntity();
         } catch (VerifyException e) {
             messager.printMessage(ERROR, e.getMessage(), annotatedType);
             e.printStackTrace();
@@ -109,8 +107,8 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
 
     private void processComponent(TypeElement annotatedType) throws VerifyException {
         try {
-            PreferenceComponentAnnotatedClass annotatedClazz = new PreferenceComponentAnnotatedClass(annotatedType, processingEnv.getElementUtils());
-            checkValidPreferenceComponent(annotatedClazz);
+            PreferenceComponentAnnotatedClass annotatedClazz = new PreferenceComponentAnnotatedClass(annotatedType, processingEnv.getElementUtils(), annotatedEntityTypeMap);
+            generateProcessComponent(annotatedClazz);
         } catch (VerifyException e) {
             messager.printMessage(ERROR, e.getMessage(), annotatedType);
             e.printStackTrace();
@@ -125,6 +123,12 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
             } catch (IOException e) {
                 // ignore ;)
             }
+        });
+    }
+
+    private void generateProcessComponent(PreferenceComponentAnnotatedClass annotatedClazz) {
+        annotatedClazz.keyNames.forEach(value -> {
+            messager.printMessage(NOTE, value);
         });
     }
 
@@ -147,16 +151,9 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
     private void checkDuplicatedPreferenceEntity(PreferenceEntityAnnotatedClass annotatedClazz) throws VerifyException {
         if(annotatedEntityMap.containsKey(annotatedClazz.preferenceName)) {
             throw new VerifyException("@PreferenceRoom key name is duplicated.");
-        } else {
+        } else if(!annotatedEntityMap.containsKey(annotatedClazz.preferenceName)) {
             annotatedEntityMap.put(annotatedClazz.preferenceName, annotatedClazz);
-            annotatedEntityTypeMap.put(annotatedClazz.preferenceName, annotatedClazz.typeName + ".class");
+            annotatedEntityTypeMap.put(annotatedClazz.typeName + ".class", annotatedClazz.preferenceName);
         }
-    }
-
-    private void checkValidPreferenceComponent(PreferenceComponentAnnotatedClass annotatedClazz) throws VerifyException {
-        annotatedClazz.entities.forEach(value -> {
-            if(!annotatedEntityTypeMap.containsValue(value))
-                throw new VerifyException(String.format("%s is not a preference entity.", value));
-        });
     }
 }
