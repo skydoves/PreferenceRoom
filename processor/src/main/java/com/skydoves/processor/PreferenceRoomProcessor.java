@@ -131,10 +131,6 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
         } catch (IOException e) {
             // ignore >.<
         }
-        
-        /* annotatedClazz.keyNames.forEach(value -> {
-            messager.printMessage(NOTE, value);
-        });*/
     }
 
     private void checkValidEntityType(TypeElement annotatedType) throws IllegalAccessException {
