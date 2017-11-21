@@ -11,10 +11,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Preference_UserProfile profile = Preference_UserProfile.getInstance(this);
-        profile.putUserName("PreferenceRoom");
+        PreferenceComponent_PrefsComponent.inject(this);
+
+        PreferenceComponent_PrefsComponent.UserProfile().putUserName("PreferenceRoom Test");
 
         TextView textView = findViewById(R.id.textView);
-        textView.setText(profile.getUserName());
+        textView.setText(PreferenceComponent_PrefsComponent.UserProfile().getUserName());
     }
 }
