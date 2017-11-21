@@ -101,9 +101,8 @@ public class PreferenceComponentGenerator {
         this.annotatedClazz.keyNames.forEach(keyName -> {
             String fieldName = getEntityInstanceFieldName(keyName);
             MethodSpec instance = MethodSpec.methodBuilder(StringUtils.toUpperCamel(keyName))
-                    .addModifiers(PUBLIC, STATIC)
-                    .addStatement("if($N != null) return $N", fieldName, fieldName)
-                    .addStatement("throw new NullPointerException($S)", "can not access entity before injecting context on the component.")
+                    .addModifiers(PUBLIC)
+                    .addStatement("return $N", fieldName)
                     .returns(getEntityClassType(annotatedEntityMap.get(keyName)))
                     .build();
             methodSpecs.add(instance);
