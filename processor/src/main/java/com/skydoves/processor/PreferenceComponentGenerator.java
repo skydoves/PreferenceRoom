@@ -86,7 +86,7 @@ public class PreferenceComponentGenerator {
     }
 
     private MethodSpec getInstanceSpec() {
-        return MethodSpec.methodBuilder("inject")
+        return MethodSpec.methodBuilder("init")
                 .addModifiers(PUBLIC, STATIC)
                 .addParameter(ParameterSpec.builder(Context.class, CONSTRUCTOR_CONTEXT).addAnnotation(NonNull.class).build())
                 .addStatement("if($N != null) return $N", FIELD_INSTANCE, FIELD_INSTANCE)
