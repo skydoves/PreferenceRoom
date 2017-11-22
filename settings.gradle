@@ -1,1 +1,1 @@
-include ':app', ':preferenceroom', ':processor'
+include ':app', ':preferenceroom', ':preferenceroom-compiler'

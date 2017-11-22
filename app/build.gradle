@@ -23,5 +23,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     implementation project(':preferenceroom')
-    annotationProcessor project(':processor')
+    annotationProcessor project(':preferenceroom-compiler')
 }
