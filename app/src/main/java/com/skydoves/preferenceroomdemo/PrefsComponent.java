@@ -9,4 +9,6 @@ import com.skydoves.preferenceroom.PreferenceComponent;
 
 @PreferenceComponent(entities = {Profile.class, Test.class})
 public interface PrefsComponent {
+    void inject(MainActivity __, Profile ___);
+    void inject(Profile __);
 }

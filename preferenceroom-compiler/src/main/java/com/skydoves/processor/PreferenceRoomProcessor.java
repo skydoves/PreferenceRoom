@@ -18,13 +18,16 @@ package com.skydoves.processor;
 
 import com.google.auto.service.AutoService;
 import com.google.common.base.VerifyException;
+import com.skydoves.preferenceroom.InjectPreference;
 import com.skydoves.preferenceroom.PreferenceComponent;
 import com.skydoves.preferenceroom.PreferenceEntity;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -52,6 +55,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
 
     private Map<String, String> annotatedEntityTypeMap;
     private Map<String, PreferenceEntityAnnotatedClass> annotatedEntityMap;
+    private List<PreferenceComponentAnnotatedClass> annotatedComponentList;
     private Messager messager;
 
     @Override
@@ -59,6 +63,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
         super.init(processingEnv);
         annotatedEntityMap = new HashMap<>();
         annotatedEntityTypeMap = new HashMap<>();
+        annotatedComponentList = new ArrayList<>();
         messager = processingEnv.getMessager();
     }
 
@@ -108,6 +113,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
     private void processComponent(TypeElement annotatedType) throws VerifyException {
         try {
             PreferenceComponentAnnotatedClass annotatedClazz = new PreferenceComponentAnnotatedClass(annotatedType, processingEnv.getElementUtils(), annotatedEntityTypeMap);
+            checkDuplicatedPreferenceComponent(annotatedClazz);
             generateProcessComponent(annotatedClazz);
         } catch (VerifyException e) {
             messager.printMessage(ERROR, e.getMessage(), annotatedType);
@@ -155,6 +161,14 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
         } else {
             annotatedEntityMap.put(annotatedClazz.preferenceName, annotatedClazz);
             annotatedEntityTypeMap.put(annotatedClazz.typeName + ".class", annotatedClazz.preferenceName);
+        }
+    }
+
+    private void checkDuplicatedPreferenceComponent(PreferenceComponentAnnotatedClass annotatedClazz) {
+        if(annotatedComponentList.contains(annotatedClazz))
+            throw new VerifyException("@PreferenceComponent is duplicated.");
+        else {
+            annotatedComponentList.add(annotatedClazz);
         }
     }
 }
