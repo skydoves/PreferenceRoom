@@ -60,6 +60,7 @@ public class PreferenceComponentGenerator {
                 .addField(getInstanceFieldSpec())
                 .addFields(getEntityInstanceFieldSpecs())
                 .addMethod(getConstructorSpec())
+                .addMethod(getInitializeSpec())
                 .addMethod(getInstanceSpec())
                 .addMethods(getSuperMethodSpecs())
                 .addMethods(getEntityInstanceSpecs())
@@ -91,13 +92,22 @@ public class PreferenceComponentGenerator {
         return builder.build();
     }
 
-    private MethodSpec getInstanceSpec() {
+    private MethodSpec getInitializeSpec() {
         return MethodSpec.methodBuilder("init")
                 .addModifiers(PUBLIC, STATIC)
                 .addParameter(ParameterSpec.builder(Context.class, CONSTRUCTOR_CONTEXT).addAnnotation(NonNull.class).build())
                 .addStatement("if($N != null) return $N", FIELD_INSTANCE, FIELD_INSTANCE)
                 .addStatement("$N = new $N($N)", FIELD_INSTANCE, getClazzName(), CONSTRUCTOR_CONTEXT)
                 .addStatement("return $N", FIELD_INSTANCE)
+                .returns(getClassType())
+                .build();
+    }
+
+    private MethodSpec getInstanceSpec() {
+        return MethodSpec.methodBuilder("getInstance")
+                .addModifiers(PUBLIC, STATIC)
+                .addStatement("if($N != null) return $N", FIELD_INSTANCE, FIELD_INSTANCE)
+                .addStatement("else throw new VerifyError(\"component is not initialized.\")")
                 .returns(getClassType())
                 .build();
     }

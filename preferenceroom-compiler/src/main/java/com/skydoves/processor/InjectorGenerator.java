@@ -9,10 +9,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
-import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.util.Elements;
 
 import static javax.lang.model.element.Modifier.PUBLIC;
 
@@ -24,7 +21,8 @@ import static javax.lang.model.element.Modifier.PUBLIC;
 public class InjectorGenerator {
 
     private static final String CLAZZ_PREFIX = "Injector_";
-    private static final String INJECTED_CLASS = "InjectedClazz";
+    private static final String INJECT_OBJECT = "injectObject";
+    private static final String COMPONENT_PREFIX = "PreferenceComponent_";
 
     private final PreferenceComponentAnnotatedClass annotatedClazz;
     private final TypeElement injectedElement;
@@ -45,8 +43,19 @@ public class InjectorGenerator {
     public MethodSpec getConstructorSpec() {
         MethodSpec.Builder builder = MethodSpec.constructorBuilder()
                 .addModifiers(PUBLIC)
-                .addParameter(ParameterSpec.builder(TypeName.get(injectedElement.asType()), INJECTED_CLASS).addAnnotation(NonNull.class).build());
+                .addParameter(ParameterSpec.builder(TypeName.get(injectedElement.asType()), INJECT_OBJECT).addAnnotation(NonNull.class).build());
 
+        injectedElement.getEnclosedElements().stream()
+                .filter(field -> field.getKind().isField())
+                .forEach(field -> {
+                    if(field.getAnnotation(InjectPreference.class) != null) {
+                        if(annotatedClazz.generatedClazzList.contains(TypeName.get(field.asType()).toString())) {
+
+                        } else {
+                            throw new VerifyException(String.format("'%s' type can not be injected", TypeName.get(field.asType()).toString()));
+                        }
+                    }
+                });
 
         return builder.build();
     }
