@@ -22,6 +22,8 @@ import com.skydoves.preferenceroom.InjectPreference;
 import com.skydoves.preferenceroom.PreferenceComponent;
 import com.skydoves.preferenceroom.PreferenceEntity;
 import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
@@ -39,6 +41,7 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 
@@ -49,7 +52,8 @@ import static javax.tools.Diagnostic.Kind.NOTE;
 @SupportedAnnotationTypes({
         "com.skydoves.preferenceroom.Preference",
         "com.skydoves.preferenceroom.KeyName",
-        "com.skydoves.preferenceroom.PreferenceComponent"})
+        "com.skydoves.preferenceroom.PreferenceComponent",
+        "com.skydoves.preferenceroom.InjectPreference"})
 @AutoService(Processor.class)
 public class PreferenceRoomProcessor extends AbstractProcessor {
 
@@ -96,6 +100,18 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
                     }
                 });
 
+        roundEnv.getElementsAnnotatedWith(InjectPreference.class).forEach(field -> {
+            try {
+                if (!field.getModifiers().contains(Modifier.PUBLIC)) {
+                    throw new IllegalAccessException("annotated with @InjectPreference field's modifier should be public");
+                }
+            } catch (IllegalAccessException e) {
+                messager.printMessage(ERROR, e.getMessage(), field);
+            }
+        });
+
+        annotatedComponentList.forEach(this::processInjector);
+
         return true;
     }
 
@@ -121,6 +137,20 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
         }
     }
 
+    private void processInjector(PreferenceComponentAnnotatedClass annotatedClass) throws VerifyException {
+        try {
+            annotatedClass.annotatedElement.getEnclosedElements().forEach(method -> {
+                        MethodSpec methodSpec = MethodSpec.overriding((ExecutableElement) method).build();
+                        ParameterSpec parameterSpec = methodSpec.parameters.get(0);
+                        TypeElement injectedElement = processingEnv.getElementUtils().getTypeElement(parameterSpec.type.toString());
+                        generateProcessInjector(annotatedClass, injectedElement);
+                    });
+        } catch (VerifyException e) {
+            messager.printMessage(ERROR, e.getMessage(), annotatedClass.annotatedElement);
+            e.printStackTrace();
+        }
+    }
+
     private void generateProcessEntity(PreferenceEntityAnnotatedClass annotatedClass) {
         try {
             TypeSpec annotatedClazz = (new PreferenceEntityGenerator(annotatedClass)).generate();
@@ -136,6 +166,15 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
             JavaFile.builder(annotatedClass.packageName, annotatedClazz).build().writeTo(processingEnv.getFiler());
         } catch (IOException e) {
             // ignore >.<
+        }
+    }
+
+    private void generateProcessInjector(PreferenceComponentAnnotatedClass annotatedClass, TypeElement injectedElement) {
+        try {
+            TypeSpec injectorSpec = new InjectorGenerator(annotatedClass, injectedElement).generate();
+            JavaFile.builder(annotatedClass.packageName, injectorSpec).build().writeTo(processingEnv.getFiler());
+        } catch (IOException e) {
+            // ignore ^v^
         }
     }
 
