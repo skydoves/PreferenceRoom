@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
     public int aaa = 10;
 
     @InjectPreference
-    public Preference_Test test;
+    public Preference_Test testsss;
 
     @InjectPreference
     public Preference_UserProfile userProfile;
@@ -22,14 +22,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         PreferenceComponent_PrefsComponent.init(this);
+        Injector_MainActivity injector_mainActivity = new Injector_MainActivity(this);
 
         PreferenceComponent_PrefsComponent component = PreferenceComponent_PrefsComponent.getInstance();
 
         Preference_UserProfile userProfile = PreferenceComponent_PrefsComponent.getInstance().UserProfile();
 
-        component.UserProfile().putUserName("PreferenceRoom Test123");
+        component.UserProfile().putUserName("PreferenceRoom Test567567");
 
         TextView textView = findViewById(R.id.textView);
-        textView.setText(component.UserProfile().getUserName());
+        textView.setText(userProfile.getUserName());
     }
 }

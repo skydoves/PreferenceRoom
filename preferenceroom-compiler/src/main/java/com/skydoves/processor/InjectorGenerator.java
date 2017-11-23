@@ -22,6 +22,7 @@ public class InjectorGenerator {
 
     private static final String CLAZZ_PREFIX = "Injector_";
     private static final String INJECT_OBJECT = "injectObject";
+    private static final String PREFERENCE_PREFIX = "Preference_";
     private static final String COMPONENT_PREFIX = "PreferenceComponent_";
 
     private final PreferenceComponentAnnotatedClass annotatedClazz;
@@ -49,10 +50,12 @@ public class InjectorGenerator {
                 .filter(field -> field.getKind().isField())
                 .forEach(field -> {
                     if(field.getAnnotation(InjectPreference.class) != null) {
-                        if(annotatedClazz.generatedClazzList.contains(TypeName.get(field.asType()).toString())) {
-
+                        String generatedClazzName = TypeName.get(field.asType()).toString();
+                        if(annotatedClazz.generatedClazzList.contains(generatedClazzName)) {
+                            builder.addStatement(INJECT_OBJECT + ".$N = " + COMPONENT_PREFIX + "$N.getInstance().$N()",
+                                    field.getSimpleName(), annotatedClazz.clazzName, TypeName.get(field.asType()).toString().replace(PREFERENCE_PREFIX, ""));
                         } else {
-                            throw new VerifyException(String.format("'%s' type can not be injected", TypeName.get(field.asType()).toString()));
+                            throw new VerifyException(String.format("'%s' type can not be injected", generatedClazzName));
                         }
                     }
                 });
