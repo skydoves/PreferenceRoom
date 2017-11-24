@@ -61,12 +61,15 @@ public class InjectorGenerator {
                 .filter(field -> field.getKind().isField())
                 .forEach(field -> {
                     if(field.getAnnotation(InjectPreference.class) != null) {
-                        String generatedClazzName = TypeName.get(field.asType()).toString();
-                        if(annotatedClazz.generatedClazzList.contains(generatedClazzName)) {
+                        String annotatedFieldName = TypeName.get(field.asType()).toString();
+                        if(annotatedClazz.generatedClazzList.contains(annotatedFieldName)) {
                             builder.addStatement(INJECT_OBJECT + ".$N = " + COMPONENT_PREFIX + "$N.getInstance().$N()",
                                     field.getSimpleName(), annotatedClazz.clazzName, TypeName.get(field.asType()).toString().replace(PREFERENCE_PREFIX, ""));
+                        } else if((COMPONENT_PREFIX + annotatedClazz.clazzName).equals(annotatedFieldName)) {
+                            builder.addStatement(INJECT_OBJECT + ".$N = " + COMPONENT_PREFIX + "$N.getInstance()",
+                                    field.getSimpleName(), annotatedClazz.clazzName);
                         } else {
-                            throw new VerifyException(String.format("'%s' type can not be injected", generatedClazzName));
+                            throw new VerifyException(String.format("'%s' type can not be injected", annotatedFieldName));
                         }
                     }
                 });

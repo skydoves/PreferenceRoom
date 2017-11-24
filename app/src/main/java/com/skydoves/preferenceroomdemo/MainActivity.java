@@ -15,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
     @InjectPreference
     public Preference_UserProfile userProfile;
 
+    @InjectPreference
+    public PreferenceComponent_PrefsComponent component;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +25,6 @@ public class MainActivity extends AppCompatActivity {
         PreferenceRoom.inject(this);
 
         TextView textView = findViewById(R.id.textView);
-        textView.setText(userProfile.getUserName());
+        textView.setText(component.UserProfile().getUserName());
     }
 }
