@@ -31,7 +31,7 @@ import static javax.lang.model.element.Modifier.PUBLIC;
 
 public class InjectorGenerator {
 
-    private static final String CLAZZ_PREFIX = "Injector_";
+    private static final String CLAZZ_PREFIX = "_Injector";
     private static final String INJECT_OBJECT = "injectObject";
     private static final String PREFERENCE_PREFIX = "Preference_";
     private static final String COMPONENT_PREFIX = "PreferenceComponent_";
@@ -75,6 +75,6 @@ public class InjectorGenerator {
     }
 
     private String getClazzName() {
-        return CLAZZ_PREFIX + injectedElement.getSimpleName();
+        return injectedElement.getSimpleName() + CLAZZ_PREFIX;
     }
 }

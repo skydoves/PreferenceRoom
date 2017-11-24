@@ -11,4 +11,5 @@ import com.skydoves.preferenceroom.PreferenceComponent;
 public interface PrefsComponent {
     void inject(MainActivity __);
     void inject(Profile __);
+    void inject(SimpleClass __);
 }
