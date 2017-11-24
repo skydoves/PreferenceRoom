@@ -20,6 +20,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.google.common.base.VerifyException;
+import com.skydoves.preferenceroom.PreferenceRoom;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
@@ -129,7 +130,9 @@ public class PreferenceComponentGenerator {
     private List<MethodSpec> getSuperMethodSpecs() {
         List<MethodSpec> methodSpecs = new ArrayList<>();
         this.annotatedClazz.annotatedElement.getEnclosedElements().forEach(method -> {
-            MethodSpec methodSpec = MethodSpec.overriding((ExecutableElement)method).build();
+            ClassName preferenceRoom = ClassName.get(PreferenceRoom.class);
+            MethodSpec.Builder builder = MethodSpec.overriding((ExecutableElement)method);
+            MethodSpec methodSpec = builder.addStatement("$T.inject($N)", preferenceRoom, ((ExecutableElement) method).getParameters().get(0).getSimpleName()).build();
             if(methodSpec.returnType != TypeName.get(Void.TYPE)) {
                 throw new VerifyException(String.format("Returned '%s'. only return type can be void.", methodSpec.returnType.toString()));
             }
