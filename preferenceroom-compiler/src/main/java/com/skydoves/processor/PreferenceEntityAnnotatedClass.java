@@ -102,24 +102,26 @@ public class PreferenceEntityAnnotatedClass {
                 .filter(function -> !function.getKind().isField() && function.getModifiers().contains(Modifier.PUBLIC) &&
                         function.getAnnotation(PreferenceFunction.class) != null).forEach(function -> {
                             PreferenceFunction annotation = function.getAnnotation(PreferenceFunction.class);
-                            MethodSpec methodSpec = MethodSpec.overriding((ExecutableElement) function).build();
-                            if(methodSpec.parameters.size() > 1 || methodSpec.parameters.size() == 0) {
-                                throw new VerifyException("PreferenceFunction should has one parameter");
-                            } else if(!methodSpec.parameters.get(0).type.equals(keyFieldMap.get(annotation.keyname()).typeName)) {
-                                throw new VerifyException(String.format("parameter '%s''s type should be %s.", methodSpec.parameters.get(0).name, keyFieldMap.get(annotation.keyname()).typeName));
-                            } else if(!methodSpec.returnType.equals(keyFieldMap.get(annotation.keyname()).typeName)) {
-                                throw new VerifyException(String.format("method '%s''s return type should be %s.", methodSpec.name, keyFieldMap.get(annotation.keyname()).typeName));
-                            }
-                            if(keyNameFields.contains(annotation.keyname())) {
+                            String keyName = StringUtils.toUpperCamel(annotation.keyname());
+                            if(keyNameFields.contains(keyName)) {
                                 if(function.getSimpleName().toString().startsWith(SETTER_PREFIX)) {
-                                    setterFunctionsList.put(annotation.keyname(), function);
+                                    setterFunctionsList.put(keyName, function);
                                 } else if(function.getSimpleName().toString().startsWith(GETTER_PREFIX)) {
-                                    getterFunctionsList.put(annotation.keyname(), function);
+                                    getterFunctionsList.put(keyName, function);
                                 } else {
                                     throw new VerifyException(String.format("PreferenceFunction's prefix should startWith 'get' or 'put' : %s", function.getSimpleName()));
                                 }
                             } else {
-                                throw new VerifyException(String.format("keyName '%s' is not exist in entity.", annotation.keyname()));
+                                throw new VerifyException(String.format("keyName '%s' is not exist in entity.", keyName));
+                            }
+
+                            MethodSpec methodSpec = MethodSpec.overriding((ExecutableElement) function).build();
+                            if(methodSpec.parameters.size() > 1 || methodSpec.parameters.size() == 0) {
+                                throw new VerifyException("PreferenceFunction should has one parameter");
+                            } else if(!methodSpec.parameters.get(0).type.equals(keyFieldMap.get(keyName).typeName)) {
+                                throw new VerifyException(String.format("parameter '%s''s type should be %s.", methodSpec.parameters.get(0).name, keyFieldMap.get(keyName).typeName));
+                            } else if(!methodSpec.returnType.equals(keyFieldMap.get(keyName).typeName)) {
+                                throw new VerifyException(String.format("method '%s''s return type should be %s.", methodSpec.name, keyFieldMap.get(keyName).typeName));
                             }
                 });
     }
