@@ -93,7 +93,7 @@ public class PreferenceEntityGenerator {
     private List<MethodSpec> getFieldMethodSpecs() {
         List<MethodSpec> methodSpecs = new ArrayList<>();
         this.annotatedClazz.keyFields.forEach(annotatedFields -> {
-            PreferenceFieldMethodGenerator methodGenerator = new PreferenceFieldMethodGenerator(annotatedFields, FIELD_PREFERENCE);
+            PreferenceFieldMethodGenerator methodGenerator = new PreferenceFieldMethodGenerator(annotatedFields, annotatedClazz, FIELD_PREFERENCE);
             methodSpecs.addAll(methodGenerator.getFieldMethods());
         });
         return methodSpecs;

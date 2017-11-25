@@ -27,6 +27,7 @@ import static javax.lang.model.element.Modifier.PUBLIC;
 public class PreferenceFieldMethodGenerator {
 
     private final PreferenceKeyField keyField;
+    private final PreferenceEntityAnnotatedClass annotatedEntityClazz;
     private final String preference;
 
     private static final String SETTER_PREFIX = "put";
@@ -38,8 +39,9 @@ public class PreferenceFieldMethodGenerator {
     private static final String EDIT_METHOD = "edit()";
     private static final String APPLY_METHOD = "apply()";
 
-    public PreferenceFieldMethodGenerator(PreferenceKeyField keyField, String preference) {
+    public PreferenceFieldMethodGenerator(PreferenceKeyField keyField, PreferenceEntityAnnotatedClass annotatedClass, String preference) {
         this.keyField = keyField;
+        this.annotatedEntityClazz = annotatedClass;
         this.preference = preference;
     }
 
@@ -80,7 +82,7 @@ public class PreferenceFieldMethodGenerator {
         return MethodSpec.methodBuilder(getGetterPrefixName())
                 .addModifiers(PUBLIC)
                 .addStatement("$T $N = new $T()", converterClazz, INSTANCE_CONVERTER, converterClazz)
-                .addStatement("return $N.convertType(" +  getGetterStatement() +")", INSTANCE_CONVERTER, preference, keyField.keyName, keyField.value)
+                .addStatement("return " + getObjectGetterStatement(), INSTANCE_CONVERTER, preference, keyField.keyName, keyField.value)
                 .returns(keyField.typeName)
                 .build();
     }
@@ -135,15 +137,47 @@ public class PreferenceFieldMethodGenerator {
     }
 
     private String getGetterStatement() {
-        if(keyField.value instanceof String)
-            return "$N.getString($S, $S)";
-        else if(keyField.value instanceof Float)
-            return "$N." + getGetterTypeMethodName() + "($S, $Lf)";
-        else
-            return "$N." + getGetterTypeMethodName() + "($S, $L)";
+        if(annotatedEntityClazz.getterFunctionsList.containsKey(keyField.keyName)) {
+            String superMethodName =  annotatedEntityClazz.getterFunctionsList.get(keyField.keyName).getSimpleName().toString();
+            if (keyField.value instanceof String)
+                return String.format("super.%s($N.getString($S, $S))", superMethodName);
+            else if (keyField.value instanceof Float)
+                return String.format("super.%s($N." + getGetterTypeMethodName() + "($S, $Lf))", superMethodName);
+            else
+                return String.format("super.%s($N." + getGetterTypeMethodName() + "($S, $L))", superMethodName);
+        } else {
+            if (keyField.value instanceof String)
+                return "$N.getString($S, $S)";
+            else if (keyField.value instanceof Float)
+                return "$N." + getGetterTypeMethodName() + "($S, $Lf)";
+            else
+                return "$N." + getGetterTypeMethodName() + "($S, $L)";
+        }
+    }
+
+    private String getObjectGetterStatement() {
+        if(annotatedEntityClazz.getterFunctionsList.containsKey(keyField.keyName)) {
+            String superMethodName = annotatedEntityClazz.getterFunctionsList.get(keyField.keyName).getSimpleName().toString();
+            if (keyField.value instanceof String)
+                return String.format("super.%s($N.convertType($N.getString($S, $S)))", superMethodName);
+            else if (keyField.value instanceof Float)
+                return String.format("super.%s($N.convertType($N." + getGetterTypeMethodName() + "($S, $Lf)))", superMethodName);
+            else
+                return String.format("super.%s($N.convertType($N." + getGetterTypeMethodName() + "($S, $L))", superMethodName);
+        } else {
+            if (keyField.value instanceof String)
+                return "$N.convertType($N.getString($S, $S))";
+            else if (keyField.value instanceof Float)
+                return "$N.convertType($N." + getGetterTypeMethodName() + "($S, $Lf))";
+            else
+                return "$N.convertType($N." + getGetterTypeMethodName() + "($S, $L))";
+        }
     }
 
     private String getSetterStatement() {
+        if(annotatedEntityClazz.setterFunctionsList.containsKey(keyField.keyName)) {
+            return String.format("$N.$N." + getSetterTypeMethodName() + "($S, super.%s($N)).$N", annotatedEntityClazz.setterFunctionsList.get(keyField.keyName).getSimpleName());
+        } else
             return "$N.$N." + getSetterTypeMethodName() + "($S, $N).$N";
     }
 }

@@ -2,6 +2,7 @@ package com.skydoves.preferenceroomdemo;
 
 import com.skydoves.preferenceroom.KeyName;
 import com.skydoves.preferenceroom.PreferenceEntity;
+import com.skydoves.preferenceroom.PreferenceFunction;
 import com.skydoves.preferenceroom.TypeConverter;
 
 /**
@@ -13,7 +14,7 @@ public class Profile {
     @KeyName(name = "login")
     protected final boolean isLoggedIn = false;
     @KeyName(name = "visit")
-    protected final int visiCount = 12;
+    protected final int visitCount = 12;
     @KeyName(name = "UserName")
     protected final String nickName = "skydoves";
     protected final float myFloat = 56.2f;
@@ -22,4 +23,14 @@ public class Profile {
     @KeyName(name = "YourClass")
     @TypeConverter(converter = MyClassConverter.class)
     protected MyClass myClass;
+
+    @PreferenceFunction(keyname = "UserName")
+    public String putUserNameFunction(String username) {
+        return "hello " + username;
+    }
+
+    @PreferenceFunction(keyname = "UserName")
+    public String getUserNameFunction(String username) {
+        return username + "!!!";
+    }
 }

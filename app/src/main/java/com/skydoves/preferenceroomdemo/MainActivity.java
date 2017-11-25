@@ -24,6 +24,6 @@ public class MainActivity extends AppCompatActivity {
         PreferenceComponent_PrefsComponent.getInstance().inject(this);
 
         TextView textView = findViewById(R.id.textView);
-        textView.setText(component.UserProfile().getYourClass().getName());
+        textView.setText(component.UserProfile().getUserName());
     }
 }
