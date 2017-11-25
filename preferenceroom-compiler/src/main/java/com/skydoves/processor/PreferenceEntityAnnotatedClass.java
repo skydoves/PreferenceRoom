@@ -139,6 +139,6 @@ public class PreferenceEntityAnnotatedClass {
     }
 
     private String getMethodNameVerifyErrorMessage(String methodName) {
-        return String.format("can not use method name : '%s'. Use other the other one.", methodName);
+        return String.format("can not use method name '%s'. Use an another one.", methodName);
     }
 }
