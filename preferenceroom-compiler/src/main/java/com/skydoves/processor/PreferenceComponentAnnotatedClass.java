@@ -19,6 +19,7 @@ package com.skydoves.processor;
 import android.support.annotation.NonNull;
 
 import com.google.common.base.VerifyException;
+import com.skydoves.preferenceroom.PreferenceComponent;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 
@@ -66,11 +67,13 @@ public class PreferenceComponentAnnotatedClass {
         });
 
         Set<String> entitySet = new HashSet<>();
-        annotatedElement.getAnnotationMirrors().forEach(annotationMirror -> {
-            annotationMirror.getElementValues().forEach((type, value) -> {
-                String[] values = value.getValue().toString().split(",");
-                List<String> valueList = Arrays.asList(values);
-                entitySet.addAll(valueList);
+        annotatedElement.getAnnotationMirrors().stream()
+                .filter(annotationMirror -> TypeName.get(annotationMirror.getAnnotationType()).equals(TypeName.get(PreferenceComponent.class)))
+                .forEach(annotationMirror -> {
+                    annotationMirror.getElementValues().forEach((type, value) -> {
+                        String[] values = value.getValue().toString().split(",");
+                        List<String> valueList = Arrays.asList(values);
+                        entitySet.addAll(valueList);
             });
         });
 
