@@ -2,6 +2,7 @@ package com.skydoves.preferenceroomdemo;
 
 import com.skydoves.preferenceroom.KeyName;
 import com.skydoves.preferenceroom.PreferenceEntity;
+import com.skydoves.preferenceroom.TypeConverter;
 
 /**
  * Developed by skydoves on 2017-11-18.
@@ -17,4 +18,7 @@ public class Profile {
     protected final String nickName = "skydoves";
     protected final float myFloat = 56.2f;
     protected final long cash = 1241224L;
+
+    @TypeConverter(converter = MyClassConverter.class)
+    protected MyClass myClass;
 }

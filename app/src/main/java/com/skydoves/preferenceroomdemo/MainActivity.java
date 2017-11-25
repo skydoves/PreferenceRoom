@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.skydoves.preferenceroom.InjectPreference;
-import com.skydoves.preferenceroom.PreferenceRoom;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,9 +21,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        PreferenceRoom.inject(this);
+        PreferenceComponent_PrefsComponent.getInstance().inject(this);
+
+        MyClass myClass = new MyClass("skydoves", 23);
+        userProfile.putMyClass(myClass);
 
         TextView textView = findViewById(R.id.textView);
-        textView.setText(component.UserProfile().getUserName());
+        textView.setText(component.UserProfile().getMyClass().getName());
     }
 }

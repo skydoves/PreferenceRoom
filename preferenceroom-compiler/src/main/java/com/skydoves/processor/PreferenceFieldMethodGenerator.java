@@ -16,6 +16,7 @@
 
 package com.skydoves.processor;
 
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class PreferenceFieldMethodGenerator {
     private static final String GETTER_PREFIX = "get";
     private static final String HAS_PREFIX = "contains";
     private static final String REMOVE_PREFIX = "remove";
+    private static final String INSTANCE_CONVERTER = "converter";
 
     private static final String EDIT_METHOD = "edit()";
     private static final String APPLY_METHOD = "apply()";
@@ -43,8 +45,15 @@ public class PreferenceFieldMethodGenerator {
 
     public List<MethodSpec> getFieldMethods() {
         List<MethodSpec> methodSpecs = new ArrayList<>();
-        methodSpecs.add(generateGetter());
-        methodSpecs.add(generateSetter());
+
+        if(!keyField.isObjectField) {
+            methodSpecs.add(generateGetter());
+            methodSpecs.add(generateSetter());
+        } else {
+            methodSpecs.add(generateObjectGetter());
+            methodSpecs.add(generateObjectSetter());
+        }
+
         methodSpecs.add(generateContainsSpec());
         methodSpecs.add(generateRemoveSpec());
         return methodSpecs;
@@ -53,7 +62,7 @@ public class PreferenceFieldMethodGenerator {
     public MethodSpec generateGetter() {
         return MethodSpec.methodBuilder(getGetterPrefixName())
                 .addModifiers(PUBLIC)
-                .addStatement(getGetterStatement(), preference, keyField.keyName, keyField.value)
+                .addStatement("return " + getGetterStatement(), preference, keyField.keyName, keyField.value)
                 .returns(keyField.typeName)
                 .build();
     }
@@ -63,6 +72,26 @@ public class PreferenceFieldMethodGenerator {
                 .addModifiers(PUBLIC)
                 .addParameter(keyField.typeName, keyField.keyName.toLowerCase())
                 .addStatement(getSetterStatement(), preference, EDIT_METHOD, keyField.keyName, keyField.keyName.toLowerCase(), APPLY_METHOD)
+                .build();
+    }
+
+    private MethodSpec generateObjectGetter() {
+        ClassName converterClazz = ClassName.get(keyField.packageName, keyField.converter);
+        return MethodSpec.methodBuilder(getGetterPrefixName())
+                .addModifiers(PUBLIC)
+                .addStatement("$T $N = new $T()", converterClazz, INSTANCE_CONVERTER, converterClazz)
+                .addStatement("return $N.convertType(" +  getGetterStatement() +")", INSTANCE_CONVERTER, preference, keyField.keyName, keyField.value)
+                .returns(keyField.typeName)
+                .build();
+    }
+
+    private MethodSpec generateObjectSetter() {
+        ClassName converterClazz = ClassName.get(keyField.packageName, keyField.converter);
+        return MethodSpec.methodBuilder(getSetterPrefixName())
+                .addModifiers(PUBLIC)
+                .addParameter(keyField.typeName, keyField.keyName.toLowerCase())
+                .addStatement("$T $N = new $T()", converterClazz, INSTANCE_CONVERTER, converterClazz)
+                .addStatement(getSetterStatement(), preference, EDIT_METHOD, keyField.keyName, INSTANCE_CONVERTER + ".convertObject(" + keyField.keyName.toLowerCase() + ")", APPLY_METHOD)
                 .build();
     }
 
@@ -107,11 +136,11 @@ public class PreferenceFieldMethodGenerator {
 
     private String getGetterStatement() {
         if(keyField.value instanceof String)
-            return "return $N.getString($S, $S)";
+            return "$N.getString($S, $S)";
         else if(keyField.value instanceof Float)
-            return "return $N." + getGetterTypeMethodName() + "($S, $Lf)";
+            return "$N." + getGetterTypeMethodName() + "($S, $Lf)";
         else
-            return "return $N." + getGetterTypeMethodName() + "($S, $L)";
+            return "$N." + getGetterTypeMethodName() + "($S, $L)";
     }
 
     private String getSetterStatement() {
