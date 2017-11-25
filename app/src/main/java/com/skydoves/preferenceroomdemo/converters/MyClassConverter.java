@@ -1,6 +1,7 @@
-package com.skydoves.preferenceroomdemo;
+package com.skydoves.preferenceroomdemo.converters;
 
 import com.skydoves.preferenceroom.PreferenceTypeConverter;
+import com.skydoves.preferenceroomdemo.models.MyClass;
 
 /**
  * Developed by skydoves on 2017-11-25.

@@ -45,6 +45,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
 
 import static javax.tools.Diagnostic.Kind.ERROR;
 import static javax.tools.Diagnostic.Kind.NOTE;
@@ -58,7 +59,7 @@ import static javax.tools.Diagnostic.Kind.NOTE;
 @AutoService(Processor.class)
 public class PreferenceRoomProcessor extends AbstractProcessor {
 
-    private Map<String, String> annotatedEntityTypeMap;
+    private Map<String, String> annotatedEntityNameMap;
     private Map<String, PreferenceEntityAnnotatedClass> annotatedEntityMap;
     private List<PreferenceComponentAnnotatedClass> annotatedComponentList;
     private Messager messager;
@@ -67,7 +68,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
         annotatedEntityMap = new HashMap<>();
-        annotatedEntityTypeMap = new HashMap<>();
+        annotatedEntityNameMap = new HashMap<>();
         annotatedComponentList = new ArrayList<>();
         messager = processingEnv.getMessager();
     }
@@ -101,15 +102,18 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
                     }
                 });
 
-        roundEnv.getElementsAnnotatedWith(InjectPreference.class).forEach(field -> {
-            try {
-                if (!field.getModifiers().contains(Modifier.PUBLIC)) {
-                    throw new IllegalAccessException("annotated with @InjectPreference field's modifier should be public");
-                }
-            } catch (IllegalAccessException e) {
-                showErrorLog(e.getMessage(), field);
-            }
-        });
+        roundEnv.getElementsAnnotatedWith(InjectPreference.class).stream()
+                .filter(variable -> variable instanceof VariableElement)
+                .map(variable -> (VariableElement) variable)
+                .forEach(variable -> {
+                    try {
+                        if (!variable.getModifiers().contains(Modifier.PUBLIC)) {
+                            throw new IllegalAccessException("annotated with @InjectPreference field's modifier should be public");
+                        }
+                    } catch (IllegalAccessException e) {
+                        showErrorLog(e.getMessage(), variable);
+                    }
+                });
 
         annotatedComponentList.forEach(this::processInjector);
 
@@ -129,7 +133,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
 
     private void processComponent(TypeElement annotatedType) throws VerifyException {
         try {
-            PreferenceComponentAnnotatedClass annotatedClazz = new PreferenceComponentAnnotatedClass(annotatedType, processingEnv.getElementUtils(), annotatedEntityTypeMap);
+            PreferenceComponentAnnotatedClass annotatedClazz = new PreferenceComponentAnnotatedClass(annotatedType, processingEnv.getElementUtils(), annotatedEntityNameMap);
             checkDuplicatedPreferenceComponent(annotatedClazz);
             generateProcessComponent(annotatedClazz);
         } catch (VerifyException e) {
@@ -172,8 +176,9 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
 
     private void generateProcessInjector(PreferenceComponentAnnotatedClass annotatedClass, TypeElement injectedElement) {
         try {
-            TypeSpec injectorSpec = new InjectorGenerator(annotatedClass, injectedElement).generate();
-            JavaFile.builder(annotatedClass.packageName, injectorSpec).build().writeTo(processingEnv.getFiler());
+            InjectorGenerator injectorGenerator = new InjectorGenerator(annotatedClass, injectedElement, processingEnv.getElementUtils());
+            TypeSpec injectorSpec = injectorGenerator.generate();
+            JavaFile.builder(injectorGenerator.packageName, injectorSpec).build().writeTo(processingEnv.getFiler());
         } catch (IOException e) {
             // ignore ^v^
         }
@@ -200,7 +205,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
             throw new VerifyException("@PreferenceRoom key name is duplicated.");
         } else {
             annotatedEntityMap.put(annotatedClazz.preferenceName, annotatedClazz);
-            annotatedEntityTypeMap.put(annotatedClazz.typeName + ".class", annotatedClazz.preferenceName);
+            annotatedEntityNameMap.put(annotatedClazz.typeName + ".class", annotatedClazz.preferenceName);
         }
     }
 

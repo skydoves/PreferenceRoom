@@ -20,12 +20,16 @@ import android.support.annotation.NonNull;
 
 import com.google.common.base.VerifyException;
 import com.skydoves.preferenceroom.InjectPreference;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
+import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
+import javax.lang.model.util.Elements;
 
 import static javax.lang.model.element.Modifier.PUBLIC;
 
@@ -38,10 +42,13 @@ public class InjectorGenerator {
 
     private final PreferenceComponentAnnotatedClass annotatedClazz;
     private final TypeElement injectedElement;
+    public String packageName;
 
-    public InjectorGenerator(@NonNull PreferenceComponentAnnotatedClass annotatedClass, @NonNull TypeElement injectedElement) {
+    public InjectorGenerator(@NonNull PreferenceComponentAnnotatedClass annotatedClass, @NonNull TypeElement injectedElement, @NonNull Elements elementUtils) {
         this.annotatedClazz = annotatedClass;
         this.injectedElement = injectedElement;
+        PackageElement packageElement = elementUtils.getPackageOf(injectedElement);
+        this.packageName = packageElement.isUnnamed() ? null : packageElement.getQualifiedName().toString();
     }
 
     public TypeSpec generate() {
@@ -58,16 +65,18 @@ public class InjectorGenerator {
                 .addParameter(ParameterSpec.builder(TypeName.get(injectedElement.asType()), INJECT_OBJECT).addAnnotation(NonNull.class).build());
 
         injectedElement.getEnclosedElements().stream()
-                .filter(field -> field.getKind().isField())
-                .forEach(field -> {
-                    if(field.getAnnotation(InjectPreference.class) != null) {
-                        String annotatedFieldName = TypeName.get(field.asType()).toString();
+                .filter(variable -> variable instanceof VariableElement)
+                .map(variable -> (VariableElement) variable)
+                .forEach(variable -> {
+                    if(variable.getAnnotation(InjectPreference.class) != null) {
+                        String annotatedFieldName = TypeName.get(variable.asType()).toString();
+                        ClassName preferenceClazz = ClassName.get(annotatedClazz.packageName, COMPONENT_PREFIX + annotatedClazz.clazzName);
                         if(annotatedClazz.generatedClazzList.contains(annotatedFieldName)) {
-                            builder.addStatement(INJECT_OBJECT + ".$N = " + COMPONENT_PREFIX + "$N.getInstance().$N()",
-                                    field.getSimpleName(), annotatedClazz.clazzName, TypeName.get(field.asType()).toString().replace(PREFERENCE_PREFIX, ""));
+                            builder.addStatement(INJECT_OBJECT + ".$N = $T.getInstance().$N()",
+                                    variable.getSimpleName(), preferenceClazz, TypeName.get(variable.asType()).toString().replace(PREFERENCE_PREFIX, ""));
                         } else if((COMPONENT_PREFIX + annotatedClazz.clazzName).equals(annotatedFieldName)) {
                             builder.addStatement(INJECT_OBJECT + ".$N = " + COMPONENT_PREFIX + "$N.getInstance()",
-                                    field.getSimpleName(), annotatedClazz.clazzName);
+                                    variable.getSimpleName(), annotatedClazz.clazzName);
                         } else {
                             throw new VerifyException(String.format("'%s' type can not be injected", annotatedFieldName));
                         }

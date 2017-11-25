@@ -1,4 +1,4 @@
-package com.skydoves.preferenceroomdemo;
+package com.skydoves.preferenceroomdemo.converters;
 
 import com.skydoves.preferenceroom.PreferenceEntity;
 

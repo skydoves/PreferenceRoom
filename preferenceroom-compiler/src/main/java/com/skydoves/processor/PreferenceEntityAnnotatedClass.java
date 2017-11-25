@@ -81,7 +81,7 @@ public class PreferenceEntityAnnotatedClass {
                 .map(variable -> (VariableElement) variable)
                 .forEach(variable -> {
                     try {
-                        PreferenceKeyField keyField = new PreferenceKeyField(variable, packageName);
+                        PreferenceKeyField keyField = new PreferenceKeyField(variable, elementUtils);
 
                         if(checkMap.get(keyField.keyName) != null) {
                             throw new VerifyException(String.format("\'%s\' key is already used in class.", keyField.keyName));

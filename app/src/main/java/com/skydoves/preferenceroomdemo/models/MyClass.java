@@ -1,4 +1,4 @@
-package com.skydoves.preferenceroomdemo;
+package com.skydoves.preferenceroomdemo.models;
 
 /**
  * Developed by skydoves on 2017-11-25.

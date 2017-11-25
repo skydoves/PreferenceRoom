@@ -24,7 +24,9 @@ import com.skydoves.preferenceroom.TypeConverter;
 import com.squareup.javapoet.TypeName;
 
 import javax.lang.model.element.Modifier;
+import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.VariableElement;
+import javax.lang.model.util.Elements;
 
 public class PreferenceKeyField {
 
@@ -37,12 +39,14 @@ public class PreferenceKeyField {
     public Object value;
 
     public String converter;
+    public String converterPackage;
     public boolean isObjectField = false;
 
-    public PreferenceKeyField(@NonNull VariableElement variableElement, @NonNull String packageName) throws IllegalAccessException {
+    public PreferenceKeyField(@NonNull VariableElement variableElement, @NonNull Elements elementUtils) throws IllegalAccessException {
         KeyName annotation_keyName = variableElement.getAnnotation(KeyName.class);
         this.variableElement = variableElement;
-        this.packageName = packageName;
+        PackageElement packageElement = elementUtils.getPackageOf(variableElement);
+        this.packageName = packageElement.isUnnamed() ? null : packageElement.getQualifiedName().toString();
         this.typeName = TypeName.get(variableElement.asType());
         this.clazzName = variableElement.getSimpleName().toString();
         this.value = variableElement.getConstantValue();
@@ -59,6 +63,10 @@ public class PreferenceKeyField {
                     .forEach(annotationMirror -> {
                         annotationMirror.getElementValues().forEach((type, value) -> {
                             String[] split = value.getValue().toString().split("\\.");
+                            StringBuilder builder = new StringBuilder();
+                            for (int i=0; i<split.length-1; i++)
+                                builder.append(split[i] + ".");
+                            this.converterPackage = builder.toString().substring(0, builder.toString().length()-1);
                             this.converter = split[split.length-1];
                         });
             });

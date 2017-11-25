@@ -150,7 +150,7 @@ public class PreferenceComponentGenerator {
     }
 
     private ClassName getEntityClassType(PreferenceEntityAnnotatedClass annotatedClass) {
-        return ClassName.get(annotatedClazz.packageName, getEntityClazzName(annotatedClass));
+        return ClassName.get(annotatedClass.packageName, getEntityClazzName(annotatedClass));
     }
 
     private String getEntityClazzName(PreferenceEntityAnnotatedClass annotatedClass) {

@@ -1,14 +1,17 @@
-package com.skydoves.preferenceroomdemo;
+package com.skydoves.preferenceroomdemo.entities;
 
 import com.skydoves.preferenceroom.KeyName;
 import com.skydoves.preferenceroom.PreferenceEntity;
 import com.skydoves.preferenceroom.PreferenceFunction;
 import com.skydoves.preferenceroom.TypeConverter;
+import com.skydoves.preferenceroomdemo.models.MyClass;
+import com.skydoves.preferenceroomdemo.converters.MyClassConverter;
 
 /**
  * Developed by skydoves on 2017-11-18.
  * Copyright (c) 2017 skydoves rights reserved.
  */
+
 @PreferenceEntity(name = "UserProfile")
 public class Profile {
     @KeyName(name = "login")

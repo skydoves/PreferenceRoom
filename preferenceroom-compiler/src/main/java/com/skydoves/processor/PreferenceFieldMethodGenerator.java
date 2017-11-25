@@ -78,7 +78,7 @@ public class PreferenceFieldMethodGenerator {
     }
 
     private MethodSpec generateObjectGetter() {
-        ClassName converterClazz = ClassName.get(keyField.packageName, keyField.converter);
+        ClassName converterClazz = ClassName.get(keyField.converterPackage, keyField.converter);
         return MethodSpec.methodBuilder(getGetterPrefixName())
                 .addModifiers(PUBLIC)
                 .addStatement("$T $N = new $T()", converterClazz, INSTANCE_CONVERTER, converterClazz)
@@ -88,7 +88,7 @@ public class PreferenceFieldMethodGenerator {
     }
 
     private MethodSpec generateObjectSetter() {
-        ClassName converterClazz = ClassName.get(keyField.packageName, keyField.converter);
+        ClassName converterClazz = ClassName.get(keyField.converterPackage, keyField.converter);
         return MethodSpec.methodBuilder(getSetterPrefixName())
                 .addModifiers(PUBLIC)
                 .addParameter(keyField.typeName, keyField.keyName.toLowerCase())
