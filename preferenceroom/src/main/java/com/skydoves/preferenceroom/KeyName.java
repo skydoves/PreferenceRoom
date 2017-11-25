@@ -35,5 +35,5 @@ public @interface KeyName {
      *
      * @return The Preference key name of the SharedPreference.
      */
-    String name() default "";
+    String name();
 }
