@@ -29,7 +29,6 @@ import javax.lang.model.element.VariableElement;
 public class PreferenceKeyField {
 
     public final VariableElement variableElement;
-    public final String packageName;
     public final TypeName typeName;
     public final String clazzName;
     public String typeStringName;
@@ -39,10 +38,9 @@ public class PreferenceKeyField {
     public String converter;
     public boolean isObjectField = false;
 
-    public PreferenceKeyField(@NonNull VariableElement variableElement, @NonNull String packageName) throws IllegalAccessException {
+    public PreferenceKeyField(@NonNull VariableElement variableElement) throws IllegalAccessException {
         KeyName annotation_keyName = variableElement.getAnnotation(KeyName.class);
         this.variableElement = variableElement;
-        this.packageName = packageName;
         this.typeName = TypeName.get(variableElement.asType());
         this.clazzName = variableElement.getSimpleName().toString();
         this.value = variableElement.getConstantValue();
