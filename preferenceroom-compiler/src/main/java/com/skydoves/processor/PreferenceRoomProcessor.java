@@ -41,6 +41,7 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
+import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
@@ -85,7 +86,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
                         checkValidEntityType(annotatedType);
                         processEntity(annotatedType);
                     } catch (IllegalAccessException e) {
-                        messager.printMessage(ERROR, e.getMessage(), annotatedType);
+                        showErrorLog(e.getMessage(), annotatedType);
                     }
                 });
 
@@ -96,7 +97,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
                         checkValidComponentType(annotatedType);
                         processComponent(annotatedType);
                     } catch (IllegalAccessException e) {
-                        messager.printMessage(ERROR, e.getMessage(), annotatedType);
+                        showErrorLog(e.getMessage(), annotatedType);
                     }
                 });
 
@@ -106,7 +107,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
                     throw new IllegalAccessException("annotated with @InjectPreference field's modifier should be public");
                 }
             } catch (IllegalAccessException e) {
-                messager.printMessage(ERROR, e.getMessage(), field);
+                showErrorLog(e.getMessage(), field);
             }
         });
 
@@ -121,7 +122,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
             checkDuplicatedPreferenceEntity(annotatedClazz);
             generateProcessEntity(annotatedClazz);
         } catch (VerifyException e) {
-            messager.printMessage(ERROR, e.getMessage(), annotatedType);
+            showErrorLog(e.getMessage(), annotatedType);
             e.printStackTrace();
         }
     }
@@ -132,7 +133,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
             checkDuplicatedPreferenceComponent(annotatedClazz);
             generateProcessComponent(annotatedClazz);
         } catch (VerifyException e) {
-            messager.printMessage(ERROR, e.getMessage(), annotatedType);
+            showErrorLog(e.getMessage(), annotatedType);
             e.printStackTrace();
         }
     }
@@ -146,7 +147,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
                         generateProcessInjector(annotatedClass, injectedElement);
                     });
         } catch (VerifyException e) {
-            messager.printMessage(ERROR, e.getMessage(), annotatedClass.annotatedElement);
+            showErrorLog(e.getMessage(), annotatedClass.annotatedElement);
             e.printStackTrace();
         }
     }
@@ -182,9 +183,9 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
         if(!annotatedType.getKind().isClass()) {
             throw new IllegalAccessException("Only classes can be annotated with @PreferenceRoom");
         } else if(annotatedType.getModifiers().contains(Modifier.FINAL)) {
-            messager.printMessage(ERROR, "class modifier should not be final", annotatedType);
+            showErrorLog("class modifier should not be final", annotatedType);
         } else if(annotatedType.getModifiers().contains(Modifier.PRIVATE)) {
-            messager.printMessage(ERROR, "class modifier should not be final", annotatedType);
+            showErrorLog("class modifier should not be final", annotatedType);
         }
     }
 
@@ -209,5 +210,9 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
         else {
             annotatedComponentList.add(annotatedClazz);
         }
+    }
+
+    private void showErrorLog(String message, Element element) {
+        messager.printMessage(ERROR, StringUtils.getErrorMessagePrefix() + message, element);
     }
 }

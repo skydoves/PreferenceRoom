@@ -22,4 +22,8 @@ public class StringUtils {
     public static String toUpperCamel(String name) {
         return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, name);
     }
+
+    public static String getErrorMessagePrefix() {
+        return "==================== ERROR LOG ====================\n";
+    }
 }
