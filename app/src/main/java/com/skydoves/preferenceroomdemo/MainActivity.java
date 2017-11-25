@@ -23,10 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         PreferenceComponent_PrefsComponent.getInstance().inject(this);
 
-        MyClass myClass = new MyClass("skydoves", 23);
-        userProfile.putMyClass(myClass);
-
         TextView textView = findViewById(R.id.textView);
-        textView.setText(component.UserProfile().getMyClass().getName());
+        textView.setText(component.UserProfile().getYourClass().getName());
     }
 }

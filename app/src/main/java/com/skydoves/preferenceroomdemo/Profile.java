@@ -19,6 +19,7 @@ public class Profile {
     protected final float myFloat = 56.2f;
     protected final long cash = 1241224L;
 
+    @KeyName(name = "YourClass")
     @TypeConverter(converter = MyClassConverter.class)
     protected MyClass myClass;
 }
