@@ -174,4 +174,55 @@ Preference_UserDevice userDevice = PreferenceComponent_UserProfileComponent.getI
 ```
 
 ## Dependency Injection
+![di](https://user-images.githubusercontent.com/24237865/33241294-bfaf9b5a-d306-11e7-816a-2be938fafdf8.png) <br>
+All we know already about dependency injection. <br>
+PreferenceRoom supplys simple dependency injection process with free from reflection. <br>
 
+first, we need to declare targets who will be injected by PreferenceRoom at Component.<br>
+```java
+@PreferenceComponent(entities = {Profile.class, Device.class})
+public interface UserProfileComponent {
+    /**
+     * declare dependency injection targets.
+     */
+    void inject(MainActivity __);
+    void inject(LoginActivity __);
+}
+```
+
+and next, we should inject instances of entity and component at targets. </br>
+```java
+@Override
+protected void onCreate(@Nullable Bundle savedInstanceState) {
+   super.onCreate(savedInstanceState);
+   setContentView(R.layout.activity_main);
+   PreferenceComponent_UserProfileComponent.getInstance().inject(this);
+}
+```
+
+the last, request dependency injection using @InjectPreference annotation. <br>
+As we know, field's modifier should be a public.
+```java
+@InjectPreference
+public PreferenceComponent_UserProfileComponent component;
+
+@InjectPreference
+public Preference_UserProfile userProfile;
+```
+
+# License
+```xml
+Copyright 2017 skydoves
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
