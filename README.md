@@ -13,7 +13,7 @@ dependencies {
 ```
 
 ## PreferenceEntity
-![preferenceentity](https://user-images.githubusercontent.com/24237865/33240687-5fa9ccca-d2fd-11e7-8962-e39c8dad5f41.png)<br><br>
+![preferenceentity](https://user-images.githubusercontent.com/24237865/33240687-5fa9ccca-d2fd-11e7-8962-e39c8dad5f41.png)<br>
 @PreferenceEntity annotation makes SharedPreference data as an entity.<br>
 "name" value in @PreferenceEntity determines entity's name.<br>
 Entity's default naming rule is Class name with camel uppercase.<br>
@@ -63,7 +63,7 @@ but manage more efficiently using [Component](https://github.com/skydoves/Prefer
 [Dependency Injection](https://github.com/skydoves/PreferenceRoom/new/master?readme=1#dependency-injection).
 
 ### keyName
-![keyname](https://user-images.githubusercontent.com/24237865/33240803-7c80bb7c-d2ff-11e7-98e4-cf43d6aebb1e.png)<br><br>
+![keyname](https://user-images.githubusercontent.com/24237865/33240803-7c80bb7c-d2ff-11e7-98e4-cf43d6aebb1e.png)<br>
 @KeyName annotation is used in an entity. <br>
 @keyName's name value determines key name with camel uppercase.
 ```java
@@ -108,7 +108,7 @@ public class PetConverter extends PreferenceTypeConverter<Pet> {
 ```
 
 ### PreferenceFunction
-![preferencefunction](https://user-images.githubusercontent.com/24237865/33240543-c292ee82-d2fa-11e7-86c2-b013830965b2.png)<br><br>
+![preferencefunction](https://user-images.githubusercontent.com/24237865/33240543-c292ee82-d2fa-11e7-86c2-b013830965b2.png)<br>
 @PreferenceFunction annotation processes getter and setter functions. <br>
 @PreferenceFunction's keyname value sets a target of a key. <br>
 Function's name should start with put or get prefix. <br>
