@@ -59,7 +59,7 @@ Preference_UserProfile.getInstance(this).putNickname("my nickname");
 ```
 
 auto-generated code is managed by singleton. <br>
-but manage more efficiently using [PreferenceComponent](https://github.com/skydoves/PreferenceRoom#preferencefunction) and
+but manage more efficiently using [PreferenceComponent](https://github.com/skydoves/PreferenceRoom#preferencecomponent) and
 [Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection).
 
 ### keyName
@@ -144,7 +144,34 @@ public String getUuidFunction(String uuid) {
 
 ## PreferenceComponent
 ![preferencecomponent](https://user-images.githubusercontent.com/24237865/33240928-10a88e18-d302-11e7-8ff5-b5d4f33de692.png) <br>
+PreferenceComponent integrates entities. @PreferenceComponent annotation is used on an interface.<br>
+@PreferenceComponent's 'entities' values are targets to integrated by component.<br>
+PreferenceComponent's instance also singleton. And all entities instances are initialized when the component is initialized.<br>
+```java
+@PreferenceComponent(entities = {Profile.class, Device.class})
+public interface UserProfileComponent {
+}
+```
+After the build process, can using PreferenceComponent_(conponent's name) class. <br>
 
+The best way to initialize component is initializing on Application class. because PreferenceRoom's instances are singleton process.
+
+```java
+public class MyApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        PreferenceComponent_UserProfileComponent.init(this);
+    }
+}
+
+```
+After initializing on Application Class, we can access anywhere to component and component's entities.<br>
+```java
+Preference_UserProfile userProfile = PreferenceComponent_UserProfileComponent.getInstance().UserProfile();
+Preference_UserDevice userDevice = PreferenceComponent_UserProfileComponent.getInstance().UserDevice();
+```
 
 ## Dependency Injection
 
