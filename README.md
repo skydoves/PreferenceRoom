@@ -1,5 +1,5 @@
 # PreferenceRoom
-Manage your project's SharedPreference more efficiently.<br>
+Manage your project's SharedPreferences more efficiently.<br>
 PreferenceRoom inspired by [Architecture Components Room Persistence](https://developer.android.com/topic/libraries/architecture/room.html)
 and [dagger](https://github.com/square/dagger).
 
@@ -14,7 +14,7 @@ dependencies {
 
 ## PreferenceEntity
 ![preferenceentity](https://user-images.githubusercontent.com/24237865/33240687-5fa9ccca-d2fd-11e7-8962-e39c8dad5f41.png)<br>
-@PreferenceEntity annotation makes SharedPreference data as an entity.<br>
+@PreferenceEntity annotation makes SharedPreferences data as an entity.<br>
 "name" value in @PreferenceEntity determines entity's name.<br>
 Entity's default naming rule is Class name with camel uppercase.<br>
 
@@ -49,8 +49,8 @@ public class Profile {
 After the build process, can using Preference_(entity's name) class like following. <br>
 ```java
 Preference_UserProfile userProfile = Preference_UserProfile.getInstance(this);
-userProfile.putNickname("my nickname"); // puts SharedPreference in NickName key.
-userProfile.getNickname(); // gets SharedPreference value in NickName key.
+userProfile.putNickname("my nickname"); // puts a SharedPreference in NickName key.
+userProfile.getNickname(); // gets a SharedPreference value in NickName key.
 userProfile.containsNickname(); // checks NickName key value is exist in SharedPreference.
 userProfile.removeNickname(); // removes NickName key's value in SharedPreference.
 
@@ -127,7 +127,7 @@ public String getUserNickFunction(String nickname) {
 ```
 
 ### security
-SharedPreference is not safe from hacking even if private-mode.<br>
+SharedPreferences data are not safe from hacking even if private-mode.<br>
 When saving private-user data on SharedPreference, you can save with encrypt and decrypt algorithm with PreferenceFunction.
 
 ```java
