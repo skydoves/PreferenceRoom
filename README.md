@@ -59,8 +59,8 @@ Preference_UserProfile.getInstance(this).putNickname("my nickname");
 ```
 
 auto-generated code is managed by singleton. <br>
-but manage more efficiently using [Component](https://github.com/skydoves/PreferenceRoom/new/master?readme=1#component) and
-[Dependency Injection](https://github.com/skydoves/PreferenceRoom/new/master?readme=1#dependency-injection).
+but manage more efficiently using [PreferenceComponent](https://github.com/skydoves/PreferenceRoom#preferencefunction) and
+[Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection).
 
 ### keyName
 ![keyname](https://user-images.githubusercontent.com/24237865/33240803-7c80bb7c-d2ff-11e7-98e4-cf43d6aebb1e.png)<br>
@@ -142,7 +142,8 @@ public String getUuidFunction(String uuid) {
 }
 ```
 
-## Component
+## PreferenceComponent
+![preferencecomponent](https://user-images.githubusercontent.com/24237865/33240928-10a88e18-d302-11e7-8ff5-b5d4f33de692.png) <br>
 
 
 ## Dependency Injection
