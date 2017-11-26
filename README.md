@@ -105,11 +105,11 @@ public class PetConverter extends PreferenceTypeConverter<Pet> {
 ```
 
 ### PreferenceFunction
-![preferencefunction](https://user-images.githubusercontent.com/24237865/33240392-965905b0-d2f8-11e7-8cc9-5709c27eb2cc.png)<br><br>
+![preferencefunction](https://user-images.githubusercontent.com/24237865/33240543-c292ee82-d2fa-11e7-86c2-b013830965b2.png)<br><br>
 @PreferenceFunction annotation processes getter and setter functions. <br>
 @PreferenceFunction's keyname value sets a target of a key. <br>
-and function's name should start with put or get prefix. <br>
-put_functionname_ will processes getter function. get_functionname_ will processes getter function.
+Function's name should start with put or get prefix. <br>
+put_functionname_ will processes getter function and get_functionname_ will processes getter function.
 
 ```java
 @PreferenceFunction(keyname = "nickname")
@@ -121,11 +121,26 @@ public String putUserNickFunction(String nickname) {
 public String getUserNickFunction(String nickname) {
     return nickname + "!!!";
 }
-
 ```
 
+### security
+SharedPreference is not safe from hacking even if private-mode.<br>
+When saving private-user data on SharedPreference, you can save with encrypt and decrypt algorithm with PreferenceFunction.
+
+```java
+@PreferenceFunction(keyname = "uuid")
+public String putUuidFunction(String uuid) {
+   return SecurityUtils.encrypt(uuid);
+}
+
+@PreferenceFunction(keyname = "uuid")
+public String getUuidFunction(String uuid) {
+    return SecurityUtils.decrypt(uuid);
+}
+```
 
 ## Component
+
 
 ## Dependency Injection
 
