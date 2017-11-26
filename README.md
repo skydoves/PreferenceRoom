@@ -1,6 +1,6 @@
 # PreferenceRoom
 Manage your project's SharedPreferences more efficiently.<br>
-PreferenceRoom inspired by [Architecture Components Room Persistence](https://developer.android.com/topic/libraries/architecture/room.html)
+PreferenceRoom is inspired by [Architecture Components Room Persistence](https://developer.android.com/topic/libraries/architecture/room.html)
 and [dagger](https://github.com/square/dagger).
 
 ## Download
