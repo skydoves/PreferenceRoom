@@ -4,8 +4,10 @@ import com.skydoves.preferenceroom.KeyName;
 import com.skydoves.preferenceroom.PreferenceEntity;
 import com.skydoves.preferenceroom.PreferenceFunction;
 import com.skydoves.preferenceroom.TypeConverter;
-import com.skydoves.preferenceroomdemo.models.MyClass;
-import com.skydoves.preferenceroomdemo.converters.MyClassConverter;
+import com.skydoves.preferenceroomdemo.converters.PetConverter;
+import com.skydoves.preferenceroomdemo.converters.PrivateInfoConverter;
+import com.skydoves.preferenceroomdemo.models.Pet;
+import com.skydoves.preferenceroomdemo.models.PrivateInfo;
 
 /**
  * Developed by skydoves on 2017-11-18.
@@ -14,26 +16,55 @@ import com.skydoves.preferenceroomdemo.converters.MyClassConverter;
 
 @PreferenceEntity(name = "UserProfile")
 public class Profile {
-    @KeyName(name = "login")
-    protected final boolean isLoggedIn = false;
-    @KeyName(name = "visit")
-    protected final int visitCount = 12;
-    @KeyName(name = "UserName")
-    protected final String nickName = "skydoves";
-    protected final float myFloat = 56.2f;
-    protected final long cash = 1241224L;
+    @KeyName(name = "nickname")
+    protected final String userNickName = null;
 
-    @KeyName(name = "YourClass")
-    @TypeConverter(converter = MyClassConverter.class)
-    protected MyClass myClass;
+    /**
+     * key name will be 'Login'. (login's camel uppercase)
+     */
+    protected final boolean login = false;
 
-    @PreferenceFunction(keyname = "UserName")
-    public String putUserNameFunction(String username) {
-        return "hello " + username;
+    @KeyName(name = "visits")
+    protected final int visitCount = 1;
+
+    @KeyName(name = "userinfo")
+    @TypeConverter(converter = PrivateInfoConverter.class)
+    protected PrivateInfo privateInfo;
+
+    /**
+     * converter used with gson.
+     */
+    @KeyName(name = "userPet")
+    @TypeConverter(converter = PetConverter.class)
+    protected Pet userPetInfo;
+
+    /**
+     * preference putter function about userNickName.
+     * @param nickname function in
+     * @return function out
+     */
+    @PreferenceFunction(keyname = "nickname")
+    public String putUserNickFunction(String nickname) {
+        return "Hello, " + nickname;
     }
 
-    @PreferenceFunction(keyname = "UserName")
-    public String getUserNameFunction(String username) {
-        return username + "!!!";
+    /**
+     * preference getter function about userNickName.
+     * @param nickname function in
+     * @return function out
+     */
+    @PreferenceFunction(keyname = "nickname")
+    public String getUserNickFunction(String nickname) {
+        return nickname + "!!!";
+    }
+
+    /**
+     * preference putter function example about visitCount's auto increment.
+     * @param count function in
+     * @return function out
+     */
+    @PreferenceFunction(keyname = "visits")
+    public int putVisitCountFunction(int count) {
+        return ++count;
     }
 }

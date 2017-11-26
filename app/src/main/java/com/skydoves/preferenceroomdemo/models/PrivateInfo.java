@@ -5,11 +5,12 @@ package com.skydoves.preferenceroomdemo.models;
  * Copyright (c) 2017 skydoves rights reserved.
  */
 
-public class MyClass {
-    private int age;
-    private String name;
+public class PrivateInfo {
 
-    public MyClass(String name, int age) {
+    private String name;
+    private int age;
+
+    public PrivateInfo(String name, int age) {
         this.name = name;
         this.age = age;
     }
