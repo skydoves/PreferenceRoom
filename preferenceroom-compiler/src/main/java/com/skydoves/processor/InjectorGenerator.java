@@ -70,13 +70,13 @@ public class InjectorGenerator {
                 .forEach(variable -> {
                     if(variable.getAnnotation(InjectPreference.class) != null) {
                         String annotatedFieldName = TypeName.get(variable.asType()).toString();
-                        ClassName preferenceClazz = ClassName.get(annotatedClazz.packageName, COMPONENT_PREFIX + annotatedClazz.clazzName);
+                        ClassName componentClazz = ClassName.get(annotatedClazz.packageName, COMPONENT_PREFIX + annotatedClazz.clazzName);
                         if(annotatedClazz.generatedClazzList.contains(annotatedFieldName)) {
                             builder.addStatement(INJECT_OBJECT + ".$N = $T.getInstance().$N()",
-                                    variable.getSimpleName(), preferenceClazz, TypeName.get(variable.asType()).toString().replace(PREFERENCE_PREFIX, ""));
+                                    variable.getSimpleName(), componentClazz, TypeName.get(variable.asType()).toString().replace(PREFERENCE_PREFIX, ""));
                         } else if((COMPONENT_PREFIX + annotatedClazz.clazzName).equals(annotatedFieldName)) {
-                            builder.addStatement(INJECT_OBJECT + ".$N = " + COMPONENT_PREFIX + "$N.getInstance()",
-                                    variable.getSimpleName(), annotatedClazz.clazzName);
+                            builder.addStatement(INJECT_OBJECT + ".$N = $T.getInstance()",
+                                    variable.getSimpleName(), componentClazz);
                         } else {
                             throw new VerifyException(String.format("'%s' type can not be injected", annotatedFieldName));
                         }
