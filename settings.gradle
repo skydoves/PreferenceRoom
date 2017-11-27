@@ -1,1 +1,1 @@
-include ':app', ':preferenceroom', ':preferenceroom-compiler'
+include ':Demo', ':preferenceroom', ':preferenceroom-compiler'
