@@ -1,6 +1,6 @@
 # PreferenceRoom
 Manage your project's SharedPreferences more efficiently.<br>
-PreferenceRoom inspired by [Architecture Components Room Persistence](https://developer.android.com/topic/libraries/architecture/room.html)
+PreferenceRoom is inspired by [Architecture Components Room Persistence](https://developer.android.com/topic/libraries/architecture/room.html)
 and [dagger](https://github.com/square/dagger).
 
 ## Download
@@ -11,6 +11,15 @@ dependencies {
     annotationProcessor 'com.github.skydoves:preferenceroom-processor:1.0.3'
 }
 ```
+
+## Index
+#### [1.PreferenceEntity](https://github.com/skydoves/PreferenceRoom#preferenceentity)
+* [KeyName](https://github.com/skydoves/PreferenceRoom#keyname)
+* [TypeConverter](https://github.com/skydoves/PreferenceRoom#typeconverter)
+* [PreferenceFunction](https://github.com/skydoves/PreferenceRoom#preferencefunction) 
+([security](https://github.com/skydoves/PreferenceRoom#security))
+#### [2.PreferenceComponent](https://github.com/skydoves/PreferenceRoom#preferencecomponent)
+#### [3.Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection)
 
 ## PreferenceEntity
 ![preferenceentity](https://user-images.githubusercontent.com/24237865/33240687-5fa9ccca-d2fd-11e7-8962-e39c8dad5f41.png)<br>
@@ -46,7 +55,7 @@ public class Profile {
 }
 ```
 
-After the build process, can using Preference_(entity's name) class like following. <br>
+After the build process, we can use Preference_(entity's name) class like following. <br>
 ```java
 Preference_UserProfile userProfile = Preference_UserProfile.getInstance(this);
 userProfile.putNickname("my nickname"); // puts a SharedPreference in NickName key.
@@ -58,7 +67,7 @@ userProfile.removeNickname(); // removes NickName key's value in SharedPreferenc
 Preference_UserProfile.getInstance(this).putNickname("my nickname");
 ```
 
-auto-generated code is managed by singleton. <br>
+auto-generated code is managed by singletons. </br>
 but manage more efficiently using [PreferenceComponent](https://github.com/skydoves/PreferenceRoom#preferencecomponent) and
 [Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection).
 
@@ -81,7 +90,7 @@ You can put and get Objects using TypeConverter.<br>
 protected Pet userPetInfo;
 ```
 
-below example is converter using with Gson. <br>
+below example is converter using Gson. <br>
 Converter should extends "PreferenceTypeConverter<?>" class.
 ```java
 public class PetConverter extends PreferenceTypeConverter<Pet> {
@@ -110,8 +119,8 @@ public class PetConverter extends PreferenceTypeConverter<Pet> {
 ### PreferenceFunction
 ![preferencefunction](https://user-images.githubusercontent.com/24237865/33240543-c292ee82-d2fa-11e7-86c2-b013830965b2.png)<br>
 @PreferenceFunction annotation processes getter and setter functions. <br>
-@PreferenceFunction's keyname value sets a target of a key. <br>
-Function's name should start with put or get prefix. <br>
+@PreferenceFunction's "keyname" value determines a target. The target should be a keyName. <br>
+Function's name should start with "put" or "get" prefix. <br>
 put_functionname_ will processes getter function and get_functionname_ will processes getter function.
 
 ```java
@@ -128,7 +137,7 @@ public String getUserNickFunction(String nickname) {
 
 ### security
 SharedPreferences data are not safe from hacking even if private-mode.<br>
-When saving private-user data on SharedPreference, you can save with encrypt and decrypt algorithm with PreferenceFunction.
+When saving private-user data on SharedPreference, we can save by encrypting and decrypt algorithm with PreferenceFunction.
 
 ```java
 @PreferenceFunction(keyname = "uuid")
@@ -146,13 +155,13 @@ public String getUuidFunction(String uuid) {
 ![preferencecomponent](https://user-images.githubusercontent.com/24237865/33240928-10a88e18-d302-11e7-8ff5-b5d4f33de692.png) <br>
 PreferenceComponent integrates entities. @PreferenceComponent annotation is used on an interface.<br>
 @PreferenceComponent's 'entities' values are targets to integrated by component.<br>
-PreferenceComponent's instance also singleton. And all entities instances are initialized when the component is initialized.<br>
+PreferenceComponent's instance also singletons. And all entities instances are initialized when the component is initialized.<br>
 ```java
 @PreferenceComponent(entities = {Profile.class, Device.class})
 public interface UserProfileComponent {
 }
 ```
-After the build process, can using PreferenceComponent_(conponent's name) class. <br>
+After the build process, can using PreferenceComponent_(component's name) class. <br>
 
 The best way to initialize component is initializing on Application class. because PreferenceRoom's instances are singleton process.
 
@@ -176,7 +185,7 @@ Preference_UserDevice userDevice = PreferenceComponent_UserProfileComponent.getI
 ## Dependency Injection
 ![di](https://user-images.githubusercontent.com/24237865/33241294-bfaf9b5a-d306-11e7-816a-2be938fafdf8.png) <br>
 All we know already about dependency injection. <br>
-PreferenceRoom supplys simple dependency injection process with free from reflection. <br>
+PreferenceRoom supplies simple dependency injection process with free from reflection. <br>
 
 first, we need to declare targets who will be injected by PreferenceRoom at Component.<br>
 ```java
