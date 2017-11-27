@@ -12,6 +12,15 @@ dependencies {
 }
 ```
 
+## Index
+#### ![PreferenceEntity](https://github.com/skydoves/PreferenceRoom#preferenceentity)
+* ![KeyName](https://github.com/skydoves/PreferenceRoom#keyname)
+* ![TypeConverter](https://github.com/skydoves/PreferenceRoom#typeconverter)
+* ![PreferenceFunction](https://github.com/skydoves/PreferenceRoom#preferencefunction) 
+(![security](https://github.com/skydoves/PreferenceRoom#security))
+#### ![PreferenceComponent](https://github.com/skydoves/PreferenceRoom#preferencecomponent)
+#### ![Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection)
+
 ## PreferenceEntity
 ![preferenceentity](https://user-images.githubusercontent.com/24237865/33240687-5fa9ccca-d2fd-11e7-8962-e39c8dad5f41.png)<br>
 @PreferenceEntity annotation makes SharedPreferences data as an entity.<br>
