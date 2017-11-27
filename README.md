@@ -1,4 +1,4 @@
-# PreferenceRoom
+# PreferenceRoom [![Build Status](https://travis-ci.org/skydoves/PreferenceRoom.svg?branch=master)](https://travis-ci.org/skydoves/PreferenceRoom)
 Manage your project's SharedPreferences more efficiently.<br>
 PreferenceRoom is inspired by [Architecture Components Room Persistence](https://developer.android.com/topic/libraries/architecture/room.html)
 and [dagger](https://github.com/square/dagger).
