@@ -5,8 +5,8 @@ PreferenceRoom is inspired by [Architecture Components Room Persistence](https:/
 and [dagger](https://github.com/square/dagger).<br>
 Fully supported in kotlin project.<br>
 PreferenceRoom integrates scattered SharedPreferences as an entity.<br>
-It supports putter & getter custom functions with security algorithm & could put and get Objects.<br>
-And supports simple preference dependency injection with free from reflection.
+It supports putter & getter custom functions with security algorithm and could put & get objects.<br>
+Also supports simple preference dependency injection with free from reflection.
 
 ## Download
 #### Gradle
@@ -26,6 +26,7 @@ dependencies {
 ([security](https://github.com/skydoves/PreferenceRoom#security))
 #### [2.PreferenceComponent](https://github.com/skydoves/PreferenceRoom#preferencecomponent)
 #### [3.Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection)
+#### [4.Kotlin Useage](https://github.com/skydoves/PreferenceRoom#usage-in-kotlin)
 
 ## PreferenceEntity
 ![preferenceentity](https://user-images.githubusercontent.com/24237865/33240687-5fa9ccca-d2fd-11e7-8962-e39c8dad5f41.png)<br>
@@ -223,6 +224,33 @@ public PreferenceComponent_UserProfileComponent component;
 
 @InjectPreference
 public Preference_UserProfile userProfile;
+```
+
+## Usage in Kotlin
+Already know if you interested in kotlin. but this section is for newbies.
+
+Firstly we should create Component as Kotlin.
+```kotlin
+@PreferenceComponent(entities = arrayOf(Profile::class, Device::class))
+interface UserProfileComponent {
+    /**
+     * declare dependency injection targets.
+     */
+    fun inject(target: MainActivity)
+    fun inject(target: LoginActivity)
+}
+```
+
+And the last, injecting is the same with java. but we should declare component's modifier as lateinit var.<br>
+That's it.
+```kotlin
+@InjectPreference
+lateinit var component: PreferenceComponent_UserProfileComponent
+    
+override fun onCreate(savedInstanceState: Bundle?) {
+   super.onCreate(savedInstanceState)
+   setContentView(R.layout.activity_main)
+    PreferenceComponent_UserProfileComponent.getInstance().inject(this) // inject dependency injection to MainActivity.
 ```
 
 # License
