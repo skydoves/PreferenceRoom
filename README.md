@@ -1,14 +1,16 @@
 # PreferenceRoom [![Build Status](https://travis-ci.org/skydoves/PreferenceRoom.svg?branch=master)](https://travis-ci.org/skydoves/PreferenceRoom)
 Manage your project's SharedPreferences more efficiently.<br>
 PreferenceRoom is inspired by [Architecture Components Room Persistence](https://developer.android.com/topic/libraries/architecture/room.html)
-and [dagger](https://github.com/square/dagger).
+and [dagger](https://github.com/square/dagger).<br>
+Fully supported in kotlin project.
 
 ## Download
 #### Gradle
 ```java
 dependencies {
-    implementation 'com.github.skydoves:preferenceroom:1.0.4'
-    annotationProcessor 'com.github.skydoves:preferenceroom-processor:1.0.4'
+    implementation 'com.github.skydoves:preferenceroom:1.0.5'
+    annotationProcessor 'com.github.skydoves:preferenceroom-processor:1.0.5' // if android java project
+    kapt 'com.github.skydoves:preferenceroom-processor:1.0.5' // if android kotlin project
 }
 ```
 
