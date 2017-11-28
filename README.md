@@ -7,8 +7,8 @@ and [dagger](https://github.com/square/dagger).
 #### Gradle
 ```java
 dependencies {
-    implementation 'com.github.skydoves:preferenceroom:1.0.3'
-    annotationProcessor 'com.github.skydoves:preferenceroom-processor:1.0.3'
+    implementation 'com.github.skydoves:preferenceroom:1.0.4'
+    annotationProcessor 'com.github.skydoves:preferenceroom-processor:1.0.4'
 }
 ```
 
