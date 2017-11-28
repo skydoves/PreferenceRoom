@@ -26,6 +26,10 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
@@ -70,15 +74,22 @@ public class InjectorGenerator {
                 .forEach(variable -> {
                     if(variable.getAnnotation(InjectPreference.class) != null) {
                         String annotatedFieldName = TypeName.get(variable.asType()).toString();
+                        if(annotatedFieldName.contains(".") || annotatedFieldName.contains("\\.")) {
+                            ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(annotatedFieldName);
+                            String arr = StandardCharsets.UTF_8.decode(byteBuffer).toString();
+                            String[] typedArray = arr.split("\\.");
+                            annotatedFieldName = typedArray[typedArray.length-1];
+                        }
+
                         ClassName componentClazz = ClassName.get(annotatedClazz.packageName, COMPONENT_PREFIX + annotatedClazz.clazzName);
                         if(annotatedClazz.generatedClazzList.contains(annotatedFieldName)) {
                             builder.addStatement(INJECT_OBJECT + ".$N = $T.getInstance().$N()",
-                                    variable.getSimpleName(), componentClazz, TypeName.get(variable.asType()).toString().replace(PREFERENCE_PREFIX, ""));
+                                    variable.getSimpleName(), componentClazz, annotatedFieldName.replace(PREFERENCE_PREFIX, ""));
                         } else if((COMPONENT_PREFIX + annotatedClazz.clazzName).equals(annotatedFieldName)) {
                             builder.addStatement(INJECT_OBJECT + ".$N = $T.getInstance()",
                                     variable.getSimpleName(), componentClazz);
                         } else {
-                            throw new VerifyException(String.format("'%s' type can not be injected", annotatedFieldName));
+                            throw new VerifyException(String.format("'%s' type can not be injected!!!", annotatedFieldName));
                         }
                     }
                 });
