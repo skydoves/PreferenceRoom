@@ -21,14 +21,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.CLASS;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Marks a class as an SharedPreference data. This class will have a mapping SharedPreference with Upper camel case.
  */
 @Documented
 @Target(TYPE)
-@Retention(CLASS)
+@Retention(RUNTIME)
 public @interface PreferenceEntity {
     /**
      * Preference name in the SharedPreference. If not set, defaults to the class name with Upper camel case.

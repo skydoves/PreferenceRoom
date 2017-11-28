@@ -21,13 +21,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.RetentionPolicy.CLASS;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Injects dependencies into the fields what preference.
  */
 @Documented
 @Target(FIELD)
-@Retention(CLASS)
+@Retention(RUNTIME)
 public @interface InjectPreference {
 }
