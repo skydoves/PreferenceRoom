@@ -14,8 +14,8 @@ import com.skydoves.preferenceroomdemo.models.PrivateInfo;
  * Copyright (c) 2017 skydoves rights reserved.
  */
 
-@PreferenceEntity(name = "UserProfile")
-public class Profile {
+@PreferenceEntity(name = "ProfileWithFunctions")
+public class UserProfileWithFunctions {
     @KeyName(name = "nickname")
     protected final String userNickName = "skydoves";
 

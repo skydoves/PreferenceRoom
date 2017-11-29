@@ -17,7 +17,7 @@ public class PrivateInfoConverter extends PreferenceTypeConverter<PrivateInfo> {
 
     @Override
     public PrivateInfo convertType(String string) {
-        if(string == null) new PrivateInfo("null",0);
+        if(string == null) return new PrivateInfo("null",0);
         String[] information = string.split(",");
         return new PrivateInfo(information[0], Integer.parseInt(information[1]));
     }
