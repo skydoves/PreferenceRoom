@@ -133,8 +133,10 @@ public class PreferenceEntityAnnotatedClass {
     }
 
     private void checkOverrideMethods() {
-        annotatedElement.getEnclosedElements().
-                forEach(method -> {
+        annotatedElement.getEnclosedElements().stream()
+                .filter(element -> element instanceof ExecutableElement)
+                .map(element -> (ExecutableElement) element)
+                .forEach(method -> {
                     if(keyNameFields.contains(method.getSimpleName().toString().replace(SETTER_PREFIX, "")))
                         throw new VerifyException(getMethodNameVerifyErrorMessage(method.getSimpleName().toString()));
                     else if(keyNameFields.contains(method.getSimpleName().toString().replace(GETTER_PREFIX, "")))

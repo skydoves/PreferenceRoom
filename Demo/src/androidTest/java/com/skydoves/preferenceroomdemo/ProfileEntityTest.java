@@ -74,6 +74,6 @@ public class ProfileEntityTest {
 
     @Test
     public void keyNameListTest() throws Exception {
-        Assert.assertEquals(profile.getkeyNameList().size(), 5);
+        Assert.assertEquals(profile.getkeyNameList().size(), 6);
     }
 }

@@ -36,4 +36,7 @@ public class UserProfile {
     @KeyName(name = "userPet")
     @TypeConverter(converter = PetConverter.class)
     protected Pet userPetInfo;
+
+    @KeyName(name = "test")
+    protected final String test = "test";
 }

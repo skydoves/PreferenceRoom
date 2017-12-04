@@ -57,14 +57,17 @@ public class PreferenceComponentAnnotatedClass {
         this.keyNames = new ArrayList<>();
         this.generatedClazzList = new ArrayList<>();
 
-        annotatedElement.getEnclosedElements().forEach(method -> {
-            MethodSpec methodSpec = MethodSpec.overriding((ExecutableElement) method).build();
-            if(methodSpec.returnType != TypeName.get(Void.TYPE)) {
-                throw new VerifyException(String.format("return type should be void : '%s' method with return type '%s'", methodSpec.name, methodSpec.returnType));
-            } else if(methodSpec.parameters.size() > 1) {
-                throw new VerifyException(String.format("length of parameter should be 1 : '%s' method with parameters '%s'", methodSpec.name, methodSpec.parameters.toString()));
-            }
-        });
+        annotatedElement.getEnclosedElements().stream()
+                .filter(element -> element instanceof ExecutableElement)
+                .map(element -> (ExecutableElement) element)
+                .forEach(method -> {
+                    MethodSpec methodSpec = MethodSpec.overriding(method).build();
+                    if(methodSpec.returnType != TypeName.get(Void.TYPE)) {
+                        throw new VerifyException(String.format("return type should be void : '%s' method with return type '%s'", methodSpec.name, methodSpec.returnType));
+                    } else if(methodSpec.parameters.size() > 1) {
+                        throw new VerifyException(String.format("length of parameter should be 1 : '%s' method with parameters '%s'", methodSpec.name, methodSpec.parameters.toString()));
+                    }
+                });
 
         Set<String> entitySet = new HashSet<>();
         annotatedElement.getAnnotationMirrors().stream()
