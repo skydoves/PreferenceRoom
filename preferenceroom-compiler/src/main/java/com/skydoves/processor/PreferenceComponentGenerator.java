@@ -131,15 +131,18 @@ public class PreferenceComponentGenerator {
 
     private List<MethodSpec> getSuperMethodSpecs() {
         List<MethodSpec> methodSpecs = new ArrayList<>();
-        this.annotatedClazz.annotatedElement.getEnclosedElements().forEach(method -> {
-            ClassName preferenceRoom = ClassName.get(PreferenceRoom.class);
-            MethodSpec.Builder builder = MethodSpec.overriding((ExecutableElement)method);
-            MethodSpec methodSpec = builder.addStatement("$T.inject($N)", preferenceRoom, ((ExecutableElement) method).getParameters().get(0).getSimpleName()).build();
-            if(methodSpec.returnType != TypeName.get(Void.TYPE)) {
-                throw new VerifyException(String.format("Returned '%s'. only return type can be void.", methodSpec.returnType.toString()));
-            }
-            methodSpecs.add(methodSpec);
-        });
+        this.annotatedClazz.annotatedElement.getEnclosedElements().stream()
+                .filter(element -> element instanceof ExecutableElement)
+                .map(element -> (ExecutableElement) element)
+                .forEach(method -> {
+                    ClassName preferenceRoom = ClassName.get(PreferenceRoom.class);
+                    MethodSpec.Builder builder = MethodSpec.overriding(method);
+                    MethodSpec methodSpec = builder.addStatement("$T.inject($N)", preferenceRoom, method.getParameters().get(0).getSimpleName()).build();
+                    if(methodSpec.returnType != TypeName.get(Void.TYPE)) {
+                        throw new VerifyException(String.format("Returned '%s'. only return type can be void.", methodSpec.returnType.toString()));
+                    }
+                    methodSpecs.add(methodSpec);
+                });
         return methodSpecs;
     }
 

@@ -86,10 +86,9 @@ public class InjectorGenerator {
                             builder.addStatement(INJECT_OBJECT + ".$N = $T.getInstance().$N()",
                                     variable.getSimpleName(), componentClazz, annotatedFieldName.replace(PREFERENCE_PREFIX, ""));
                         } else if((COMPONENT_PREFIX + annotatedClazz.clazzName).equals(annotatedFieldName)) {
-                            builder.addStatement(INJECT_OBJECT + ".$N = $T.getInstance()",
-                                    variable.getSimpleName(), componentClazz);
+                            builder.addStatement(INJECT_OBJECT + ".$N = $T.getInstance()", variable.getSimpleName(), componentClazz);
                         } else {
-                            throw new VerifyException(String.format("'%s' type can not be injected!!!", annotatedFieldName));
+                            throw new VerifyException(String.format("'%s' type can not be injected", annotatedFieldName));
                         }
                     }
                 });
