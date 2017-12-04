@@ -1,6 +1,7 @@
 package com.skydoves.preferenceroomdemo;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -24,11 +25,25 @@ import static org.junit.Assert.assertThat;
 public class ProfileWithFunctionsEntityTest {
 
     private Preference_ProfileWithFunctions profile;
+    private SharedPreferences preferences;
 
     @Before
     public void getProfileEntityInstance() {
         Context appContext = InstrumentationRegistry.getTargetContext();
         profile = Preference_ProfileWithFunctions.getInstance(appContext);
+        preferences = appContext.getSharedPreferences(profile.getEntityName(), Context.MODE_PRIVATE);
+    }
+
+    @Test
+    public void preferenceFunctionTest() throws Exception {
+        profile.putNickname("PreferenceRoom");
+        profile.putVisits(15);
+
+        assertThat(preferences.getString(profile.nicknameKeyName(), null), is("Hello, PreferenceRoom"));
+        assertThat(profile.getNickname(), is(preferences.getString(profile.nicknameKeyName(), null) + "!!!"));
+        assertThat(preferences.getInt(profile.visitsKeyName(), -1), is(15 + 1));
+
+        profile.clear();
     }
 
     @Test

@@ -52,7 +52,8 @@ import static javax.tools.Diagnostic.Kind.NOTE;
 
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedAnnotationTypes({
-        "com.skydoves.preferenceroom.Preference",
+        "com.skydoves.preferenceroom.PreferenceEntity",
+        "com.skydoves.preferenceroom.DefaultPreference",
         "com.skydoves.preferenceroom.KeyName",
         "com.skydoves.preferenceroom.PreferenceComponent",
         "com.skydoves.preferenceroom.InjectPreference"})
@@ -201,11 +202,11 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
     }
 
     private void checkDuplicatedPreferenceEntity(PreferenceEntityAnnotatedClass annotatedClazz) throws VerifyException {
-        if(annotatedEntityMap.containsKey(annotatedClazz.preferenceName)) {
+        if(annotatedEntityMap.containsKey(annotatedClazz.entityName)) {
             throw new VerifyException("@PreferenceRoom key name is duplicated.");
         } else {
-            annotatedEntityMap.put(annotatedClazz.preferenceName, annotatedClazz);
-            annotatedEntityNameMap.put(annotatedClazz.typeName + ".class", annotatedClazz.preferenceName);
+            annotatedEntityMap.put(annotatedClazz.entityName, annotatedClazz);
+            annotatedEntityNameMap.put(annotatedClazz.typeName + ".class", annotatedClazz.entityName);
         }
     }
 

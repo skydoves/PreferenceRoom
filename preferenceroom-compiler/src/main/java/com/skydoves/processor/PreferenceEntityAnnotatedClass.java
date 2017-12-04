@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 
 import com.google.common.base.Strings;
 import com.google.common.base.VerifyException;
+import com.skydoves.preferenceroom.DefaultPreference;
 import com.skydoves.preferenceroom.PreferenceEntity;
 import com.skydoves.preferenceroom.PreferenceFunction;
 import com.squareup.javapoet.MethodSpec;
@@ -44,8 +45,9 @@ public class PreferenceEntityAnnotatedClass {
     public final TypeElement annotatedElement;
     public final TypeName typeName;
     public final String clazzName;
-    public final String preferenceName;
+    public final String entityName;
     public final List<PreferenceKeyField> keyFields;
+    public boolean isDefaultPreference = false;
 
     public final List<String> keyNameFields;
     public final Map<String, PreferenceKeyField> keyFieldMap;
@@ -58,21 +60,25 @@ public class PreferenceEntityAnnotatedClass {
     private static final String REMOVE_PREFIX = "remove";
 
     public PreferenceEntityAnnotatedClass(@NonNull TypeElement annotatedElement, @NonNull Elements elementUtils) throws VerifyException {
-        PreferenceEntity preferenceRoom = annotatedElement.getAnnotation(PreferenceEntity.class);
+        PreferenceEntity preferenceEntity = annotatedElement.getAnnotation(PreferenceEntity.class);
+        DefaultPreference defaultPreference = annotatedElement.getAnnotation(DefaultPreference.class);
         PackageElement packageElement = elementUtils.getPackageOf(annotatedElement);
         this.packageName = packageElement.isUnnamed() ? null : packageElement.getQualifiedName().toString();
         this.annotatedElement = annotatedElement;
         this.typeName = TypeName.get(annotatedElement.asType());
         this.clazzName = annotatedElement.getSimpleName().toString();
-        this.preferenceName = Strings.isNullOrEmpty(preferenceRoom.name()) ? StringUtils.toUpperCamel(this.clazzName) : preferenceRoom.name();
+        this.entityName = Strings.isNullOrEmpty(preferenceEntity.name()) ? StringUtils.toUpperCamel(this.clazzName) : preferenceEntity.name();
         this.keyFields = new ArrayList<>();
         this.keyNameFields = new ArrayList<>();
         this.keyFieldMap = new HashMap<>();
         this.setterFunctionsList = new HashMap<>();
         this.getterFunctionsList = new HashMap<>();
 
-        if(Strings.isNullOrEmpty(preferenceName)) {
-            throw new VerifyException("You should specify PreferenceRoom class name.");
+        if(defaultPreference != null)
+            isDefaultPreference = true;
+
+        if(Strings.isNullOrEmpty(entityName)) {
+            throw new VerifyException("You should entity PreferenceRoom class name.");
         }
 
         Map<String, String> checkMap = new HashMap<>();

@@ -28,7 +28,6 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
-import java.awt.Paint;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -169,7 +168,7 @@ public class PreferenceComponentGenerator {
     }
 
     private String getEntityClazzName(PreferenceEntityAnnotatedClass annotatedClass) {
-        return ENTITY_PREFIX + annotatedClass.preferenceName;
+        return ENTITY_PREFIX + annotatedClass.entityName;
     }
 
     private String getEntityInstanceFieldName(String keyName) {
