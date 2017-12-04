@@ -11,6 +11,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
 /**
  * Developed by skydoves on 2017-11-29.
  * Copyright (c) 2017 skydoves rights reserved.
@@ -37,5 +40,12 @@ public class ComponentTest {
         Assert.assertNotNull(testProfileComponent.Profile());
         Assert.assertNotNull(testProfileComponent.ProfileWithFunctions());
         Assert.assertNotNull(testProfileComponent.Device());
+    }
+
+    @Test
+    public void entityListTest() throws Exception {
+        assertThat(testProfileComponent.getEntityNameList().get(0).toString(), is("Profile"));
+        assertThat(testProfileComponent.getEntityNameList().get(1).toString(), is("Device"));
+        assertThat(testProfileComponent.getEntityNameList().get(2).toString(), is("ProfileWithFunctions"));
     }
 }

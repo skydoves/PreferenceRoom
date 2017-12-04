@@ -42,6 +42,7 @@ public class PreferenceEntityGenerator {
     private static final String FIELD_PREFERENCE = "preference";
     private static final String FIELD_INSTANCE = "instance";
     private static final String CONSTRUCTOR_CONTEXT = "context";
+    private static final String KEY_NAME_LIST = "keyNameList";
 
     private static final String EDIT_METHOD = "edit()";
     private static final String CLEAR_METHOD = "clear()";
@@ -61,6 +62,7 @@ public class PreferenceEntityGenerator {
                 .addMethod(getInstanceSpec())
                 .addMethods(getFieldMethodSpecs())
                 .addMethod(getClearSpec())
+                .addMethod(getKeyNameListSpec())
                 .build();
     }
 
@@ -104,6 +106,18 @@ public class PreferenceEntityGenerator {
                 .addModifiers(PUBLIC)
                 .addStatement("$N.$N.$N.$N", FIELD_PREFERENCE, EDIT_METHOD, CLEAR_METHOD, APPLY_METHOD)
                 .build();
+    }
+
+    private MethodSpec getKeyNameListSpec() {
+        MethodSpec.Builder builder = MethodSpec.methodBuilder("get" + KEY_NAME_LIST)
+                .addModifiers(PUBLIC)
+                .returns(List.class)
+                .addStatement("List<String> $N = new $T<>()", KEY_NAME_LIST, ArrayList.class);
+
+        this.annotatedClazz.keyNameFields.forEach(keyName -> builder.addStatement("$N.add($S)", KEY_NAME_LIST, keyName));
+
+        builder.addStatement("return $N", KEY_NAME_LIST);
+        return builder.build();
     }
 
     private ClassName getClassType() {

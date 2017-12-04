@@ -102,7 +102,7 @@ public class PreferenceEntityAnnotatedClass {
                 .filter(function -> !function.getKind().isField() && function.getModifiers().contains(Modifier.PUBLIC) &&
                         function.getAnnotation(PreferenceFunction.class) != null).forEach(function -> {
                             PreferenceFunction annotation = function.getAnnotation(PreferenceFunction.class);
-                            String keyName = StringUtils.toUpperCamel(annotation.keyname());
+                            String keyName = annotation.keyname();
                             if(keyNameFields.contains(keyName)) {
                                 if(function.getSimpleName().toString().startsWith(SETTER_PREFIX)) {
                                     setterFunctionsList.put(keyName, function);

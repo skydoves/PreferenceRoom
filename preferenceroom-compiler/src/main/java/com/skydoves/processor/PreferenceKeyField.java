@@ -53,7 +53,7 @@ public class PreferenceKeyField {
         setTypeStringName();
 
         if(annotation_keyName != null)
-            this.keyName = StringUtils.toUpperCamel(Strings.isNullOrEmpty(annotation_keyName.name()) ? this.clazzName : annotation_keyName.name());
+            this.keyName = Strings.isNullOrEmpty(annotation_keyName.name()) ? StringUtils.toUpperCamel(this.clazzName) : annotation_keyName.name();
         else
             this.keyName = StringUtils.toUpperCamel(this.clazzName);
 

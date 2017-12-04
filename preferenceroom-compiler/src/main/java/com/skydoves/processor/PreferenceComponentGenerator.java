@@ -28,6 +28,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
+import java.awt.Paint;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,7 @@ public class PreferenceComponentGenerator {
     private static final String ENTITY_PREFIX = "Preference_";
     private static final String FIELD_INSTANCE = "instance";
     private static final String CONSTRUCTOR_CONTEXT = "context";
+    private static final String ENTITY_NAME_LIST = "EntityNameList";
 
     public PreferenceComponentGenerator(@NonNull PreferenceComponentAnnotatedClass annotatedClass, @NonNull Map<String, PreferenceEntityAnnotatedClass> annotatedEntityMap) {
         this.annotatedClazz = annotatedClass;
@@ -65,6 +67,7 @@ public class PreferenceComponentGenerator {
                 .addMethod(getInstanceSpec())
                 .addMethods(getSuperMethodSpecs())
                 .addMethods(getEntityInstanceSpecs())
+                .addMethod(getEntityNameListSpec())
                 .build();
     }
 
@@ -139,6 +142,18 @@ public class PreferenceComponentGenerator {
             methodSpecs.add(methodSpec);
         });
         return methodSpecs;
+    }
+
+    private MethodSpec getEntityNameListSpec() {
+        MethodSpec.Builder builder = MethodSpec.methodBuilder("get" + ENTITY_NAME_LIST)
+                .addModifiers(PUBLIC)
+                .returns(List.class)
+                .addStatement("List<String> $N = new $T<>()", ENTITY_NAME_LIST, ArrayList.class);
+
+        this.annotatedClazz.keyNames.forEach(entityName -> builder.addStatement("$N.add($S)", ENTITY_NAME_LIST, entityName));
+
+        builder.addStatement("return $N", ENTITY_NAME_LIST);
+        return builder.build();
     }
 
     private ClassName getClassType() {

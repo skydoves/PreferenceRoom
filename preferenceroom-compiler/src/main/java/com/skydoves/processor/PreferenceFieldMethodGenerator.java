@@ -32,6 +32,7 @@ public class PreferenceFieldMethodGenerator {
 
     private static final String SETTER_PREFIX = "put";
     private static final String GETTER_PREFIX = "get";
+    private static final String KEYNAME_POSTFIX = "KeyName";
     private static final String HAS_PREFIX = "contains";
     private static final String REMOVE_PREFIX = "remove";
     private static final String INSTANCE_CONVERTER = "converter";
@@ -56,12 +57,13 @@ public class PreferenceFieldMethodGenerator {
             methodSpecs.add(generateObjectSetter());
         }
 
+        methodSpecs.add(generateObjectKeyNameSpec());
         methodSpecs.add(generateContainsSpec());
         methodSpecs.add(generateRemoveSpec());
         return methodSpecs;
     }
 
-    public MethodSpec generateGetter() {
+    private MethodSpec generateGetter() {
         return MethodSpec.methodBuilder(getGetterPrefixName())
                 .addModifiers(PUBLIC)
                 .addStatement("return " + getGetterStatement(), preference, keyField.keyName, keyField.value)
@@ -69,7 +71,7 @@ public class PreferenceFieldMethodGenerator {
                 .build();
     }
 
-    public MethodSpec generateSetter() {
+    private MethodSpec generateSetter() {
         return MethodSpec.methodBuilder(getSetterPrefixName())
                 .addModifiers(PUBLIC)
                 .addParameter(keyField.typeName, keyField.keyName.toLowerCase())
@@ -97,7 +99,15 @@ public class PreferenceFieldMethodGenerator {
                 .build();
     }
 
-    public MethodSpec generateContainsSpec() {
+    private MethodSpec generateObjectKeyNameSpec() {
+        return MethodSpec.methodBuilder(getKeynamePostfixName())
+                .addModifiers(PUBLIC)
+                .returns(String.class)
+                .addStatement("return $S", keyField.keyName)
+                .build();
+    }
+
+    private MethodSpec generateContainsSpec() {
         return MethodSpec.methodBuilder(getContainsPrefixName())
                 .addModifiers(PUBLIC)
                 .addStatement("return $N.contains($S)", preference, keyField.keyName)
@@ -105,7 +115,7 @@ public class PreferenceFieldMethodGenerator {
                 .build();
     }
 
-    public MethodSpec generateRemoveSpec() {
+    private MethodSpec generateRemoveSpec() {
         return MethodSpec.methodBuilder(getRemovePrefixName())
                 .addModifiers(PUBLIC)
                 .addStatement("$N.$N.remove($S).$N", preference, EDIT_METHOD, keyField.keyName, APPLY_METHOD)
@@ -113,19 +123,23 @@ public class PreferenceFieldMethodGenerator {
     }
 
     private String getGetterPrefixName() {
-        return GETTER_PREFIX + this.keyField.keyName;
+        return GETTER_PREFIX + StringUtils.toUpperCamel(this.keyField.keyName);
     }
 
     private String getSetterPrefixName() {
-        return SETTER_PREFIX + this.keyField.keyName;
+        return SETTER_PREFIX + StringUtils.toUpperCamel(this.keyField.keyName);
+    }
+
+    private String getKeynamePostfixName() {
+        return this.keyField.keyName + KEYNAME_POSTFIX;
     }
 
     private String getContainsPrefixName() {
-        return HAS_PREFIX + this.keyField.keyName;
+        return HAS_PREFIX + StringUtils.toUpperCamel(this.keyField.keyName);
     }
 
     private String getRemovePrefixName() {
-        return REMOVE_PREFIX + this.keyField.keyName;
+        return REMOVE_PREFIX + StringUtils.toUpperCamel(this.keyField.keyName);
     }
 
     private String getGetterTypeMethodName() {
