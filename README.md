@@ -11,9 +11,9 @@ Also supports simple preference dependency injection with free from reflection.
 #### Gradle
 ```java
 dependencies {
-    implementation 'com.github.skydoves:preferenceroom:1.0.5'
-    annotationProcessor 'com.github.skydoves:preferenceroom-processor:1.0.5' // if android java project
-    kapt 'com.github.skydoves:preferenceroom-processor:1.0.5' // if android kotlin project
+    implementation 'com.github.skydoves:preferenceroom:1.0.6'
+    annotationProcessor 'com.github.skydoves:preferenceroom-processor:1.0.6' // if android java project
+    kapt 'com.github.skydoves:preferenceroom-processor:1.0.6' // if android kotlin project
 }
 ```
 
@@ -31,7 +31,7 @@ dependencies {
 ![preferenceentity](https://user-images.githubusercontent.com/24237865/33240687-5fa9ccca-d2fd-11e7-8962-e39c8dad5f41.png)<br>
 @PreferenceEntity annotation makes SharedPreferences data as an entity.<br>
 "name" value in @PreferenceEntity determines entity's name.<br>
-Entity's default naming rule is Class name with camel uppercase.<br>
+Entity's default name is determined by class name.<br>
 
 ```java
 @PreferenceEntity(name = "UserProfile")
@@ -66,8 +66,11 @@ After the build process, we can use Preference_(entity's name) class like follow
 Preference_UserProfile userProfile = Preference_UserProfile.getInstance(this);
 userProfile.putNickname("my nickname"); // puts a SharedPreference in NickName key.
 userProfile.getNickname(); // gets a SharedPreference value in NickName key.
-userProfile.containsNickname(); // checks NickName key value is exist in SharedPreference.
-userProfile.removeNickname(); // removes NickName key's value in SharedPreference.
+userProfile.containsNickname(); // checks nickname key value is exist in SharedPreference.
+userProfile.removeNickname(); // removes nickname key's value in SharedPreference.
+userProfile.nicknameKeyName(); // returns nickname fields's key name.
+userProfile.getEntityName(); // returns UserProfile entity's name;
+userProfile.getkeyNameList(); // returns UserProfile entity's KeyName list of fields.
 
 // or invoke static.
 Preference_UserProfile.getInstance(this).putNickname("my nickname");
@@ -75,12 +78,34 @@ Preference_UserProfile.getInstance(this).putNickname("my nickname");
 
 auto-generated code is managed by singletons. </br>
 but manage more efficiently using [PreferenceComponent](https://github.com/skydoves/PreferenceRoom#preferencecomponent) and
-[Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection).
+[Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection). <br>
+
+We can set SharedPreference as DefaultSharedPreferences using @DefaultPreference annotation like below.
+```java
+@DefaultPreference
+@PreferenceEntity(name = "ProfileWithDefault")
+public class UserProfilewithDefaultPreference {
+    @KeyName(name = "nickname")
+    protected final String userNickName = "skydoves";
+
+    /**
+     * key name will be 'Login'. (login's camel uppercase)
+     */
+    protected final boolean login = false;
+
+    // - skipped - //
+}
+```
+Then "ProfileWithDefault" entity's instance will be initialized like below.
+```java
+PreferenceManager.getDefaultSharedPreferences(context);
+```
+so we can connect with PreferenceActivity, PreferenceFragment or etc.
 
 ### keyName
 ![keyname](https://user-images.githubusercontent.com/24237865/33240803-7c80bb7c-d2ff-11e7-98e4-cf43d6aebb1e.png)<br>
 @KeyName annotation is used in an entity. <br>
-@keyName's name value determines key name with camel uppercase.
+@keyName's name value determines Sharedpreference's key name.
 ```java
 @KeyName(name = "visits") // keyname will be Visits.
 protected final int visitCount = 1;
@@ -242,7 +267,7 @@ interface UserProfileComponent {
 
 And the last, injecting is the same with java. but we should declare component's modifier as lateinit var.<br>
 That's it.
-```kotlin
+```java
 @InjectPreference
 lateinit var component: PreferenceComponent_UserProfileComponent
     
