@@ -145,8 +145,11 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
 
     private void processInjector(PreferenceComponentAnnotatedClass annotatedClass) throws VerifyException {
         try {
-            annotatedClass.annotatedElement.getEnclosedElements().forEach(method -> {
-                        MethodSpec methodSpec = MethodSpec.overriding((ExecutableElement) method).build();
+            annotatedClass.annotatedElement.getEnclosedElements().stream()
+                    .filter(element -> element instanceof ExecutableElement)
+                    .map(element -> (ExecutableElement) element)
+                    .forEach(method -> {
+                        MethodSpec methodSpec = MethodSpec.overriding(method).build();
                         ParameterSpec parameterSpec = methodSpec.parameters.get(0);
                         TypeElement injectedElement = processingEnv.getElementUtils().getTypeElement(parameterSpec.type.toString());
                         generateProcessInjector(annotatedClass, injectedElement);
