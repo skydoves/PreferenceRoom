@@ -277,6 +277,15 @@ override fun onCreate(savedInstanceState: Bundle?) {
     PreferenceComponent_UserProfileComponent.getInstance().inject(this) // inject dependency injection to MainActivity.
 ```
 
+But if you encounter __NonExistentClass__ error at compile time, you should add below codes on your build.gradle. <br>
+```xml
+kapt {
+  correctErrorTypes = true
+}
+```
+This the problem is that the first version of kapt isn't able to process generated files.<br>
+And now in kapt3, this problem was solved with correctErrorTypes option.
+
 # License
 ```xml
 Copyright 2017 skydoves
