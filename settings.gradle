@@ -1,1 +1,1 @@
-include ':Demo', ':preferenceroom', ':preferenceroom-compiler'
+include ':demo',':demo-kotlin', ':preferenceroom', ':preferenceroom-compiler'
