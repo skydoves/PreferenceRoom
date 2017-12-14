@@ -277,21 +277,23 @@ override fun onCreate(savedInstanceState: Bundle?) {
    setContentView(R.layout.activity_main)
     PreferenceComponent_UserProfileComponent.getInstance().inject(this) // inject dependency injection to MainActivity.
 ```
-
+#### Non Existent Type Correction
 But if you encounter __NonExistentClass__ error at compile time, you should add below codes on your build.gradle. <br>
+default, Kapt replaces every unknown type (including types for the generated classes) to NonExistentClass, but you can change this behavior. Add the additional flag to the build.gradle file to enable error type inferring in stubs:
 ```xml
 kapt {
   correctErrorTypes = true
 }
 ```
-This the problem is that the first version of kapt isn't able to process generated files.<br>
-And now in kapt3, this problem was solved with correctErrorTypes option.
 
 ## Proguard Rules
 ```xml
-# PreferenceRoom
--keep class com.skydoves.preferenceroom.*
+# Retain generated class which implement PreferenceRoomImpl.
 -keep public class ** implements com.skydoves.preferenceroom.PreferenceRoomImpl
+
+# Prevent obfuscation of types which use PreferenceRoom annotations since the simple name
+# is used to reflectively look up the generated Injector.
+-keep class com.skydoves.preferenceroom.*
 -keepclasseswithmembernames class * { @com.skydoves.preferenceroom.* <methods>; }
 -keepclasseswithmembernames class * { @com.skydoves.preferenceroom.* <fields>; }
 ```
