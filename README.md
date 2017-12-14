@@ -26,6 +26,7 @@ dependencies {
 #### [2.PreferenceComponent](https://github.com/skydoves/PreferenceRoom#preferencecomponent)
 #### [3.Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection)
 #### [4.Usage in Kotlin](https://github.com/skydoves/PreferenceRoom#usage-in-kotlin)
+#### [5.Proguard-Rules](https://github.com/skydoves/PreferenceRoom#proguard-rules)
 
 ## PreferenceEntity
 ![preferenceentity](https://user-images.githubusercontent.com/24237865/33240687-5fa9ccca-d2fd-11e7-8962-e39c8dad5f41.png)<br>
@@ -285,6 +286,15 @@ kapt {
 ```
 This the problem is that the first version of kapt isn't able to process generated files.<br>
 And now in kapt3, this problem was solved with correctErrorTypes option.
+
+## Proguard Rules
+```xml
+# PreferenceRoom
+-keep class com.skydoves.preferenceroom.*
+-keep public class ** implements com.skydoves.preferenceroom.PreferenceRoomImpl
+-keepclasseswithmembernames class * { @com.skydoves.preferenceroom.* <methods>; }
+-keepclasseswithmembernames class * { @com.skydoves.preferenceroom.* <fields>; }
+```
 
 # License
 ```xml
