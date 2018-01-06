@@ -11,9 +11,9 @@ Also supports simple preference dependency injection with free from reflection.
 #### Gradle
 ```java
 dependencies {
-    implementation 'com.github.skydoves:preferenceroom:1.0.7'
-    annotationProcessor 'com.github.skydoves:preferenceroom-processor:1.0.7' // if android java project
-    kapt 'com.github.skydoves:preferenceroom-processor:1.0.7' // if android kotlin project
+    implementation 'com.github.skydoves:preferenceroom:1.0.8'
+    annotationProcessor 'com.github.skydoves:preferenceroom-processor:1.0.8' // if android java project
+    kapt 'com.github.skydoves:preferenceroom-processor:1.0.8' // if android kotlin project
 }
 ```
 
