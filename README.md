@@ -11,9 +11,9 @@ Also supports simple preference dependency injection with free from reflection.
 #### Gradle
 ```java
 dependencies {
-    implementation 'com.github.skydoves:preferenceroom:1.0.8'
-    annotationProcessor 'com.github.skydoves:preferenceroom-processor:1.0.8' // if android java project
-    kapt 'com.github.skydoves:preferenceroom-processor:1.0.8' // if android kotlin project
+    implementation 'com.github.skydoves:preferenceroom:1.0.9'
+    annotationProcessor 'com.github.skydoves:preferenceroom-processor:1.0.9' // if android java project
+    kapt 'com.github.skydoves:preferenceroom-processor:1.0.9' // if android kotlin project
 }
 ```
 
@@ -148,6 +148,46 @@ public class PetConverter extends PreferenceTypeConverter<Pet> {
 }
 ```
 
+#### BaseTypeConverter
+This is a Base-Gson-Converter example. <br>
+You can apply to all objects using generics like below.
+
+```java
+public class BaseGsonConverter<T> extends PreferenceTypeConverter<T> {
+
+    private final Gson gson;
+
+    /**
+     * default constructor will be called by PreferenceRoom
+     */
+    public BaseGsonConverter(Class<T> clazz) {
+        super(clazz);
+        this.gson = new Gson();
+    }
+
+    @Override
+    public String convertObject(T object) {
+        return gson.toJson(object);
+    }
+
+    @Override
+    public T convertType(String string) {
+        return gson.fromJson(string, clazz);
+    }
+}
+```
+
+and using like this.
+```java
+@KeyName(name = "userinfo")
+@TypeConverter(converter = BaseGsonConverter.class)
+protected PrivateInfo privateInfo;
+
+@KeyName(name = "userPet")
+@TypeConverter(converter = BaseGsonConverter.class)
+protected Pet userPetInfo;
+```
+
 ### PreferenceFunction
 ![preferencefunction](https://user-images.githubusercontent.com/24237865/33240543-c292ee82-d2fa-11e7-86c2-b013830965b2.png)<br>
 @PreferenceFunction annotation processes getter and setter functions. <br>
@@ -252,10 +292,32 @@ public Preference_UserProfile userProfile;
 ```
 
 ## Usage in Kotlin
-Already know if you interested in kotlin. but this section is for newbies.
+First, create an entity.
+The most important thing is we shuold use __open__ modifier at entity classes and PreferenceFunctions.
+And field's modifier should be __@JvmField val__.
+```java
+@PreferenceEntity(name = "UserDevice")
+open class Device {
+    @KeyName(name = "version")
+    @JvmField val deviceVersion: String? = null
 
-Firstly we should create Component as Kotlin.
-```kotlin
+    @KeyName(name = "uuid")
+    @JvmField val userUUID: String? = null
+
+    @PreferenceFunction(keyname = "uuid")
+    open fun putUuidFunction(uuid: String): String? {
+        return SecurityUtils.encrypt(uuid)
+    }
+
+    @PreferenceFunction(keyname = "uuid")
+    open fun getUuidFunction(uuid: String): String? {
+        return SecurityUtils.decrypt(uuid)
+    }
+}
+```
+
+Second, create a Component like below.
+```java
 @PreferenceComponent(entities = arrayOf(Profile::class, Device::class))
 interface UserProfileComponent {
     /**
@@ -266,7 +328,7 @@ interface UserProfileComponent {
 }
 ```
 
-And the last, injecting is the same with java. but we should declare component's modifier as lateinit var.<br>
+And the last, injecting is the same with the java. but we should declare component's modifier as lateinit var.<br>
 That's it.
 ```java
 @InjectPreference
