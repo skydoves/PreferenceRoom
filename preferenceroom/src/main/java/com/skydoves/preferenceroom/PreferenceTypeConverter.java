@@ -17,6 +17,13 @@
 package com.skydoves.preferenceroom;
 
 public abstract class PreferenceTypeConverter<T> {
+
+    public Class<T> clazz;
+
+    public PreferenceTypeConverter(Class<T> clazz) {
+        this.clazz = clazz;
+    }
+
     public abstract String convertObject(T object);
     public abstract T convertType(String string);
 }

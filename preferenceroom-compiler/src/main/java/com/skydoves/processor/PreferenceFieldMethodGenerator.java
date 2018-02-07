@@ -83,8 +83,8 @@ public class PreferenceFieldMethodGenerator {
         ClassName converterClazz = ClassName.get(keyField.converterPackage, keyField.converter);
         return MethodSpec.methodBuilder(getGetterPrefixName())
                 .addModifiers(PUBLIC)
-                .addStatement("$T $N = new $T()", converterClazz, INSTANCE_CONVERTER, converterClazz)
-                .addStatement("return " + getObjectGetterStatement(), INSTANCE_CONVERTER, preference, keyField.keyName, keyField.value)
+                .addStatement("$T $N = new $T($T.class)", converterClazz, INSTANCE_CONVERTER, converterClazz, keyField.typeName.box())
+                .addStatement("return ($T)" + getObjectGetterStatement(), keyField.typeName.box(), INSTANCE_CONVERTER, preference, keyField.keyName, keyField.value)
                 .returns(keyField.typeName)
                 .build();
     }
@@ -94,7 +94,7 @@ public class PreferenceFieldMethodGenerator {
         return MethodSpec.methodBuilder(getSetterPrefixName())
                 .addModifiers(PUBLIC)
                 .addParameter(keyField.typeName, keyField.keyName.toLowerCase())
-                .addStatement("$T $N = new $T()", converterClazz, INSTANCE_CONVERTER, converterClazz)
+                .addStatement("$T $N = new $T($T.class)", converterClazz, INSTANCE_CONVERTER, converterClazz, keyField.typeName.box())
                 .addStatement(getSetterStatement(), preference, EDIT_METHOD, keyField.keyName, INSTANCE_CONVERTER + ".convertObject(" + keyField.keyName.toLowerCase() + ")", APPLY_METHOD)
                 .build();
     }
