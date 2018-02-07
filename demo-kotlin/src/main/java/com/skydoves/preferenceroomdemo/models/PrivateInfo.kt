@@ -5,4 +5,4 @@ package com.skydoves.preferenceroomdemo.models
  * Copyright (c) 2017 skydoves rights reserved.
  */
 
-class PrivateInfo(val name: String, val age: Int)
+data class PrivateInfo(val name: String, val age: Int)

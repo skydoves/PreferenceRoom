@@ -16,7 +16,8 @@ public class PetConverter extends PreferenceTypeConverter<Pet> {
     /**
      * default constructor will be called by PreferenceRoom
      */
-    public PetConverter() {
+    public PetConverter(Class<Pet> clazz) {
+        super(clazz);
         this.gson = new Gson();
     }
 

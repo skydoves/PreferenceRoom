@@ -5,4 +5,4 @@ package com.skydoves.preferenceroomdemo.models
  * Copyright (c) 2017 skydoves rights reserved.
  */
 
-class ItemProfile(val title: String, val content: String)
+data class ItemProfile(val title: String, val content: String)

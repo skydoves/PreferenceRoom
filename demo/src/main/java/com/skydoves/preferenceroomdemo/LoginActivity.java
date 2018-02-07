@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String inputNick = editText_nick.getText().toString();
                 String inputAge = editText_age.getText().toString();
-                if(!inputNick.equals("") || !inputAge.equals("")) {
+                if(!inputNick.equals("") && !inputAge.equals("")) {
                     userProfile.putLogin(true);
                     userProfile.putNickname(inputNick);
                     userProfile.putUserinfo(new PrivateInfo(inputNick, Integer.parseInt(inputAge)));

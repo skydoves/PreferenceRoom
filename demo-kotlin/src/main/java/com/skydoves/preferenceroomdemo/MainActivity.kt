@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
      */
     @InjectPreference lateinit var component: PreferenceComponent_UserProfileComponent
 
-    private lateinit var adapter: ListViewAdapter
+    private val adapter by lazy { ListViewAdapter(this, R.layout.item_profile) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +40,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeUI() {
-        this.adapter = ListViewAdapter(this, R.layout.item_profile)
-
         when(component.UserProfile().login) {
             true -> {
                 ViewCompat.setNestedScrollingEnabled(content_listView, true)

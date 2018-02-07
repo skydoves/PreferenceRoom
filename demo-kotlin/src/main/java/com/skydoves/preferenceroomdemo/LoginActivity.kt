@@ -31,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
         login_button.setOnClickListener {
             val inputNick = login_editText_nick.text.toString()
             val inputAge = login_editText_age.text.toString()
-            when(inputNick != "" || inputAge != "") {
+            when(inputNick.isNotEmpty() && inputAge.isNotEmpty()) {
                 true -> {
                     userProfile.putLogin(true)
                     userProfile.putNickname(inputNick)
