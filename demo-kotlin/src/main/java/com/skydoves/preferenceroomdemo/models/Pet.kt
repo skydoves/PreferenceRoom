@@ -5,4 +5,4 @@ package com.skydoves.preferenceroomdemo.models
  * Copyright (c) 2017 skydoves rights reserved.
  */
 
-class Pet(var name: String?, var age: Int, var isFeed: Boolean, var color: Int)
+data class Pet(var name: String?, var age: Int, var isFeed: Boolean, var color: Int)

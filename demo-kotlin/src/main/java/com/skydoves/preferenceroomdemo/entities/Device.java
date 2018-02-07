@@ -25,7 +25,7 @@ public class Device {
      */
     @PreferenceFunction(keyname = "uuid")
     public String putUuidFunction(String uuid) {
-        return SecurityUtils.encrypt(uuid);
+        return SecurityUtils.INSTANCE.encrypt(uuid);
     }
 
     /**
@@ -35,6 +35,6 @@ public class Device {
      */
     @PreferenceFunction(keyname = "uuid")
     public String getUuidFunction(String uuid) {
-        return SecurityUtils.decrypt(uuid);
+        return SecurityUtils.INSTANCE.decrypt(uuid);
     }
 }

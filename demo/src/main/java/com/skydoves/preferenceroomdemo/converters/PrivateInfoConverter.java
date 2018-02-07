@@ -10,6 +10,10 @@ import com.skydoves.preferenceroomdemo.models.PrivateInfo;
 
 public class PrivateInfoConverter extends PreferenceTypeConverter<PrivateInfo> {
 
+    public PrivateInfoConverter(Class<PrivateInfo> clazz) {
+        super(clazz);
+    }
+
     @Override
     public String convertObject(PrivateInfo privateInfo) {
         return privateInfo.getName() + "," + privateInfo.getAge();
