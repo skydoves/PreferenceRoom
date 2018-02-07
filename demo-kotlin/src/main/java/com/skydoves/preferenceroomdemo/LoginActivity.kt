@@ -1,14 +1,14 @@
 package com.skydoves.preferenceroomdemo
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import com.skydoves.preferenceroom.InjectPreference
 import com.skydoves.preferenceroomdemo.components.PreferenceComponent_UserProfileComponent
 import com.skydoves.preferenceroomdemo.entities.Preference_UserProfile
 import com.skydoves.preferenceroomdemo.models.PrivateInfo
 import kotlinx.android.synthetic.main.activity_login.*
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 
 /**
  * Developed by skydoves on 2017-11-26.
@@ -37,10 +37,10 @@ class LoginActivity : AppCompatActivity() {
                     userProfile.putNickname(inputNick)
                     userProfile.putUserinfo(PrivateInfo(inputNick, Integer.parseInt(inputAge)))
 
-                    startActivity(Intent(baseContext, MainActivity::class.java))
+                    startActivity<MainActivity>()
                     finish()
                 }
-                false -> Toast.makeText(baseContext, "please fill all inputs", Toast.LENGTH_SHORT).show()
+                false -> toast("please fill all inputs")
             }
         }
     }

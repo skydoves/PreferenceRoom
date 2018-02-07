@@ -18,7 +18,7 @@ buildscript {
     ext {
         metadata = [userOrg : 'devmagician',
                     groupId : 'com.github.skydoves',
-                    publishVersion : '1.0.8',
+                    publishVersion : '1.0.9',
                     desc : 'This is PreferenceRoom by skydoves',
                     website : 'https://github.com/skydoves/PreferenceRoom',
                     issueTracker : '${website}/issues',

@@ -12,7 +12,8 @@
         android:layout_margin="20dp"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:hint="nickname"/>
+        android:hint="nickname"
+        android:textColorHint="@color/HintText"/>
 
     <EditText
         android:id="@+id/login_editText_age"
@@ -24,7 +25,8 @@
         android:textColor="@android:color/white"
         android:textSize="20sp"
         android:inputType="number"
-        android:hint="age"/>
+        android:hint="age"
+        android:textColorHint="@color/HintText"/>
 
     <Button
         android:id="@+id/login_button"
