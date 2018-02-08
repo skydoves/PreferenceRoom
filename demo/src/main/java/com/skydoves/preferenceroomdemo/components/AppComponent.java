@@ -15,7 +15,7 @@ import com.skydoves.preferenceroomdemo.entities.Profile;
  * Component integrates entities.
  */
 @PreferenceComponent(entities = {Profile.class, Device.class})
-public interface UserProfileComponent {
+public interface AppComponent {
     /**
      * declare dependency injection targets.
      */

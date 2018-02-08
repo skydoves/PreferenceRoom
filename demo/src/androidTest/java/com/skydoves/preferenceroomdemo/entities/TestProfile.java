@@ -4,7 +4,7 @@ import com.skydoves.preferenceroom.KeyName;
 import com.skydoves.preferenceroom.PreferenceEntity;
 import com.skydoves.preferenceroom.PreferenceFunction;
 import com.skydoves.preferenceroom.TypeConverter;
-import com.skydoves.preferenceroomdemo.converters.PetConverter;
+import com.skydoves.preferenceroomdemo.converters.BaseGsonConverter;
 import com.skydoves.preferenceroomdemo.converters.PrivateInfoConverter;
 import com.skydoves.preferenceroomdemo.models.Pet;
 import com.skydoves.preferenceroomdemo.models.PrivateInfo;
@@ -14,8 +14,8 @@ import com.skydoves.preferenceroomdemo.models.PrivateInfo;
  * Copyright (c) 2017 skydoves rights reserved.
  */
 
-@PreferenceEntity(name = "ProfileWithFunctions")
-public class UserProfileWithFunctions {
+@PreferenceEntity(name = "TestProfile")
+public class TestProfile {
     @KeyName(name = "nickname")
     protected final String userNickName = "skydoves";
 
@@ -35,7 +35,7 @@ public class UserProfileWithFunctions {
      * converter used with gson.
      */
     @KeyName(name = "userPet")
-    @TypeConverter(converter = PetConverter.class)
+    @TypeConverter(converter = BaseGsonConverter.class)
     protected Pet userPetInfo;
 
     /**

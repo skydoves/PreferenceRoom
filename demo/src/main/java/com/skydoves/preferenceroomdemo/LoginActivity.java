@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.skydoves.preferenceroom.InjectPreference;
-import com.skydoves.preferenceroomdemo.components.PreferenceComponent_UserProfileComponent;
+import com.skydoves.preferenceroomdemo.components.PreferenceComponent_AppComponent;
 import com.skydoves.preferenceroomdemo.entities.Preference_UserProfile;
 import com.skydoves.preferenceroomdemo.models.PrivateInfo;
 
@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        PreferenceComponent_UserProfileComponent.getInstance().inject(this);
+        PreferenceComponent_AppComponent.getInstance().inject(this);
 
         final EditText editText_nick = findViewById(R.id.login_editText_nick);
         final EditText editText_age = findViewById(R.id.login_editText_age);

@@ -2,7 +2,8 @@ package com.skydoves.preferenceroomdemo;
 
 import android.app.Application;
 
-import com.skydoves.preferenceroomdemo.components.PreferenceComponent_UserProfileComponent;
+import com.skydoves.preferenceroomdemo.components.AppComponent;
+import com.skydoves.preferenceroomdemo.components.PreferenceComponent_AppComponent;
 
 /**
  * Developed by skydoves on 2017-11-24.
@@ -17,8 +18,8 @@ public class MyApplication extends Application {
 
         /**
          * initialize instances of preference component and entities.
-         * {@link com.skydoves.preferenceroomdemo.components.UserProfileComponent}
+         * {@link AppComponent}
          */
-        PreferenceComponent_UserProfileComponent.init(this);
+        PreferenceComponent_AppComponent.init(this);
     }
 }

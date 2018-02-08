@@ -1,9 +1,8 @@
-package com.skydoves.preferenceroomdemo;
+package com.skydoves.preferenceroomdemo.entities;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.test.InstrumentationRegistry;
-
-import com.skydoves.preferenceroomdemo.entities.Preference_UserDevice;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,19 +20,21 @@ import static org.junit.Assert.assertThat;
 @RunWith(JUnit4.class)
 public class DeviceEntityTest {
 
+    private SharedPreferences preferences;
     private Preference_UserDevice device;
+
+    private static final String uuid = "00001234-0000-0000-0000-000123456789";
 
     @Before
     public void getProfileEntityInstance() {
         Context appContext = InstrumentationRegistry.getTargetContext();
         device = Preference_UserDevice.getInstance(appContext);
+        preferences = appContext.getSharedPreferences(device.getEntityName(), Context.MODE_PRIVATE);
     }
 
     @Test
     public void securityTest() {
-        String uuid = "00001234-0000-0000-0000-000123456789";
-
-        device.putUuid(uuid);
-        assertThat(device.getUuid(), is(uuid));
+        device.putUuid(uuid); // encrypt
+        assertThat(device.getUuid(), is(uuid)); // decrypt
     }
 }
