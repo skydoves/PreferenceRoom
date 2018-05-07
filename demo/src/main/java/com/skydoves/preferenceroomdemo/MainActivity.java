@@ -11,7 +11,8 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.skydoves.preferenceroom.InjectPreference;
-import com.skydoves.preferenceroomdemo.components.PreferenceComponent_UserProfileComponent;
+import com.skydoves.preferenceroomdemo.components.AppComponent;
+import com.skydoves.preferenceroomdemo.components.PreferenceComponent_AppComponent;
 import com.skydoves.preferenceroomdemo.models.ItemProfile;
 import com.skydoves.preferenceroomdemo.utils.ListViewAdapter;
 
@@ -24,10 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * UserProfile Component.
-     * {@link com.skydoves.preferenceroomdemo.components.UserProfileComponent}
+     * {@link AppComponent}
      */
     @InjectPreference
-    public PreferenceComponent_UserProfileComponent component;
+    public PreferenceComponent_AppComponent component;
 
     private ListViewAdapter adapter;
 
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        PreferenceComponent_UserProfileComponent.getInstance().inject(this); // inject dependency injection to MainActivity.
+        PreferenceComponent_AppComponent.getInstance().inject(this); // inject dependency injection to MainActivity.
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
