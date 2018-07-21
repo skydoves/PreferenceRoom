@@ -16,6 +16,8 @@
 
 package com.skydoves.processor;
 
+import android.support.annotation.Nullable;
+
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 
@@ -66,6 +68,7 @@ public class PreferenceFieldMethodGenerator {
     private MethodSpec generateGetter() {
         return MethodSpec.methodBuilder(getGetterPrefixName())
                 .addModifiers(PUBLIC)
+                .addAnnotation(Nullable.class)
                 .addStatement("return " + getGetterStatement(), preference, keyField.keyName, keyField.value)
                 .returns(keyField.typeName)
                 .build();
@@ -83,6 +86,7 @@ public class PreferenceFieldMethodGenerator {
         ClassName converterClazz = ClassName.get(keyField.converterPackage, keyField.converter);
         return MethodSpec.methodBuilder(getGetterPrefixName())
                 .addModifiers(PUBLIC)
+                .addAnnotation(Nullable.class)
                 .addStatement("$T $N = new $T($T.class)", converterClazz, INSTANCE_CONVERTER, converterClazz, keyField.typeName.box())
                 .addStatement("return ($T)" + getObjectGetterStatement(), keyField.typeName.box(), INSTANCE_CONVERTER, preference, keyField.keyName, keyField.value)
                 .returns(keyField.typeName)

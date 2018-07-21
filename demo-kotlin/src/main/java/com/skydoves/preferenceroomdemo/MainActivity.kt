@@ -45,9 +45,9 @@ class MainActivity : AppCompatActivity() {
                 ViewCompat.setNestedScrollingEnabled(content_listView, true)
                 content_listView.adapter = adapter
 
-                adapter.addItem(ItemProfile("message", component.UserProfile().nickname))
-                adapter.addItem(ItemProfile("nick name", component.UserProfile().userinfo.name))
-                adapter.addItem(ItemProfile("age", component.UserProfile().userinfo.age.toString() + ""))
+                adapter.addItem(ItemProfile("message", component.UserProfile().nickname!!))
+                adapter.addItem(ItemProfile("nick name", component.UserProfile().userinfo!!.name))
+                adapter.addItem(ItemProfile("age", component.UserProfile().userinfo!!.age.toString() + ""))
                 adapter.addItem(ItemProfile("visits", component.UserProfile().visits.toString() + ""))
 
                 /**
@@ -59,8 +59,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         component.UserDevice().uuid?.let {
-            adapter.addItem(ItemProfile("version", component.UserDevice().version))
-            adapter.addItem(ItemProfile("uuid", component.UserDevice().uuid))
+            adapter.addItem(ItemProfile("version", component.UserDevice().version!!))
+            adapter.addItem(ItemProfile("uuid", component.UserDevice().uuid!!))
         } ?: putDumpDeviceInfo()
     }
 
