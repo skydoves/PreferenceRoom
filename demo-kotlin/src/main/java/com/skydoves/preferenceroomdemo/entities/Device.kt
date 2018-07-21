@@ -24,7 +24,7 @@ open class Device {
      * @return function out
      */
     @PreferenceFunction(keyname = "uuid")
-    open fun putUuidFunction(uuid: String): String? {
+    open fun putUuidFunction(uuid: String?): String? {
         return SecurityUtils.encrypt(uuid)
     }
 
@@ -34,7 +34,7 @@ open class Device {
      * @return function out
      */
     @PreferenceFunction(keyname = "uuid")
-    open fun getUuidFunction(uuid: String): String? {
+    open fun getUuidFunction(uuid: String?): String? {
         return SecurityUtils.decrypt(uuid)
     }
 }
