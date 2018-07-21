@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.0'
+    ext.kotlin_version = '1.2.50'
     ext.gson_version = '2.8.2'
     ext.anko_version = '0.10.4'
 
@@ -10,15 +10,15 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
-        classpath 'com.novoda:bintray-release:0.5.0'
+        classpath 'com.android.tools.build:gradle:3.1.3'
+        classpath 'com.novoda:bintray-release:0.8.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 
     ext {
         metadata = [userOrg : 'devmagician',
                     groupId : 'com.github.skydoves',
-                    publishVersion : '1.0.9',
+                    publishVersion : '1.1.0',
                     desc : 'This is PreferenceRoom by skydoves',
                     website : 'https://github.com/skydoves/PreferenceRoom',
                     issueTracker : '${website}/issues',
