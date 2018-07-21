@@ -11,9 +11,9 @@ Also supports simple preference dependency injection with free from reflection.
 #### Gradle
 ```java
 dependencies {
-    implementation 'com.github.skydoves:preferenceroom:1.0.9'
-    annotationProcessor 'com.github.skydoves:preferenceroom-processor:1.0.9' // if android java project
-    kapt 'com.github.skydoves:preferenceroom-processor:1.0.9' // if android kotlin project
+    implementation 'com.github.skydoves:preferenceroom:1.1.0'
+    annotationProcessor 'com.github.skydoves:preferenceroom-processor:1.1.0' // if android java project
+    kapt 'com.github.skydoves:preferenceroom-processor:1.1.0' // if android kotlin project
 }
 ```
 
@@ -305,12 +305,12 @@ open class Device {
     @JvmField val userUUID: String? = null
 
     @PreferenceFunction(keyname = "uuid")
-    open fun putUuidFunction(uuid: String): String? {
+    open fun putUuidFunction(uuid: String?): String? {
         return SecurityUtils.encrypt(uuid)
     }
 
     @PreferenceFunction(keyname = "uuid")
-    open fun getUuidFunction(uuid: String): String? {
+    open fun getUuidFunction(uuid: String?): String? {
         return SecurityUtils.decrypt(uuid)
     }
 }
