@@ -27,6 +27,7 @@ dependencies {
 #### [3.Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection)
 #### [4.Usage in Kotlin](https://github.com/skydoves/PreferenceRoom#usage-in-kotlin)
 #### [5.Proguard-Rules](https://github.com/skydoves/PreferenceRoom#proguard-rules)
+#### [6.Debugging with Stetho](https://github.com/skydoves/PreferenceRoom#debugging-with-stetho)
 
 ## PreferenceEntity
 ![preferenceentity](https://user-images.githubusercontent.com/24237865/33240687-5fa9ccca-d2fd-11e7-8962-e39c8dad5f41.png)<br>
@@ -359,6 +360,14 @@ kapt {
 -keepclasseswithmembernames class * { @com.skydoves.preferenceroom.* <methods>; }
 -keepclasseswithmembernames class * { @com.skydoves.preferenceroom.* <fields>; }
 ```
+
+## Debugging with Stetho
+
+You can debugging SharedPreferences values with Stetho. <br> 
+To view your app’s SharedPreferences, open the Resources tab of the Developer Tools window and select LocalStorage. <br>
+You will see stored preferences by PreferenceRoom. Clicking a file displays the key-value pairs stored in that file. <br><br>
+![screenshot635705571](https://user-images.githubusercontent.com/24237865/43187949-e35f5812-902d-11e8-8aa9-c090b90e96c5.png)
+
 
 # License
 ```xml
