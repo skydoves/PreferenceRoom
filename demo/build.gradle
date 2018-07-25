@@ -32,6 +32,7 @@ dependencies {
     })
 
     implementation "com.google.code.gson:gson:$gson_version"
+    implementation "com.facebook.stetho:stetho:$stetho_version"
 
     implementation project(':preferenceroom')
     annotationProcessor project(':preferenceroom-compiler')

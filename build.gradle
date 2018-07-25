@@ -4,6 +4,7 @@ buildscript {
     ext.kotlin_version = '1.2.50'
     ext.gson_version = '2.8.2'
     ext.anko_version = '0.10.4'
+    ext.stetho_version = '1.5.0'
 
     repositories {
         google()

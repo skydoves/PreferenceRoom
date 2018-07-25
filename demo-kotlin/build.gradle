@@ -31,6 +31,7 @@ dependencies {
 
     implementation "com.google.code.gson:gson:$gson_version"
     implementation "org.jetbrains.anko:anko:$anko_version"
+    implementation "com.facebook.stetho:stetho:$stetho_version"
 
     implementation project(':preferenceroom')
     kapt project(':preferenceroom-compiler')
