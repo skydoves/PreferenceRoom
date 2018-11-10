@@ -3,12 +3,12 @@
 [![API](https://img.shields.io/badge/API-15%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=15) 
 [![Build Status](https://travis-ci.org/skydoves/PreferenceRoom.svg?branch=master)](https://travis-ci.org/skydoves/PreferenceRoom)
 <br>
-Android compiler Library for managing efficiently and structurally SharedPreferences persistence.
+Android compiler Library for managing efficiently and structurally SharedPreferences persistence.<br>
 PreferenceRoom is inspired by [Architecture Components Room Persistence](https://developer.android.com/topic/libraries/architecture/room.html)
 and [dagger](https://github.com/square/dagger).
 Fully supported in kotlin project.<br>
 PreferenceRoom integrates scattered SharedPreferences as an entity.<br>
-It supports putter & getter custom functions with security algorithm and could put & get objects.
+It supports putter & getter custom functions with security algorithm and could put & get objects. 
 Also supports simple preference dependency injection with free from reflection.
 
 ## Download
