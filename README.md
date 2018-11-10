@@ -1,19 +1,23 @@
-# PreferenceRoom [![Build Status](https://travis-ci.org/skydoves/PreferenceRoom.svg?branch=master)](https://travis-ci.org/skydoves/PreferenceRoom)<br>
-Manage your project's SharedPreferences more efficiently.<br>
+# PreferenceRoom 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![API](https://img.shields.io/badge/API-15%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=15) 
+[![Build Status](https://travis-ci.org/skydoves/PreferenceRoom.svg?branch=master)](https://travis-ci.org/skydoves/PreferenceRoom)
+<br>
+Android compiler Library for managing efficiently and structurally SharedPreferences persistence.
 PreferenceRoom is inspired by [Architecture Components Room Persistence](https://developer.android.com/topic/libraries/architecture/room.html)
-and [dagger](https://github.com/square/dagger).<br>
+and [dagger](https://github.com/square/dagger).
 Fully supported in kotlin project.<br>
 PreferenceRoom integrates scattered SharedPreferences as an entity.<br>
-It supports putter & getter custom functions with security algorithm and could put & get objects.<br>
+It supports putter & getter custom functions with security algorithm and could put & get objects.
 Also supports simple preference dependency injection with free from reflection.
 
 ## Download
 #### Gradle
-```java
+And add below dependencies to your module's `build.gradle` file.
+```gradle
 dependencies {
     implementation "com.github.skydoves:preferenceroom:1.1.1"
-    annotationProcessor "com.github.skydoves:preferenceroom-processor:1.1.1" // if android java project
-    kapt "com.github.skydoves:preferenceroom-processor:1.1.1" // if android kotlin project
+    annotationProcessor "com.github.skydoves:preferenceroom-processor:1.1.1"
 }
 ```
 
@@ -31,8 +35,8 @@ dependencies {
 
 ## PreferenceEntity
 ![preferenceentity](https://user-images.githubusercontent.com/24237865/33240687-5fa9ccca-d2fd-11e7-8962-e39c8dad5f41.png)<br>
-@PreferenceEntity annotation makes SharedPreferences data as an entity.<br>
-"name" value in @PreferenceEntity determines entity's name.<br>
+`@PreferenceEntity` annotation makes SharedPreferences data as an entity.<br>
+"name" value in `@PreferenceEntity` determines entity's name.<br>
 Entity's default name is determined by class name.<br>
 
 ```java
@@ -78,11 +82,11 @@ userProfile.getkeyNameList(); // returns UserProfile entity's KeyName list of fi
 Preference_UserProfile.getInstance(this).putNickname("my nickname");
 ```
 
-auto-generated code is managed by singletons. </br>
-but manage more efficiently using [PreferenceComponent](https://github.com/skydoves/PreferenceRoom#preferencecomponent) and
+Auto-generated code is managed by singletons. </br>
+But manage more efficiently using [PreferenceComponent](https://github.com/skydoves/PreferenceRoom#preferencecomponent) and
 [Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection). <br>
 
-We can set SharedPreference as DefaultSharedPreferences using @DefaultPreference annotation like below.
+We can set SharedPreference as DefaultSharedPreferences using `@DefaultPreference` annotation like below.
 ```java
 @DefaultPreference
 @PreferenceEntity(name = "ProfileWithDefault")
@@ -102,12 +106,12 @@ Then "ProfileWithDefault" entity's instance will be initialized like below.
 ```java
 PreferenceManager.getDefaultSharedPreferences(context);
 ```
-so we can connect with PreferenceActivity, PreferenceFragment or etc.
+So we can connect with PreferenceActivity, PreferenceFragment or etc.
 
-### keyName
+### KeyName
 ![keyname](https://user-images.githubusercontent.com/24237865/33240803-7c80bb7c-d2ff-11e7-98e4-cf43d6aebb1e.png)<br>
-@KeyName annotation is used in an entity. <br>
-@keyName's name value determines Sharedpreference's key name.
+`@KeyName` annotation is used in an entity. <br>
+`@KeyName`'s name value determines Sharedpreference's key name.
 ```java
 @KeyName(name = "visits") // keyname will be Visits.
 protected final int visitCount = 1;
@@ -116,7 +120,7 @@ protected final int visitCount = 1;
 ### TypeConverter
 ![typeconverter](https://user-images.githubusercontent.com/24237865/33240860-c5b6495a-d300-11e7-8122-804993a07b4a.png)<br>
 You can put and get Objects using TypeConverter.<br>
-@TypeConverter's converter value determines Converter.<br>
+`@TypeConverter`'s converter value determines Converter.<br>
 ```java
 @KeyName(name = "userPet")
 @TypeConverter(converter = PetConverter.class)
@@ -124,7 +128,7 @@ protected Pet userPetInfo;
 ```
 
 below example is converter using Gson. <br>
-Converter should extends "PreferenceTypeConverter<?>" class.
+Converter should extends `PreferenceTypeConverter<?>` class.
 ```java
 public class PetConverter extends PreferenceTypeConverter<Pet> {
 
@@ -191,10 +195,10 @@ protected Pet userPetInfo;
 
 ### PreferenceFunction
 ![preferencefunction](https://user-images.githubusercontent.com/24237865/33240543-c292ee82-d2fa-11e7-86c2-b013830965b2.png)<br>
-@PreferenceFunction annotation processes getter and setter functions. <br>
-@PreferenceFunction's "keyname" value determines a target. The target should be a keyName. <br>
-Function's name should start with "put" or "get" prefix. <br>
-put_functionname_ will processes getter function and get_functionname_ will processes getter function.
+`@PreferenceFunction` annotation processes getter and setter functions. <br>
+`@PreferenceFunction`'s `keyname` value determines a target. The target should be a keyName. <br>
+Function's name should start with `put` or `get` prefix. <br>
+`put_functionname_` will processes getter function and `get_functionname_` will processes getter function.
 
 ```java
 @PreferenceFunction(keyname = "nickname")
@@ -208,7 +212,7 @@ public String getUserNickFunction(String nickname) {
 }
 ```
 
-### security
+### Security
 SharedPreferences data are not safe from hacking even if private-mode.<br>
 When saving private-user data on SharedPreference, we can save by encrypting and decrypt algorithm with PreferenceFunction.
 
@@ -226,17 +230,17 @@ public String getUuidFunction(String uuid) {
 
 ## PreferenceComponent
 ![preferencecomponent](https://user-images.githubusercontent.com/24237865/33240928-10a88e18-d302-11e7-8ff5-b5d4f33de692.png) <br>
-PreferenceComponent integrates entities. @PreferenceComponent annotation is used on an interface.<br>
-@PreferenceComponent's 'entities' values are targets to integrated by component.<br>
+PreferenceComponent integrates entities. `@PreferenceComponent` annotation is used on an interface.<br>
+`@PreferenceComponent`'s 'entities' values are targets to integrated by component.<br>
 PreferenceComponent's instance also singletons. And all entities instances are initialized when the component is initialized.<br>
 ```java
 @PreferenceComponent(entities = {Profile.class, Device.class})
 public interface UserProfileComponent {
 }
 ```
-After the build process, can using PreferenceComponent_(component's name) class. <br>
+After the build process, can using `PreferenceComponent_(component's name)` class. <br>
 
-The best way to initialize component is initializing on Application class. because PreferenceRoom's instances are singleton process.
+The best way to initialize component is initializing on Application class. because `PreferenceRoom`'s instances are singleton process.
 
 ```java
 public class MyApplication extends Application {
@@ -257,10 +261,10 @@ Preference_UserDevice userDevice = PreferenceComponent_UserProfileComponent.getI
 
 ## Dependency Injection
 ![di](https://user-images.githubusercontent.com/24237865/33241294-bfaf9b5a-d306-11e7-816a-2be938fafdf8.png) <br>
-All we know already about dependency injection. <br>
-PreferenceRoom supplies simple dependency injection process with free from reflection. <br>
+All we know already about __dependency injection__. <br>
+`PreferenceRoom` supplies simple dependency injection process with free from reflection. <br>
 
-first, we need to declare targets who will be injected by PreferenceRoom at Component.<br>
+First, we need to declare targets who will be injected by `PreferenceRoom` at Component.<br>
 ```java
 @PreferenceComponent(entities = {Profile.class, Device.class})
 public interface UserProfileComponent {
@@ -272,7 +276,7 @@ public interface UserProfileComponent {
 }
 ```
 
-and next, we should inject instances of entity and component at targets. </br>
+Next, we should inject instances of entity and component at targets. </br>
 ```java
 @Override
 protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -282,7 +286,7 @@ protected void onCreate(@Nullable Bundle savedInstanceState) {
 }
 ```
 
-the last, request dependency injection using @InjectPreference annotation. <br>
+The last, request dependency injection using `@InjectPreference` annotation. <br>
 As we know, field's modifier should be a public.
 ```java
 @InjectPreference
@@ -294,8 +298,8 @@ public Preference_UserProfile userProfile;
 
 ## Usage in Kotlin
 First, create an entity.
-The most important thing is we shuold use __open__ modifier at entity classes and PreferenceFunctions.
-And field's modifier should be __@JvmField val__.
+The most important thing is we shuold use `open` modifier at entity classes and PreferenceFunctions.
+And field's modifier should be `@JvmField val`.
 ```java
 @PreferenceEntity(name = "UserDevice")
 open class Device {
@@ -317,7 +321,7 @@ open class Device {
 }
 ```
 
-Second, create a Component like below.
+Second, create a `Component` like below.
 ```java
 @PreferenceComponent(entities = arrayOf(Profile::class, Device::class))
 interface UserProfileComponent {
@@ -341,8 +345,8 @@ override fun onCreate(savedInstanceState: Bundle?) {
     PreferenceComponent_UserProfileComponent.getInstance().inject(this) // inject dependency injection to MainActivity.
 ```
 #### Non Existent Type Correction
-But if you encounter __NonExistentClass__ error at compile time, you should add below codes on your build.gradle. <br>
-default, Kapt replaces every unknown type (including types for the generated classes) to NonExistentClass, but you can change this behavior. Add the additional flag to the build.gradle file to enable error type inferring in stubs:
+But if you encounter `NonExistentClass` error at compile time, you should add below codes on your build.gradle. <br>
+Default, Kapt replaces every unknown type (including types for the generated classes) to NonExistentClass, but you can change this behavior. Add the additional flag to the build.gradle file to enable error type inferring in stubs:
 ```xml
 kapt {
   correctErrorTypes = true
