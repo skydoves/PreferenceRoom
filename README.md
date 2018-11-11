@@ -2,8 +2,9 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![API](https://img.shields.io/badge/API-15%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=15) 
 [![Build Status](https://travis-ci.org/skydoves/PreferenceRoom.svg?branch=master)](https://travis-ci.org/skydoves/PreferenceRoom)
+[![Android Weekly](https://img.shields.io/badge/Android%20Weekly-%23335-orange.svg)](https://androidweekly.net/issues/issue-335)
 <br>
-Android compiler Library for managing efficiently and structurally SharedPreferences persistence.<br>
+Android compiler library for managing  SharedPreferences persistence efficiently and structurally.<br>
 PreferenceRoom is inspired by [Architecture Components Room Persistence](https://developer.android.com/topic/libraries/architecture/room.html)
 and [dagger](https://github.com/square/dagger).
 Fully supported in kotlin project.<br>
