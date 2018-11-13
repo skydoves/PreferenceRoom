@@ -4,13 +4,12 @@
 [![Build Status](https://travis-ci.org/skydoves/PreferenceRoom.svg?branch=master)](https://travis-ci.org/skydoves/PreferenceRoom)
 [![Android Weekly](https://img.shields.io/badge/Android%20Weekly-%23335-orange.svg)](https://androidweekly.net/issues/issue-335)
 <br>
-Android process library for managing  SharedPreferences persistence efficiently and structurally.<br>
+Android processor library for managing  SharedPreferences persistence efficiently and structurally.<br>
 PreferenceRoom is inspired by [Architecture Components Room Persistence](https://developer.android.com/topic/libraries/architecture/room.html)
-and [dagger](https://github.com/square/dagger).
-Fully supported in kotlin project.<br>
+and [dagger](https://github.com/square/dagger). <br>
 PreferenceRoom integrates scattered SharedPreferences as an entity.<br>
 It supports putter & getter custom functions with security algorithm and could put & get objects. 
-Also supports simple preference dependency injection with free from reflection.
+Also supports simple preference dependency injection with free from reflection. Fully supported in kotlin project. 
 
 ## Download
 #### Gradle
@@ -373,6 +372,8 @@ To view your app’s SharedPreferences, open the Resources tab of the Developer 
 You will see stored preferences by PreferenceRoom. Clicking a file displays the key-value pairs stored in that file. <br><br>
 ![screenshot635705571](https://user-images.githubusercontent.com/24237865/43187949-e35f5812-902d-11e8-8aa9-c090b90e96c5.png)
 
+## References
+- [How to manage SharedPreferences on Android project more efficiently](https://medium.com/@skydoves/how-to-manage-sharedpreferences-on-android-project-5e6d5e28fee6)
 
 # License
 ```xml
