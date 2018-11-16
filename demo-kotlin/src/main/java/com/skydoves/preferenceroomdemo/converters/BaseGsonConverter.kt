@@ -10,17 +10,16 @@ import com.skydoves.preferenceroom.PreferenceTypeConverter
 
 class BaseGsonConverter<T>(clazz: Class<T>) : PreferenceTypeConverter<T>(clazz) {
 
-    private val gson: Gson
+    private val gson: Gson = Gson()
 
-    init {
-        this.gson = Gson()
+    override fun convertObject(obj: T?): String {
+        return gson.toJson(obj)
     }
 
-    override fun convertObject(s_object: T): String {
-        return gson.toJson(s_object)
-    }
-
-    override fun convertType(string: String): T {
-        return gson.fromJson(string, clazz)
+    override fun convertType(string: String?): T? {
+        when(string == null) {
+            true -> return null
+            else -> return gson.fromJson(string, clazz)
+        }
     }
 }
