@@ -16,7 +16,7 @@
 
 package com.skydoves.processor;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.google.common.base.VerifyException;
 import com.skydoves.preferenceroom.PreferenceComponent;
@@ -35,6 +35,7 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 
+@SuppressWarnings("WeakerAccess")
 public class PreferenceComponentAnnotatedClass {
 
     private static final String ENTITY_PREFIX = "Preference_";

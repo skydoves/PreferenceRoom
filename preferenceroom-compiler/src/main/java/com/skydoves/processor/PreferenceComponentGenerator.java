@@ -16,9 +16,6 @@
 
 package com.skydoves.processor;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-
 import com.google.common.base.VerifyException;
 import com.skydoves.preferenceroom.PreferenceRoom;
 import com.squareup.javapoet.ClassName;
@@ -33,15 +30,20 @@ import java.util.List;
 import java.util.Map;
 
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.util.Elements;
+
+import androidx.annotation.NonNull;
 
 import static javax.lang.model.element.Modifier.PRIVATE;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.lang.model.element.Modifier.STATIC;
 
+@SuppressWarnings("WeakerAccess")
 public class PreferenceComponentGenerator {
 
     private final PreferenceComponentAnnotatedClass annotatedClazz;
     private final Map<String, PreferenceEntityAnnotatedClass> annotatedEntityMap;
+    private final Elements annotatedElementUtils;
 
     private static final String CLAZZ_PREFIX = "PreferenceComponent_";
     private static final String ENTITY_PREFIX = "Preference_";
@@ -49,9 +51,12 @@ public class PreferenceComponentGenerator {
     private static final String CONSTRUCTOR_CONTEXT = "context";
     private static final String ENTITY_NAME_LIST = "EntityNameList";
 
-    public PreferenceComponentGenerator(@NonNull PreferenceComponentAnnotatedClass annotatedClass, @NonNull Map<String, PreferenceEntityAnnotatedClass> annotatedEntityMap) {
+    private static final String PACKAGE_CONTEXT = "android.content.Context";
+
+    public PreferenceComponentGenerator(@NonNull PreferenceComponentAnnotatedClass annotatedClass, @NonNull Map<String, PreferenceEntityAnnotatedClass> annotatedEntityMap, @NonNull Elements elementUtils) {
         this.annotatedClazz = annotatedClass;
         this.annotatedEntityMap = annotatedEntityMap;
+        this.annotatedElementUtils = elementUtils;
     }
 
     public TypeSpec generate() {
@@ -87,7 +92,7 @@ public class PreferenceComponentGenerator {
     private MethodSpec getConstructorSpec() {
         MethodSpec.Builder builder = MethodSpec.constructorBuilder()
                 .addModifiers(PRIVATE)
-                .addParameter(ParameterSpec.builder(Context.class, CONSTRUCTOR_CONTEXT).addAnnotation(NonNull.class).build());
+                .addParameter(ParameterSpec.builder(getContextPackageType(), CONSTRUCTOR_CONTEXT).addAnnotation(NonNull.class).build());
 
         this.annotatedClazz.keyNames.forEach(keyName ->
             builder.addStatement("$N = $N.getInstance($N.getApplicationContext())", getEntityInstanceFieldName(keyName), getEntityClazzName(annotatedEntityMap.get(keyName)), CONSTRUCTOR_CONTEXT));
@@ -98,7 +103,7 @@ public class PreferenceComponentGenerator {
     private MethodSpec getInitializeSpec() {
         return MethodSpec.methodBuilder("init")
                 .addModifiers(PUBLIC, STATIC)
-                .addParameter(ParameterSpec.builder(Context.class, CONSTRUCTOR_CONTEXT).addAnnotation(NonNull.class).build())
+                .addParameter(ParameterSpec.builder(getContextPackageType(), CONSTRUCTOR_CONTEXT).addAnnotation(NonNull.class).build())
                 .addStatement("if($N != null) return $N", FIELD_INSTANCE, FIELD_INSTANCE)
                 .addStatement("$N = new $N($N)", FIELD_INSTANCE, getClazzName(), CONSTRUCTOR_CONTEXT)
                 .addStatement("return $N", FIELD_INSTANCE)
@@ -176,5 +181,9 @@ public class PreferenceComponentGenerator {
 
     private String getEntityInstanceFieldName(String keyName) {
         return FIELD_INSTANCE + StringUtils.toUpperCamel(keyName);
+    }
+
+    private TypeName getContextPackageType() {
+        return TypeName.get(annotatedElementUtils.getTypeElement(PACKAGE_CONTEXT).asType());
     }
 }

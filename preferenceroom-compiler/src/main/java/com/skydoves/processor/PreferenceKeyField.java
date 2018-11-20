@@ -16,7 +16,7 @@
 
 package com.skydoves.processor;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.google.common.base.Strings;
 import com.skydoves.preferenceroom.KeyName;
@@ -28,6 +28,7 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Elements;
 
+@SuppressWarnings("WeakerAccess")
 public class PreferenceKeyField {
 
     public final VariableElement variableElement;

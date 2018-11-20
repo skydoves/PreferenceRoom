@@ -2,7 +2,7 @@ package com.skydoves.preferenceroomdemo.entities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.InstrumentationRegistry;
 
 import com.skydoves.preferenceroomdemo.utils.SecurityUtils;
 

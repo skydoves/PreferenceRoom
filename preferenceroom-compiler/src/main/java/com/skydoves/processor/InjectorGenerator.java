@@ -16,7 +16,7 @@
 
 package com.skydoves.processor;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.google.common.base.VerifyException;
 import com.skydoves.preferenceroom.InjectPreference;
@@ -38,6 +38,7 @@ import javax.lang.model.util.Elements;
 
 import static javax.lang.model.element.Modifier.PUBLIC;
 
+@SuppressWarnings("WeakerAccess")
 public class InjectorGenerator {
 
     private static final String CLAZZ_PREFIX = "_Injector";

@@ -19,5 +19,5 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 dependencies {
-    api "com.android.support:support-annotations:$support_version"
+    api "androidx.annotation:annotation:1.0.0"
 }

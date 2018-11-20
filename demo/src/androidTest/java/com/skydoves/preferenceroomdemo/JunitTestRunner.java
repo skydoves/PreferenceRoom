@@ -2,7 +2,7 @@ package com.skydoves.preferenceroomdemo;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.test.runner.AndroidJUnitRunner;
+import androidx.test.runner.AndroidJUnitRunner;
 
 /**
  * Created by battleent on 2018. 2. 8..

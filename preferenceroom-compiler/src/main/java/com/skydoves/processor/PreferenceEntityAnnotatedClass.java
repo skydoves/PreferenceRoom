@@ -16,7 +16,7 @@
 
 package com.skydoves.processor;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.google.common.base.Strings;
 import com.google.common.base.VerifyException;
@@ -39,6 +39,7 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Elements;
 
+@SuppressWarnings("WeakerAccess")
 public class PreferenceEntityAnnotatedClass {
 
     public final String packageName;

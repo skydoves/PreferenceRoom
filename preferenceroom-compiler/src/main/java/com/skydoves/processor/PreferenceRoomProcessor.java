@@ -162,7 +162,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
 
     private void generateProcessEntity(PreferenceEntityAnnotatedClass annotatedClass) {
         try {
-            TypeSpec annotatedClazz = (new PreferenceEntityGenerator(annotatedClass)).generate();
+            TypeSpec annotatedClazz = (new PreferenceEntityGenerator(annotatedClass, processingEnv.getElementUtils())).generate();
             JavaFile.builder(annotatedClass.packageName, annotatedClazz).build().writeTo(processingEnv.getFiler());
         } catch (IOException e) {
             // ignore ;)
@@ -171,7 +171,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
 
     private void generateProcessComponent(PreferenceComponentAnnotatedClass annotatedClass) {
         try {
-            TypeSpec annotatedClazz = (new PreferenceComponentGenerator(annotatedClass, annotatedEntityMap)).generate();
+            TypeSpec annotatedClazz = (new PreferenceComponentGenerator(annotatedClass, annotatedEntityMap, processingEnv.getElementUtils())).generate();
             JavaFile.builder(annotatedClass.packageName, annotatedClazz).build().writeTo(processingEnv.getFiler());
         } catch (IOException e) {
             // ignore >.<

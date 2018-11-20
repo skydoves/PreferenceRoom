@@ -16,7 +16,7 @@
 
 package com.skydoves.processor;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
@@ -26,6 +26,7 @@ import java.util.List;
 
 import static javax.lang.model.element.Modifier.PUBLIC;
 
+@SuppressWarnings("WeakerAccess")
 public class PreferenceFieldMethodGenerator {
 
     private final PreferenceKeyField keyField;

@@ -1,7 +1,7 @@
 package com.skydoves.preferenceroomdemo
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.skydoves.preferenceroom.InjectPreference
 import com.skydoves.preferenceroomdemo.components.PreferenceComponent_UserProfileComponent
 import com.skydoves.preferenceroomdemo.entities.Preference_UserProfile
