@@ -24,8 +24,8 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'com.google.android.material:material:1.1.0-alpha01'
+    implementation "androidx.appcompat:appcompat:$accompat_version"
+    implementation "com.google.android.material:material:$material_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation "com.google.code.gson:gson:$gson_version"

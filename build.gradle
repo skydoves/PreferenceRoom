@@ -2,11 +2,16 @@
 
 buildscript {
     ext {
+        accompat_version = '1.0.2'
+        material_version = '1.1.0-alpha02'
         kotlin_version = '1.2.71'
         gson_version = '2.8.2'
         anko_version = '0.10.4'
         stetho_version = '1.5.0'
         support_version = '28.0.0'
+        autoService_version = '1.0-rc4'
+        javaPoet_version = '1.11.1'
+        annotation_version = '1.0.1'
     }
 
     repositories {
