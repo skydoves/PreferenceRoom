@@ -35,6 +35,5 @@ dependencies {
     implementation project(':preferenceroom')
     kapt project(':preferenceroom-compiler')
 }
-repositories {
-    mavenCentral()
-}
+
+apply from: '../spotless.gradle'

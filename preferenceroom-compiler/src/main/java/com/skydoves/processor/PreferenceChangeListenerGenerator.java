@@ -74,5 +74,4 @@ public class PreferenceChangeListenerGenerator {
     public ClassName getInterfaceType(String className) {
         return ClassName.get(keyField.packageName + "." + className, getClazzName());
     }
-
 }
