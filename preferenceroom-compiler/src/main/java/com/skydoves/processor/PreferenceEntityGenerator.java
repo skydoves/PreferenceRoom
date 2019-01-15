@@ -74,9 +74,11 @@ public class PreferenceEntityGenerator {
                 }
 
                 builder.addMethod(getInstanceSpec())
+                       .addTypes(getOnChangedTypeSpecs())
+                       .addFields(getOnChangedFieldSpecs())
                        .addMethods(getFieldMethodSpecs())
-                       .addMethod(getClearSpec())
-                       .addMethod(getKeyNameListSpec())
+                       .addMethod(getClearMethodSpec())
+                       .addMethod(getKeyNameListMethodSpec())
                        .addMethod(getEntityNameMethodSpec());
 
         return builder.build();
@@ -125,14 +127,14 @@ public class PreferenceEntityGenerator {
         return methodSpecs;
     }
 
-    private MethodSpec getClearSpec() {
+    private MethodSpec getClearMethodSpec() {
         return MethodSpec.methodBuilder("clear")
                 .addModifiers(PUBLIC)
                 .addStatement("$N.$N.$N.$N", FIELD_PREFERENCE, EDIT_METHOD, CLEAR_METHOD, APPLY_METHOD)
                 .build();
     }
 
-    private MethodSpec getKeyNameListSpec() {
+    private MethodSpec getKeyNameListMethodSpec() {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("get" + KEY_NAME_LIST)
                 .addModifiers(PUBLIC)
                 .returns(List.class)
@@ -150,6 +152,24 @@ public class PreferenceEntityGenerator {
                 .returns(String.class)
                 .addStatement("return $S", annotatedClazz.entityName)
                 .build();
+    }
+
+    private List<TypeSpec> getOnChangedTypeSpecs() {
+        List<TypeSpec> typeSpecs = new ArrayList<>();
+        this.annotatedClazz.keyFields.forEach(annotatedFields -> {
+            PreferenceChangeListenerGenerator changeListenerGenerator = new PreferenceChangeListenerGenerator(annotatedFields);
+            typeSpecs.add(changeListenerGenerator.generateInterface());
+        });
+        return typeSpecs;
+    }
+
+    private List<FieldSpec> getOnChangedFieldSpecs() {
+        List<FieldSpec> fieldSpecs = new ArrayList<>();
+        this.annotatedClazz.keyFields.forEach(annotatedFields -> {
+            PreferenceChangeListenerGenerator changeListenerGenerator = new PreferenceChangeListenerGenerator(annotatedFields);
+            fieldSpecs.add(changeListenerGenerator.generateField(getClazzName()));
+        });
+        return fieldSpecs;
     }
 
     private ClassName getClassType() {

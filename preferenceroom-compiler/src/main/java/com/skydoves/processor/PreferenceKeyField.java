@@ -16,8 +16,6 @@
 
 package com.skydoves.processor;
 
-import androidx.annotation.NonNull;
-
 import com.google.common.base.Strings;
 import com.skydoves.preferenceroom.KeyName;
 import com.skydoves.preferenceroom.TypeConverter;
@@ -28,7 +26,9 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Elements;
 
-@SuppressWarnings("WeakerAccess")
+import androidx.annotation.NonNull;
+
+@SuppressWarnings({"WeakerAccess", "StringConcatenationInsideStringBufferAppend"})
 public class PreferenceKeyField {
 
     public final VariableElement variableElement;
@@ -91,7 +91,7 @@ public class PreferenceKeyField {
             this.typeStringName = "Long";
         else if(this.typeName.equals(TypeName.get(String.class)))
             this.typeStringName = "String";
-        else if(variableElement.getAnnotation(TypeConverter.class) == null && variableElement.getAnnotation(TypeConverter.class).converter() != null)
+        else if(variableElement.getAnnotation(TypeConverter.class) == null)
             throw new IllegalAccessException(String.format("Field \'%s\' can not use %s type. \nObjects should be annotated with '@TypeConverter'.", variableElement.getSimpleName(), this.typeName.toString()));
         else {
             this.typeStringName = "String";
