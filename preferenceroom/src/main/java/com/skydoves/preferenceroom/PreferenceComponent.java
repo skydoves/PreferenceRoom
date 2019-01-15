@@ -16,19 +16,17 @@
 
 package com.skydoves.preferenceroom;
 
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-/**
- * Marks a class as a component of PreferenceRooms.
- */
+/** Marks a class as a component of PreferenceRooms. */
 @Documented
 @Target(TYPE)
 @Retention(RUNTIME)
 public @interface PreferenceComponent {
-    Class<?>[] entities() default {};
+  Class<?>[] entities() default {};
 }

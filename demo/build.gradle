@@ -39,3 +39,5 @@ dependencies {
     annotationProcessor project(':preferenceroom-compiler')
     androidTestAnnotationProcessor project(':preferenceroom-compiler')
 }
+
+apply from: '../spotless.gradle'

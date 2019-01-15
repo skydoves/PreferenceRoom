@@ -18,12 +18,13 @@ package com.skydoves.processor;
 
 import com.google.common.base.CaseFormat;
 
+@SuppressWarnings("WeakerAccess")
 public class StringUtils {
-    public static String toUpperCamel(String name) {
-        return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, name);
-    }
+  public static String toUpperCamel(String name) {
+    return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, name);
+  }
 
-    public static String getErrorMessagePrefix() {
-        return "==================== ERROR LOG ====================\n";
-    }
+  public static String getErrorMessagePrefix() {
+    return "==================== ERROR LOG ====================\n";
+  }
 }

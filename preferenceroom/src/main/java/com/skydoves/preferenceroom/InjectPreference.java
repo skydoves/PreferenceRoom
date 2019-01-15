@@ -16,18 +16,15 @@
 
 package com.skydoves.preferenceroom;
 
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-/**
- * Injects dependencies into the fields what preference.
- */
+/** Injects dependencies into the fields what preference. */
 @Documented
 @Target(FIELD)
 @Retention(RUNTIME)
-public @interface InjectPreference {
-}
+public @interface InjectPreference {}

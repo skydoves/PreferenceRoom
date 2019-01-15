@@ -16,24 +16,22 @@
 
 package com.skydoves.preferenceroom;
 
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.RetentionPolicy.CLASS;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.CLASS;
-
-/**
- * Marks a class as a field's getter or putter function.
- */
+/** Marks a class as a field's getter or putter function. */
 @Documented
 @Target(METHOD)
 @Retention(CLASS)
 public @interface PreferenceFunction {
-    /**
-     * Set preference getter or putter function to key in the SharedPreference.
-     *
-     * @return The Preference key name of the SharedPreference.
-     */
-    String keyname();
+  /**
+   * Set preference getter or putter function to key in the SharedPreference.
+   *
+   * @return The Preference key name of the SharedPreference.
+   */
+  String keyname();
 }
