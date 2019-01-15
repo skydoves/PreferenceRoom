@@ -1,7 +1,6 @@
 apply plugin: 'java-library'
 apply plugin: 'com.novoda.bintray-release'
-
-def metadata = project.rootProject.ext.metadata
+apply from: '../metadata.gradle'
 
 publish {
     artifactId = 'preferenceroom-processor'
@@ -15,11 +14,13 @@ publish {
     licences = metadata.licences
 }
 
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
 dependencies {
     api project(":preferenceroom")
     implementation "com.google.auto.service:auto-service:$autoService_version"
     implementation "com.squareup:javapoet:$javaPoet_version"
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+apply from: '../spotless.gradle'
