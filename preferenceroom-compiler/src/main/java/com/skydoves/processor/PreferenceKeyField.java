@@ -28,7 +28,7 @@ import javax.lang.model.util.Elements;
 
 import androidx.annotation.NonNull;
 
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "StringConcatenationInsideStringBufferAppend"})
 public class PreferenceKeyField {
 
     public final VariableElement variableElement;
