@@ -74,11 +74,12 @@ public class PreferenceEntityGenerator {
                 }
 
                 builder.addMethod(getInstanceSpec())
+                       .addTypes(getOnChangedTypeSpecs())
+                       .addFields(getOnChangedFieldSpecs())
                        .addMethods(getFieldMethodSpecs())
                        .addMethod(getClearMethodSpec())
                        .addMethod(getKeyNameListMethodSpec())
-                       .addMethod(getEntityNameMethodSpec())
-                       .addTypes(getOnChangedTypeSpecs());
+                       .addMethod(getEntityNameMethodSpec());
 
         return builder.build();
     }
@@ -157,9 +158,18 @@ public class PreferenceEntityGenerator {
         List<TypeSpec> typeSpecs = new ArrayList<>();
         this.annotatedClazz.keyFields.forEach(annotatedFields -> {
             PreferenceChangeListenerGenerator changeListenerGenerator = new PreferenceChangeListenerGenerator(annotatedFields);
-            typeSpecs.add(changeListenerGenerator.generate());
+            typeSpecs.add(changeListenerGenerator.generateInterface());
         });
         return typeSpecs;
+    }
+
+    private List<FieldSpec> getOnChangedFieldSpecs() {
+        List<FieldSpec> fieldSpecs = new ArrayList<>();
+        this.annotatedClazz.keyFields.forEach(annotatedFields -> {
+            PreferenceChangeListenerGenerator changeListenerGenerator = new PreferenceChangeListenerGenerator(annotatedFields);
+            fieldSpecs.add(changeListenerGenerator.generateField(getClazzName()));
+        });
+        return fieldSpecs;
     }
 
     private ClassName getClassType() {

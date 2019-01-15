@@ -76,10 +76,13 @@ public class PreferenceFieldMethodGenerator {
     }
 
     private MethodSpec generateSetter() {
+        String onChangeListener = keyField.keyName + PreferenceChangeListenerGenerator.CHANGED_LISTENER_POSTFIX;
         return MethodSpec.methodBuilder(getSetterPrefixName())
                 .addModifiers(PUBLIC)
                 .addParameter(keyField.typeName, keyField.keyName.toLowerCase())
                 .addStatement(getSetterStatement(), preference, EDIT_METHOD, keyField.keyName, keyField.keyName.toLowerCase(), APPLY_METHOD)
+                .addStatement("if(" + onChangeListener + " != null) " +
+                        onChangeListener + "." + PreferenceChangeListenerGenerator.CHANGED_ABSTRACT_METHOD + "(" + keyField.keyName.toLowerCase() + ")")
                 .build();
     }
 
@@ -95,17 +98,20 @@ public class PreferenceFieldMethodGenerator {
     }
 
     private MethodSpec generateObjectSetter() {
+        String onChangeListener = keyField.keyName + PreferenceChangeListenerGenerator.CHANGED_LISTENER_POSTFIX;
         ClassName converterClazz = ClassName.get(keyField.converterPackage, keyField.converter);
         return MethodSpec.methodBuilder(getSetterPrefixName())
                 .addModifiers(PUBLIC)
                 .addParameter(keyField.typeName, keyField.keyName.toLowerCase())
                 .addStatement("$T $N = new $T($T.class)", converterClazz, INSTANCE_CONVERTER, converterClazz, keyField.typeName.box())
                 .addStatement(getSetterStatement(), preference, EDIT_METHOD, keyField.keyName, INSTANCE_CONVERTER + ".convertObject(" + keyField.keyName.toLowerCase() + ")", APPLY_METHOD)
+                .addStatement("if(" + onChangeListener + " != null) " +
+                        onChangeListener + "." + PreferenceChangeListenerGenerator.CHANGED_ABSTRACT_METHOD + "(" + keyField.keyName.toLowerCase() + ")")
                 .build();
     }
 
     private MethodSpec generateObjectKeyNameSpec() {
-        return MethodSpec.methodBuilder(getKeynamePostfixName())
+        return MethodSpec.methodBuilder(getKeyNamePostfixName())
                 .addModifiers(PUBLIC)
                 .returns(String.class)
                 .addStatement("return $S", keyField.keyName)
@@ -135,7 +141,7 @@ public class PreferenceFieldMethodGenerator {
         return SETTER_PREFIX + StringUtils.toUpperCamel(this.keyField.keyName);
     }
 
-    private String getKeynamePostfixName() {
+    private String getKeyNamePostfixName() {
         return this.keyField.keyName + KEYNAME_POSTFIX;
     }
 
