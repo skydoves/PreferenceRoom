@@ -19,26 +19,27 @@ package com.skydoves.preferenceroom;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+@SuppressWarnings("TryWithIdenticalCatches")
 public class PreferenceRoom {
 
-    private static final String CLAZZ_PREFIX = "_Injector";
+  private static final String CLAZZ_PREFIX = "_Injector";
 
-    public static void inject(Object object) {
-        try {
-            Class<?> clazz = object.getClass();
-            Class<?> injector = clazz.getClassLoader().loadClass(clazz.getName() + CLAZZ_PREFIX);
-            Constructor<?> constructor = injector.getConstructor(clazz);
-            constructor.newInstance(object);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
+  public static void inject(Object object) {
+    try {
+      Class<?> clazz = object.getClass();
+      Class<?> injector = clazz.getClassLoader().loadClass(clazz.getName() + CLAZZ_PREFIX);
+      Constructor<?> constructor = injector.getConstructor(clazz);
+      constructor.newInstance(object);
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InstantiationException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    } catch (NoSuchMethodException e) {
+      e.printStackTrace();
     }
+  }
 }

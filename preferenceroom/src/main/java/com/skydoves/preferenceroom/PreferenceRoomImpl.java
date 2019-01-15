@@ -16,5 +16,4 @@
 
 package com.skydoves.preferenceroom;
 
-public interface PreferenceRoomImpl {
-}
+public interface PreferenceRoomImpl {}

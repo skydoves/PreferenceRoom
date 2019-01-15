@@ -16,19 +16,17 @@
 
 package com.skydoves.preferenceroom;
 
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.CLASS;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.RetentionPolicy.CLASS;
-
-/**
- * Marks a object field convert to String type.
- */
+/** Marks a object field convert to String type. */
 @Documented
 @Target(FIELD)
 @Retention(CLASS)
 public @interface TypeConverter {
-    Class<? extends PreferenceTypeConverter> converter();
+  Class<? extends PreferenceTypeConverter> converter();
 }
