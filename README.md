@@ -16,8 +16,8 @@ Also supports simple preference dependency injection with free from reflection. 
 And add below dependencies to your module's `build.gradle` file.
 ```gradle
 dependencies {
-    implementation "com.github.skydoves:preferenceroom:1.1.3"
-    annotationProcessor "com.github.skydoves:preferenceroom-processor:1.1.3"
+    implementation "com.github.skydoves:preferenceroom:1.1.4"
+    annotationProcessor "com.github.skydoves:preferenceroom-processor:1.1.4"
 }
 ```
 
@@ -80,6 +80,17 @@ userProfile.getkeyNameList(); // returns UserProfile entity's KeyName list of fi
 
 // or invoke static.
 Preference_UserProfile.getInstance(this).putNickname("my nickname");
+```
+
+we can listen the changed value using `OnChangedListener`.<br>
+`onChanged` method will be invoked if we change the value using `put` method.
+```java
+userProfile.nicknameOnChangedListener = new Preference_UserProfile.NicknameOnChangedListener() {
+    @Override
+    public void onChanged(String nickname) {
+       Toast.makeText(getBaseContext(), "onChanged :" + nickname, Toast.LENGTH_SHORT).show();
+    }
+};
 ```
 
 Auto-generated code is managed by singletons. </br>
