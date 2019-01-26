@@ -12,7 +12,9 @@ It supports putter & getter custom functions with security algorithm and could p
 Also supports simple preference dependency injection with free from reflection. Fully supported in kotlin project. 
 
 ## Download
-#### Gradle
+[![Download](https://api.bintray.com/packages/devmagician/maven/preferenceroom/images/download.svg)](https://bintray.com/devmagician/maven/preferenceroom/_latestVersion)
+
+### Gradle
 And add below dependencies to your module's `build.gradle` file.
 ```gradle
 dependencies {
