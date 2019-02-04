@@ -18,8 +18,8 @@ Also supports simple preference dependency injection with free from reflection. 
 And add below dependencies to your module's `build.gradle` file.
 ```gradle
 dependencies {
-    implementation "com.github.skydoves:preferenceroom:1.1.4"
-    annotationProcessor "com.github.skydoves:preferenceroom-processor:1.1.4"
+    implementation "com.github.skydoves:preferenceroom:1.1.5"
+    annotationProcessor "com.github.skydoves:preferenceroom-processor:1.1.5"
 }
 ```
 
