@@ -94,15 +94,17 @@ public class PreferenceFieldMethodGenerator {
 
   private MethodSpec generateObjectGetter() {
     ClassName converterClazz = ClassName.get(keyField.converterPackage, keyField.converter);
+    String typeName = keyField.typeName.box().toString();
+    if (typeName.contains("<")) typeName = typeName.substring(0, typeName.indexOf("<"));
     return MethodSpec.methodBuilder(getGetterPrefixName())
         .addModifiers(PUBLIC)
         .addAnnotation(Nullable.class)
         .addStatement(
-            "$T $N = new $T($T.class)",
+            "$T $N = new $T($N.class)",
             converterClazz,
             INSTANCE_CONVERTER,
             converterClazz,
-            keyField.typeName.box())
+            typeName)
         .addStatement(
             "return ($T)" + getObjectGetterStatement(),
             keyField.typeName.box(),
@@ -116,15 +118,17 @@ public class PreferenceFieldMethodGenerator {
 
   private MethodSpec generateObjectSetter() {
     ClassName converterClazz = ClassName.get(keyField.converterPackage, keyField.converter);
+    String typeName = keyField.typeName.box().toString();
+    if (typeName.contains("<")) typeName = typeName.substring(0, typeName.indexOf("<"));
     return MethodSpec.methodBuilder(getSetterPrefixName())
         .addModifiers(PUBLIC)
         .addParameter(keyField.typeName, keyField.keyName.toLowerCase())
         .addStatement(
-            "$T $N = new $T($T.class)",
+            "$T $N = new $T($N.class)",
             converterClazz,
             INSTANCE_CONVERTER,
             converterClazz,
-            keyField.typeName.box())
+            typeName)
         .addStatement(
             getSetterStatement(),
             preference,
