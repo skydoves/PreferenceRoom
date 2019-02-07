@@ -16,12 +16,12 @@
 
 package com.skydoves.preferenceroom;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.RetentionPolicy.CLASS;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.CLASS;
 
 /**
  * Marks a field as an SharedPreference key. This field will be mapped as the SharedPreference key
@@ -32,10 +32,10 @@ import java.lang.annotation.Target;
 @Retention(CLASS)
 public @interface KeyName {
   /**
-   * Preference Key value value in the SharedPreference. If not used, defaults to the field value
+   * Preference Key name value in the SharedPreference. If not used, defaults to the field value
    * with Upper camel case.
    *
-   * @return The preference key value value of the SharedPreference.
+   * @return The preference key name value of the SharedPreference.
    */
   String value();
 }

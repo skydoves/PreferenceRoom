@@ -31,7 +31,7 @@ public @interface PreferenceFunction {
   /**
    * Set preference getter or putter function to key in the SharedPreference.
    *
-   * @return The Preference key value of the SharedPreference.
+   * @return The Preference key name of the SharedPreference.
    */
   String value();
 }
