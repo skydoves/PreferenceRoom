@@ -16,31 +16,31 @@
 
 package com.skydoves.processor;
 
-import static javax.tools.Diagnostic.Kind.ERROR;
-import static javax.tools.Diagnostic.Kind.NOTE;
-
 import com.google.auto.service.AutoService;
 import com.google.common.base.VerifyException;
+import com.skydoves.preferenceroom.DefaultPreference;
 import com.skydoves.preferenceroom.InjectPreference;
+import com.skydoves.preferenceroom.KeyName;
 import com.skydoves.preferenceroom.PreferenceComponent;
 import com.skydoves.preferenceroom.PreferenceEntity;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedAnnotationTypes;
-import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
@@ -48,15 +48,9 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 
+import static javax.tools.Diagnostic.Kind.ERROR;
+
 @SuppressWarnings("unused")
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
-@SupportedAnnotationTypes({
-  "com.skydoves.preferenceroom.PreferenceEntity",
-  "com.skydoves.preferenceroom.DefaultPreference",
-  "com.skydoves.preferenceroom.KeyName",
-  "com.skydoves.preferenceroom.PreferenceComponent",
-  "com.skydoves.preferenceroom.InjectPreference"
-})
 @AutoService(Processor.class)
 public class PreferenceRoomProcessor extends AbstractProcessor {
 
@@ -75,8 +69,23 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
   }
 
   @Override
+  public Set<String> getSupportedAnnotationTypes() {
+    Set<String> supportedTypes = new HashSet<>();
+    supportedTypes.add(PreferenceComponent.class.getCanonicalName());
+    supportedTypes.add(PreferenceEntity.class.getCanonicalName());
+    supportedTypes.add(DefaultPreference.class.getCanonicalName());
+    supportedTypes.add(KeyName.class.getCanonicalName());
+    supportedTypes.add(InjectPreference.class.getCanonicalName());
+    return supportedTypes;
+  }
+
+  @Override
+  public SourceVersion getSupportedSourceVersion() {
+    return SourceVersion.latest();
+  }
+
+  @Override
   public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-    messager.printMessage(NOTE, "start PreferenceRoom-Processor");
     if (annotations.isEmpty()) {
       return true;
     }
