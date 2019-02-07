@@ -36,7 +36,7 @@ public class PreferenceFieldMethodGenerator {
   private static final String KEYNAME_POSTFIX = "KeyName";
   private static final String HAS_PREFIX = "contains";
   private static final String REMOVE_PREFIX = "remove";
-  private static final String INSTANCE_CONVERTER = "converter";
+  private static final String INSTANCE_CONVERTER = "value";
 
   private static final String EDIT_METHOD = "edit()";
   private static final String APPLY_METHOD = "apply()";

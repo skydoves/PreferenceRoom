@@ -23,7 +23,7 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-/** Injects dependencies into the fields what preference. */
+/** Injects a dependency of the preference into a field. */
 @Documented
 @Target(FIELD)
 @Retention(RUNTIME)

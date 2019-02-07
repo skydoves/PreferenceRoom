@@ -28,5 +28,5 @@ import java.lang.annotation.Target;
 @Target(FIELD)
 @Retention(CLASS)
 public @interface TypeConverter {
-  Class<? extends PreferenceTypeConverter> converter();
+  Class<? extends PreferenceTypeConverter> value();
 }

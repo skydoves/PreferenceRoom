@@ -20,7 +20,6 @@ import android.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-/** Developed by skydoves on 2017-11-26. Copyright (c) 2017 skydoves rights reserved. */
 public class SecurityUtils {
   private static final String key = "abc12345Bab12345";
 

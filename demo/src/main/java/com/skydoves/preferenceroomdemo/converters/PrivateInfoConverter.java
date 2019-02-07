@@ -19,7 +19,6 @@ package com.skydoves.preferenceroomdemo.converters;
 import com.skydoves.preferenceroom.PreferenceTypeConverter;
 import com.skydoves.preferenceroomdemo.models.PrivateInfo;
 
-/** Developed by skydoves on 2017-11-25. Copyright (c) 2017 skydoves rights reserved. */
 public class PrivateInfoConverter extends PreferenceTypeConverter<PrivateInfo> {
 
   public PrivateInfoConverter(Class<PrivateInfo> clazz) {

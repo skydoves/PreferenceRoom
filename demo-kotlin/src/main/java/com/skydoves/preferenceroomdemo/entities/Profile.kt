@@ -30,28 +30,28 @@ import com.skydoves.preferenceroomdemo.models.PrivateInfo
  * Copyright (c) 2017 skydoves rights reserved.
  */
 
-@PreferenceEntity(name = "UserProfile")
+@PreferenceEntity("UserProfile")
 open class Profile {
-    @KeyName(name = "nickname")
+    @KeyName("nickname")
     @JvmField val userNickName = "skydoves"
 
     /**
-     * key name will be 'Login'. (login's camel uppercase)
+     * key value will be 'Login'. (login's camel uppercase)
      */
     @JvmField val login = false
 
-    @KeyName(name = "visits")
+    @KeyName("visits")
     @JvmField val visitCount = 1
 
-    @KeyName(name = "userinfo")
-    @TypeConverter(converter = PrivateInfoConverter::class)
+    @KeyName("userinfo")
+    @TypeConverter(PrivateInfoConverter::class)
     @JvmField val privateInfo: PrivateInfo? = null
 
     /**
-     * converter used with gson.
+     * value used with gson.
      */
-    @KeyName(name = "userPet")
-    @TypeConverter(converter = PetConverter::class)
+    @KeyName("userPet")
+    @TypeConverter(PetConverter::class)
     @JvmField val userPetInfo: Pet? = null
 
     /**
@@ -59,9 +59,9 @@ open class Profile {
      * @param nickname function in
      * @return function out
      */
-    @PreferenceFunction(keyname = "nickname")
+    @PreferenceFunction("nickname")
     open fun putUserNickFunction(nickname: String): String {
-        return "Hello, " + nickname
+        return "Hello, $nickname"
     }
 
     /**
@@ -69,9 +69,9 @@ open class Profile {
      * @param nickname function in
      * @return function out
      */
-    @PreferenceFunction(keyname = "nickname")
+    @PreferenceFunction("nickname")
     open fun getUserNickFunction(nickname: String): String {
-        return nickname + "!!!"
+        return "$nickname !!!"
     }
 
     /**
@@ -79,7 +79,7 @@ open class Profile {
      * @param count function in
      * @return function out
      */
-    @PreferenceFunction(keyname = "visits")
+    @PreferenceFunction("visits")
     open fun putVisitCountFunction(count: Int): Int {
         var count = count
         return ++count

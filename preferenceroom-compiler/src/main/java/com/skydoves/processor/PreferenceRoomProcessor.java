@@ -240,7 +240,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
   private void checkDuplicatedPreferenceEntity(PreferenceEntityAnnotatedClass annotatedClazz)
       throws VerifyException {
     if (annotatedEntityMap.containsKey(annotatedClazz.entityName)) {
-      throw new VerifyException("@PreferenceRoom key name is duplicated.");
+      throw new VerifyException("@PreferenceRoom key value is duplicated.");
     } else {
       annotatedEntityMap.put(annotatedClazz.entityName, annotatedClazz);
       annotatedEntityNameMap.put(annotatedClazz.typeName + ".class", annotatedClazz.entityName);

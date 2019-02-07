@@ -24,7 +24,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Marks a field as an SharedPreference key. This field will have a mapping SharedPreference key
+ * Marks a field as an SharedPreference key. This field will be mapped as the SharedPreference key
  * with Upper camel case.
  */
 @Documented
@@ -32,10 +32,10 @@ import java.lang.annotation.Target;
 @Retention(CLASS)
 public @interface KeyName {
   /**
-   * Preference Key name in the SharedPreference. If not set, defaults to the field name with Upper
-   * camel case.
+   * Preference Key value value in the SharedPreference. If not used, defaults to the field value
+   * with Upper camel case.
    *
-   * @return The Preference key name of the SharedPreference.
+   * @return The preference key value value of the SharedPreference.
    */
-  String name();
+  String value();
 }

@@ -69,9 +69,9 @@ public class PreferenceEntityAnnotatedClass {
     this.typeName = TypeName.get(annotatedElement.asType());
     this.clazzName = annotatedElement.getSimpleName().toString();
     this.entityName =
-        Strings.isNullOrEmpty(preferenceEntity.name())
+        Strings.isNullOrEmpty(preferenceEntity.value())
             ? StringUtils.toUpperCamel(this.clazzName)
-            : preferenceEntity.name();
+            : preferenceEntity.value();
     this.keyFields = new ArrayList<>();
     this.keyNameFields = new ArrayList<>();
     this.keyFieldMap = new HashMap<>();
@@ -81,7 +81,7 @@ public class PreferenceEntityAnnotatedClass {
     if (defaultPreference != null) isDefaultPreference = true;
 
     if (Strings.isNullOrEmpty(entityName)) {
-      throw new VerifyException("You should entity PreferenceRoom class name.");
+      throw new VerifyException("You should entity PreferenceRoom class value.");
     }
 
     Map<String, String> checkMap = new HashMap<>();
@@ -122,7 +122,7 @@ public class PreferenceEntityAnnotatedClass {
         .forEach(
             function -> {
               PreferenceFunction annotation = function.getAnnotation(PreferenceFunction.class);
-              String keyName = annotation.keyname();
+              String keyName = annotation.value();
               if (keyNameFields.contains(keyName)) {
                 if (function.getSimpleName().toString().startsWith(SETTER_PREFIX)) {
                   setterFunctionsList.put(keyName, function);
@@ -188,6 +188,6 @@ public class PreferenceEntityAnnotatedClass {
   }
 
   private String getMethodNameVerifyErrorMessage(String methodName) {
-    return String.format("can not use method name '%s'. Use an another one.", methodName);
+    return String.format("can not use method value '%s'. Use an another one.", methodName);
   }
 }

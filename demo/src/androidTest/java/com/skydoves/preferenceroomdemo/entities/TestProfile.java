@@ -26,24 +26,24 @@ import com.skydoves.preferenceroomdemo.models.Pet;
 import com.skydoves.preferenceroomdemo.models.PrivateInfo;
 
 /** Developed by skydoves on 2017-11-18. Copyright (c) 2017 skydoves rights reserved. */
-@PreferenceEntity(name = "TestProfile")
+@PreferenceEntity(value = "TestProfile")
 public class TestProfile {
-  @KeyName(name = "nickname")
+  @KeyName(value = "nickname")
   protected final String userNickName = "skydoves";
 
-  /** key name will be 'Login'. (login's camel uppercase) */
+  /** key value will be 'Login'. (login's camel uppercase) */
   protected final boolean login = false;
 
-  @KeyName(name = "visits")
+  @KeyName(value = "visits")
   protected final int visitCount = 1;
 
-  @KeyName(name = "userinfo")
-  @TypeConverter(converter = PrivateInfoConverter.class)
+  @KeyName(value = "userinfo")
+  @TypeConverter(value = PrivateInfoConverter.class)
   protected PrivateInfo privateInfo;
 
-  /** converter used with gson. */
-  @KeyName(name = "userPet")
-  @TypeConverter(converter = BaseGsonConverter.class)
+  /** value used with gson. */
+  @KeyName(value = "userPet")
+  @TypeConverter(value = BaseGsonConverter.class)
   protected Pet userPetInfo;
 
   /**
@@ -52,7 +52,7 @@ public class TestProfile {
    * @param nickname function in
    * @return function out
    */
-  @PreferenceFunction(keyname = "nickname")
+  @PreferenceFunction(value = "nickname")
   public String putUserNickFunction(String nickname) {
     return "Hello, " + nickname;
   }
@@ -63,7 +63,7 @@ public class TestProfile {
    * @param nickname function in
    * @return function out
    */
-  @PreferenceFunction(keyname = "nickname")
+  @PreferenceFunction(value = "nickname")
   public String getUserNickFunction(String nickname) {
     return nickname + "!!!";
   }
@@ -74,7 +74,7 @@ public class TestProfile {
    * @param count function in
    * @return function out
    */
-  @PreferenceFunction(keyname = "visits")
+  @PreferenceFunction(value = "visits")
   public int putVisitCountFunction(int count) {
     return ++count;
   }

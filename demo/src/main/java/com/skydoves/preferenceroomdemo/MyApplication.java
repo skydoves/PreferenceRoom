@@ -20,7 +20,6 @@ import android.app.Application;
 import com.facebook.stetho.Stetho;
 import com.skydoves.preferenceroomdemo.components.PreferenceComponent_AppComponent;
 
-/** Developed by skydoves on 2017-11-24. Copyright (c) 2017 skydoves rights reserved. */
 public class MyApplication extends Application {
 
   @Override

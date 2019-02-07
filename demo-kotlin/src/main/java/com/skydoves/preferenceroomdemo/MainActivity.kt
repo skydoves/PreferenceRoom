@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                 content_listView.adapter = adapter
 
                 adapter.addItem(ItemProfile("message", component.UserProfile().nickname!!))
-                adapter.addItem(ItemProfile("nick name", component.UserProfile().userinfo!!.name))
+                adapter.addItem(ItemProfile("nick value", component.UserProfile().userinfo!!.name))
                 adapter.addItem(ItemProfile("age", component.UserProfile().userinfo!!.age.toString() + ""))
                 adapter.addItem(ItemProfile("visits", component.UserProfile().visits.toString() + ""))
 

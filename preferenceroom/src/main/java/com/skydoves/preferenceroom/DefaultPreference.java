@@ -24,8 +24,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Marks a class as an default SharedPreference data. This entity will have a mapping default
- * SharedPreference.
+ * Marks a class as an default SharedPreference entity. This entity will be mapped the default
+ * SharedPreference persistence data.
  */
 @Documented
 @Target(TYPE)

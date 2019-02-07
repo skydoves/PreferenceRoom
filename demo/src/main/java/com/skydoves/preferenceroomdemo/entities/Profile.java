@@ -25,25 +25,24 @@ import com.skydoves.preferenceroomdemo.converters.PrivateInfoConverter;
 import com.skydoves.preferenceroomdemo.models.Pet;
 import com.skydoves.preferenceroomdemo.models.PrivateInfo;
 
-/** Developed by skydoves on 2017-11-18. Copyright (c) 2017 skydoves rights reserved. */
-@PreferenceEntity(name = "UserProfile")
+@PreferenceEntity("UserProfile")
 public class Profile {
-  @KeyName(name = "nickname")
+  @KeyName("nickname")
   protected final String userNickName = "skydoves";
 
-  /** key name will be 'Login'. (login's camel uppercase) */
+  /** key value will be 'Login'. (login's camel uppercase) */
   protected final boolean login = false;
 
-  @KeyName(name = "visits")
+  @KeyName("visits")
   protected final int visitCount = 1;
 
-  @KeyName(name = "userinfo")
-  @TypeConverter(converter = PrivateInfoConverter.class)
+  @KeyName("userinfo")
+  @TypeConverter(value = PrivateInfoConverter.class)
   protected PrivateInfo privateInfo;
 
-  /** converter used with gson. */
-  @KeyName(name = "userPet")
-  @TypeConverter(converter = BaseGsonConverter.class)
+  /** value used with gson. */
+  @KeyName("userPet")
+  @TypeConverter(BaseGsonConverter.class)
   protected Pet userPetInfo;
 
   /**
@@ -52,7 +51,7 @@ public class Profile {
    * @param nickname function in
    * @return function out
    */
-  @PreferenceFunction(keyname = "nickname")
+  @PreferenceFunction("nickname")
   public String putUserNickFunction(String nickname) {
     return "Hello, " + nickname;
   }
@@ -63,7 +62,7 @@ public class Profile {
    * @param nickname function in
    * @return function out
    */
-  @PreferenceFunction(keyname = "nickname")
+  @PreferenceFunction("nickname")
   public String getUserNickFunction(String nickname) {
     return nickname + "!!!";
   }
@@ -74,7 +73,7 @@ public class Profile {
    * @param count function in
    * @return function out
    */
-  @PreferenceFunction(keyname = "visits")
+  @PreferenceFunction("visits")
   public int putVisitCountFunction(int count) {
     return ++count;
   }

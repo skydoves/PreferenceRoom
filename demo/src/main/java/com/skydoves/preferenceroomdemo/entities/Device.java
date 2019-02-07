@@ -21,13 +21,12 @@ import com.skydoves.preferenceroom.PreferenceEntity;
 import com.skydoves.preferenceroom.PreferenceFunction;
 import com.skydoves.preferenceroomdemo.utils.SecurityUtils;
 
-/** Developed by skydoves on 2017-11-20. Copyright (c) 2017 skydoves rights reserved. */
-@PreferenceEntity(name = "UserDevice")
+@PreferenceEntity("UserDevice")
 public class Device {
-  @KeyName(name = "version")
+  @KeyName("version")
   public final String deviceVersion = null;
 
-  @KeyName(name = "uuid")
+  @KeyName("uuid")
   public final String userUUID = null;
 
   /**
@@ -36,7 +35,7 @@ public class Device {
    * @param uuid function in
    * @return function out
    */
-  @PreferenceFunction(keyname = "uuid")
+  @PreferenceFunction("uuid")
   public String putUuidFunction(String uuid) {
     return SecurityUtils.encrypt(uuid);
   }
@@ -47,7 +46,7 @@ public class Device {
    * @param uuid function in
    * @return function out
    */
-  @PreferenceFunction(keyname = "uuid")
+  @PreferenceFunction("uuid")
   public String getUuidFunction(String uuid) {
     return SecurityUtils.decrypt(uuid);
   }

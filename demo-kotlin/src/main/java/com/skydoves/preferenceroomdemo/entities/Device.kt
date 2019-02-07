@@ -26,12 +26,12 @@ import com.skydoves.preferenceroomdemo.utils.SecurityUtils
  * Copyright (c) 2017 skydoves rights reserved.
  */
 
-@PreferenceEntity(name = "UserDevice")
+@PreferenceEntity("UserDevice")
 open class Device {
-    @KeyName(name = "version")
+    @KeyName("version")
     @JvmField val deviceVersion: String? = null
 
-    @KeyName(name = "uuid")
+    @KeyName("uuid")
     @JvmField val userUUID: String? = null
 
     /**
@@ -39,7 +39,7 @@ open class Device {
      * @param uuid function in
      * @return function out
      */
-    @PreferenceFunction(keyname = "uuid")
+    @PreferenceFunction("uuid")
     open fun putUuidFunction(uuid: String?): String? {
         return SecurityUtils.encrypt(uuid)
     }
@@ -49,7 +49,7 @@ open class Device {
      * @param uuid function in
      * @return function out
      */
-    @PreferenceFunction(keyname = "uuid")
+    @PreferenceFunction("uuid")
     open fun getUuidFunction(uuid: String?): String? {
         return SecurityUtils.decrypt(uuid)
     }

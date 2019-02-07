@@ -16,6 +16,7 @@
 
 package com.skydoves.preferenceroom;
 
+/** PreferenceTypeConverter is an abstract class for saving object data through functions. */
 public abstract class PreferenceTypeConverter<T> {
 
   public Class<T> clazz;
@@ -24,7 +25,19 @@ public abstract class PreferenceTypeConverter<T> {
     this.clazz = clazz;
   }
 
+  /**
+   * converts an object to string value for saving.
+   *
+   * @param object an object for saving.
+   * @return converted string value.
+   */
   public abstract String convertObject(T object);
 
+  /**
+   * converts a saved string value and recovers the original object.
+   *
+   * @param string saved string value.
+   * @return recovered original object.
+   */
   public abstract T convertType(String string);
 }

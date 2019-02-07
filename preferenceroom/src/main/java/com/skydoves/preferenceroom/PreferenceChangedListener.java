@@ -16,4 +16,9 @@
 
 package com.skydoves.preferenceroom;
 
+/**
+ * PreferenceChangedListener is an interface of the listening for
+ *
+ * <p>SharedPreference persistence's value changes.
+ */
 public interface PreferenceChangedListener {}

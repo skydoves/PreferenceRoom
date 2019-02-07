@@ -56,9 +56,9 @@ public class PreferenceKeyField {
 
     if (annotation_keyName != null)
       this.keyName =
-          Strings.isNullOrEmpty(annotation_keyName.name())
+          Strings.isNullOrEmpty(annotation_keyName.value())
               ? StringUtils.toUpperCamel(this.clazzName)
-              : annotation_keyName.name();
+              : annotation_keyName.value();
     else this.keyName = StringUtils.toUpperCamel(this.clazzName);
 
     if (this.isObjectField) {

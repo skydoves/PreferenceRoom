@@ -18,7 +18,7 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 dependencies {
-    api project(":preferenceroom")
+    implementation project(":preferenceroom")
     implementation "com.google.auto.service:auto-service:$autoService_version"
     implementation "com.squareup:javapoet:$javaPoet_version"
 }

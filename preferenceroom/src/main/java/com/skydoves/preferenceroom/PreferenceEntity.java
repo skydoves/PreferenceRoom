@@ -32,10 +32,10 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 public @interface PreferenceEntity {
   /**
-   * Preference name in the SharedPreference. If not set, defaults to the class name with Upper
+   * Preference value in the SharedPreference. If not set, defaults to the class value with Upper
    * camel case.
    *
-   * @return The Preference name of the SharedPreference.
+   * @return The Preference value of the SharedPreference.
    */
-  String name() default "";
+  String value() default "";
 }

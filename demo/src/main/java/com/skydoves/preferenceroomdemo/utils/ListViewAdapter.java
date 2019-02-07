@@ -27,7 +27,6 @@ import com.skydoves.preferenceroomdemo.models.ItemProfile;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Developed by skydoves on 2017-11-26. Copyright (c) 2017 skydoves rights reserved. */
 public class ListViewAdapter extends BaseAdapter {
 
   private int layout;

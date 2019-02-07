@@ -28,7 +28,6 @@ import com.skydoves.preferenceroomdemo.components.PreferenceComponent_AppCompone
 import com.skydoves.preferenceroomdemo.entities.Preference_UserProfile;
 import com.skydoves.preferenceroomdemo.models.PrivateInfo;
 
-/** Developed by skydoves on 2017-11-26. Copyright (c) 2017 skydoves rights reserved. */
 public class LoginActivity extends AppCompatActivity {
 
   /** UserProfile entity. {@link com.skydoves.preferenceroomdemo.entities.Profile} */

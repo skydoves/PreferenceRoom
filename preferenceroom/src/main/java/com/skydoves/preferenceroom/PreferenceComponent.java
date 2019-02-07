@@ -28,5 +28,10 @@ import java.lang.annotation.Target;
 @Target(TYPE)
 @Retention(RUNTIME)
 public @interface PreferenceComponent {
+  /**
+   * Declaring the entities for the component.
+   *
+   * @return entity classes.
+   */
   Class<?>[] entities() default {};
 }
