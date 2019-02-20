@@ -16,9 +16,6 @@
 
 package com.skydoves.processor;
 
-import static javax.lang.model.element.Modifier.PUBLIC;
-
-import androidx.annotation.NonNull;
 import com.google.common.base.VerifyException;
 import com.skydoves.preferenceroom.InjectPreference;
 import com.skydoves.preferenceroom.PreferenceRoomImpl;
@@ -27,13 +24,19 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Elements;
+
+import androidx.annotation.NonNull;
+
+import static javax.lang.model.element.Modifier.PUBLIC;
 
 @SuppressWarnings("WeakerAccess")
 public class InjectorGenerator {

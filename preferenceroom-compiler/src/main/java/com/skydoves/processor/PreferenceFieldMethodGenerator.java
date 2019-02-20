@@ -16,15 +16,17 @@
 
 package com.skydoves.processor;
 
-import static javax.lang.model.element.Modifier.PUBLIC;
-
-import androidx.annotation.Nullable;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("WeakerAccess")
+import androidx.annotation.Nullable;
+
+import static javax.lang.model.element.Modifier.PUBLIC;
+
+@SuppressWarnings({"WeakerAccess", "SpellCheckingInspection"})
 public class PreferenceFieldMethodGenerator {
 
   private final PreferenceKeyField keyField;
@@ -185,11 +187,19 @@ public class PreferenceFieldMethodGenerator {
   }
 
   private String getGetterTypeMethodName() {
-    return GETTER_PREFIX + StringUtils.toUpperCamel(this.keyField.typeStringName);
+    if (isEncryption()) {
+      return GETTER_PREFIX + StringUtils.toUpperCamel("String");
+    } else {
+      return GETTER_PREFIX + StringUtils.toUpperCamel(this.keyField.typeStringName);
+    }
   }
 
   private String getSetterTypeMethodName() {
-    return SETTER_PREFIX + StringUtils.toUpperCamel(this.keyField.typeStringName);
+    if (isEncryption()) {
+      return SETTER_PREFIX + StringUtils.toUpperCamel("String");
+    } else {
+      return SETTER_PREFIX + StringUtils.toUpperCamel(this.keyField.typeStringName);
+    }
   }
 
   private String getGetterStatement() {
@@ -254,5 +264,9 @@ public class PreferenceFieldMethodGenerator {
         + "("
         + keyField.keyName.toLowerCase()
         + ")";
+  }
+
+  private boolean isEncryption() {
+    return annotatedEntityClazz.isEncryption;
   }
 }

@@ -16,18 +16,20 @@
 
 package com.skydoves.processor;
 
-import androidx.annotation.NonNull;
 import com.google.common.base.Strings;
 import com.google.common.base.VerifyException;
 import com.skydoves.preferenceroom.DefaultPreference;
+import com.skydoves.preferenceroom.EncryptEntity;
 import com.skydoves.preferenceroom.PreferenceEntity;
 import com.skydoves.preferenceroom.PreferenceFunction;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
@@ -35,6 +37,8 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Elements;
+
+import androidx.annotation.NonNull;
 
 @SuppressWarnings("WeakerAccess")
 public class PreferenceEntityAnnotatedClass {
@@ -46,6 +50,7 @@ public class PreferenceEntityAnnotatedClass {
   public final String entityName;
   public final List<PreferenceKeyField> keyFields;
   public boolean isDefaultPreference = false;
+  public boolean isEncryption = false;
 
   public final List<String> keyNameFields;
   public final Map<String, PreferenceKeyField> keyFieldMap;
@@ -62,6 +67,7 @@ public class PreferenceEntityAnnotatedClass {
       throws VerifyException {
     PreferenceEntity preferenceEntity = annotatedElement.getAnnotation(PreferenceEntity.class);
     DefaultPreference defaultPreference = annotatedElement.getAnnotation(DefaultPreference.class);
+    EncryptEntity encryptEntity = annotatedElement.getAnnotation(EncryptEntity.class);
     PackageElement packageElement = elementUtils.getPackageOf(annotatedElement);
     this.packageName =
         packageElement.isUnnamed() ? null : packageElement.getQualifiedName().toString();
@@ -79,6 +85,7 @@ public class PreferenceEntityAnnotatedClass {
     this.getterFunctionsList = new HashMap<>();
 
     if (defaultPreference != null) isDefaultPreference = true;
+    if (encryptEntity != null && encryptEntity.value() != null) isEncryption = true;
 
     if (Strings.isNullOrEmpty(entityName)) {
       throw new VerifyException("You should entity PreferenceRoom class value.");

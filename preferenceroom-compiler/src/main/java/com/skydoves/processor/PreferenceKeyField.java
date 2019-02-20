@@ -16,15 +16,17 @@
 
 package com.skydoves.processor;
 
-import androidx.annotation.NonNull;
 import com.google.common.base.Strings;
 import com.skydoves.preferenceroom.KeyName;
 import com.skydoves.preferenceroom.TypeConverter;
 import com.squareup.javapoet.TypeName;
+
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Elements;
+
+import androidx.annotation.NonNull;
 
 @SuppressWarnings({"WeakerAccess", "StringConcatenationInsideStringBufferAppend"})
 public class PreferenceKeyField {
