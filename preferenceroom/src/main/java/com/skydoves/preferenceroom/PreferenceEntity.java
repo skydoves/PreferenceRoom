@@ -16,12 +16,12 @@
 
 package com.skydoves.preferenceroom;
 
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Marks a class as an SharedPreference data. This class will have a mapping SharedPreference with
@@ -32,9 +32,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface PreferenceEntity {
   /**
-   * Preference entity name of the SharedPreference persistence.
-   *w
-   * <p>If not used, the class generated entity class name will be upper camel case of the class name.
+   * Preference entity name of the SharedPreference persistence. w
+   *
+   * <p>If not used, the class generated entity class name will be upper camel case of the class
+   * name.
    *
    * @return The Preference name of the SharedPreference entity.
    */

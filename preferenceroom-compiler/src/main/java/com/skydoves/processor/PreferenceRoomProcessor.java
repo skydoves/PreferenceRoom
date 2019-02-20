@@ -16,6 +16,8 @@
 
 package com.skydoves.processor;
 
+import static javax.tools.Diagnostic.Kind.ERROR;
+
 import com.google.auto.service.AutoService;
 import com.google.common.base.VerifyException;
 import com.skydoves.preferenceroom.DefaultPreference;
@@ -27,7 +29,6 @@ import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +36,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -47,8 +47,6 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
-
-import static javax.tools.Diagnostic.Kind.ERROR;
 
 @SuppressWarnings("unused")
 @AutoService(Processor.class)
