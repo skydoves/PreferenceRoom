@@ -16,6 +16,8 @@
 
 package com.skydoves.preferenceroomdemo.models;
 
+import androidx.annotation.NonNull;
+
 public class PrivateInfo {
 
   private String name;
@@ -32,5 +34,12 @@ public class PrivateInfo {
 
   public String getName() {
     return this.name;
+  }
+
+  @NonNull
+  @Override
+  public String toString() {
+    return "name=" + name + ", "
+        + "age=" + age;
   }
 }

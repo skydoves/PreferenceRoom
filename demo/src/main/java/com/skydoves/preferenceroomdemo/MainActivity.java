@@ -21,22 +21,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.ViewCompat;
+
 import com.skydoves.preferenceroom.InjectPreference;
 import com.skydoves.preferenceroomdemo.components.AppComponent;
 import com.skydoves.preferenceroomdemo.components.PreferenceComponent_AppComponent;
 import com.skydoves.preferenceroomdemo.models.ItemProfile;
 import com.skydoves.preferenceroomdemo.utils.ListViewAdapter;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.ViewCompat;
+
 public class MainActivity extends AppCompatActivity {
 
   /** UserProfile Component. {@link AppComponent} */
   @InjectPreference public PreferenceComponent_AppComponent component;
-
-  private ListViewAdapter adapter;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void initializeUI() {
-    this.adapter = new ListViewAdapter(this, R.layout.item_profile);
+    ListViewAdapter adapter = new ListViewAdapter(this, R.layout.item_profile);
 
     if (component.UserProfile().getLogin()) {
       ListView listView = findViewById(R.id.content_listView);

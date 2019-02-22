@@ -27,7 +27,7 @@ import javax.crypto.spec.SecretKeySpec
  */
 
 object SecurityUtils {
-    private val key = "abc12345Bab12345"
+    private const val key = "abc12345Bab12345"
 
     fun encrypt(input: String?): String? {
         if (input == null) return null
