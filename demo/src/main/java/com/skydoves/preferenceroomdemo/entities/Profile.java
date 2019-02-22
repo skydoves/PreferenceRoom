@@ -16,6 +16,7 @@
 
 package com.skydoves.preferenceroomdemo.entities;
 
+import com.skydoves.preferenceroom.EncryptEntity;
 import com.skydoves.preferenceroom.KeyName;
 import com.skydoves.preferenceroom.PreferenceEntity;
 import com.skydoves.preferenceroom.PreferenceFunction;
@@ -25,6 +26,7 @@ import com.skydoves.preferenceroomdemo.converters.PrivateInfoConverter;
 import com.skydoves.preferenceroomdemo.models.Pet;
 import com.skydoves.preferenceroomdemo.models.PrivateInfo;
 
+@EncryptEntity("1234567890ABCDFG")
 @PreferenceEntity("UserProfile")
 public class Profile {
   @KeyName("nickname")

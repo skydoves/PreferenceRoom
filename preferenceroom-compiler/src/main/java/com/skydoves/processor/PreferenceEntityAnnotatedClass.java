@@ -51,6 +51,7 @@ public class PreferenceEntityAnnotatedClass {
   public final List<PreferenceKeyField> keyFields;
   public boolean isDefaultPreference = false;
   public boolean isEncryption = false;
+  public String encryptionKey = null;
 
   public final List<String> keyNameFields;
   public final Map<String, PreferenceKeyField> keyFieldMap;
@@ -85,7 +86,10 @@ public class PreferenceEntityAnnotatedClass {
     this.getterFunctionsList = new HashMap<>();
 
     if (defaultPreference != null) isDefaultPreference = true;
-    if (encryptEntity != null && encryptEntity.value() != null) isEncryption = true;
+    if (encryptEntity != null) {
+      isEncryption = true;
+      encryptionKey = encryptEntity.value();
+    }
 
     if (Strings.isNullOrEmpty(entityName)) {
       throw new VerifyException("You should entity PreferenceRoom class value.");

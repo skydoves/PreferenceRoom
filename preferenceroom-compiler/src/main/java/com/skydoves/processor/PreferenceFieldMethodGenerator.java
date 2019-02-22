@@ -16,6 +16,7 @@
 
 package com.skydoves.processor;
 
+import com.skydoves.preferenceroom.AESEncryption;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 
@@ -70,13 +71,19 @@ public class PreferenceFieldMethodGenerator {
   }
 
   private MethodSpec generateGetter() {
-    return MethodSpec.methodBuilder(getGetterPrefixName())
+    MethodSpec.Builder builder = MethodSpec.methodBuilder(getGetterPrefixName())
         .addModifiers(PUBLIC)
-        .addAnnotation(Nullable.class)
-        .addStatement(
-            "return " + getGetterStatement(), preference, keyField.keyName, keyField.value)
-        .returns(keyField.typeName)
-        .build();
+        .addAnnotation(Nullable.class);
+        if (isEncryption()) {
+          builder.addStatement(
+              "return " + getEncryptedGetterStatement(), AESEncryption.class, preference,
+              keyField.keyName, keyField.value, getEncryptionKey());
+        } else {
+          builder.addStatement(
+              "return " + getGetterStatement(), preference, keyField.keyName, keyField.value);
+        }
+    builder.returns(keyField.typeName);
+    return builder.build();
   }
 
   private MethodSpec generateSetter() {
@@ -98,7 +105,7 @@ public class PreferenceFieldMethodGenerator {
     ClassName converterClazz = ClassName.get(keyField.converterPackage, keyField.converter);
     String typeName = keyField.typeName.box().toString();
     if (typeName.contains("<")) typeName = typeName.substring(0, typeName.indexOf("<"));
-    return MethodSpec.methodBuilder(getGetterPrefixName())
+    MethodSpec.Builder builder = MethodSpec.methodBuilder(getGetterPrefixName())
         .addModifiers(PUBLIC)
         .addAnnotation(Nullable.class)
         .addStatement(
@@ -106,16 +113,28 @@ public class PreferenceFieldMethodGenerator {
             converterClazz,
             INSTANCE_CONVERTER,
             converterClazz,
-            typeName)
-        .addStatement(
-            "return ($T)" + getObjectGetterStatement(),
-            keyField.typeName.box(),
-            INSTANCE_CONVERTER,
-            preference,
-            keyField.keyName,
-            keyField.value)
-        .returns(keyField.typeName)
-        .build();
+            typeName);
+        if (isEncryption()) {
+          builder.addStatement(
+              "return ($T)" + getObjectEncryptedGetterStatement(),
+              keyField.typeName.box(),
+              INSTANCE_CONVERTER,
+              AESEncryption.class,
+              preference,
+              keyField.keyName,
+              keyField.value,
+              getEncryptionKey());
+        } else {
+          builder.addStatement(
+              "return ($T)" + getObjectGetterStatement(),
+              keyField.typeName.box(),
+              INSTANCE_CONVERTER,
+              preference,
+              keyField.keyName,
+              keyField.value);
+        }
+        builder.returns(keyField.typeName);
+    return builder.build();
   }
 
   private MethodSpec generateObjectSetter() {
@@ -222,6 +241,26 @@ public class PreferenceFieldMethodGenerator {
     }
   }
 
+  private String getEncryptedGetterStatement() {
+    if (annotatedEntityClazz.getterFunctionsList.containsKey(keyField.keyName)) {
+      String superMethodName =
+          annotatedEntityClazz.getterFunctionsList.get(keyField.keyName).getSimpleName().toString();
+      return wrapperClassFormatting(String.format("super.%s($T.decrypt($N.getString($S, $S), $S))", superMethodName));
+    }
+    return wrapperClassFormatting("$T.decrypt($N.getString($S, $S), $S)");
+  }
+
+  private String wrapperClassFormatting(String statement) {
+    if (keyField.value instanceof Boolean) {
+      return String.format("Boolean.getBoolean(%s)", statement);
+    } else if (keyField.value instanceof Integer) {
+      return String.format("Integer.getInteger(%s)", statement);
+    } else if (keyField.value instanceof Float) {
+      return String.format("Float.getFloat(%s)", statement);
+    }
+    return statement;
+  }
+
   private String getObjectGetterStatement() {
     if (annotatedEntityClazz.getterFunctionsList.containsKey(keyField.keyName)) {
       String superMethodName =
@@ -242,6 +281,15 @@ public class PreferenceFieldMethodGenerator {
         return "$N.convertType($N." + getGetterTypeMethodName() + "($S, $Lf))";
       else return "$N.convertType($N." + getGetterTypeMethodName() + "($S, $L))";
     }
+  }
+
+  private String getObjectEncryptedGetterStatement() {
+    if (annotatedEntityClazz.getterFunctionsList.containsKey(keyField.keyName)) {
+      String superMethodName =
+          annotatedEntityClazz.getterFunctionsList.get(keyField.keyName).getSimpleName().toString();
+      return String.format("super.%s($N.convertType($T.decrypt($N.getString($S, $S), $S)))", superMethodName);
+    }
+    return "$N.convertType($T.decrypt($N.getString($S, $S), $S))";
   }
 
   private String getSetterStatement() {
@@ -268,5 +316,9 @@ public class PreferenceFieldMethodGenerator {
 
   private boolean isEncryption() {
     return annotatedEntityClazz.isEncryption;
+  }
+
+  private String getEncryptionKey() {
+    return annotatedEntityClazz.encryptionKey;
   }
 }
