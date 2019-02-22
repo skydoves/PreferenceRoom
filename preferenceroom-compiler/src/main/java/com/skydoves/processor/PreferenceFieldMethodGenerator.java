@@ -19,12 +19,13 @@ package com.skydoves.processor;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
 import androidx.annotation.Nullable;
+import com.skydoves.preferenceroom.AESEncryption;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "SpellCheckingInspection"})
 public class PreferenceFieldMethodGenerator {
 
   private final PreferenceKeyField keyField;
@@ -68,76 +69,128 @@ public class PreferenceFieldMethodGenerator {
   }
 
   private MethodSpec generateGetter() {
-    return MethodSpec.methodBuilder(getGetterPrefixName())
-        .addModifiers(PUBLIC)
-        .addAnnotation(Nullable.class)
-        .addStatement(
-            "return " + getGetterStatement(), preference, keyField.keyName, keyField.value)
-        .returns(keyField.typeName)
-        .build();
+    MethodSpec.Builder builder =
+        MethodSpec.methodBuilder(getGetterPrefixName())
+            .addModifiers(PUBLIC)
+            .addAnnotation(Nullable.class);
+    if (isEncryption()) {
+      builder.addStatement(
+          "return " + getEncryptedGetterStatement(),
+          AESEncryption.class,
+          preference,
+          keyField.keyName,
+          keyField.value,
+          keyField.value,
+          getEncryptionKey());
+    } else {
+      builder.addStatement(
+          "return " + getGetterStatement(), preference, keyField.keyName, keyField.value);
+    }
+    builder.returns(keyField.typeName);
+    return builder.build();
   }
 
   private MethodSpec generateSetter() {
-    return MethodSpec.methodBuilder(getSetterPrefixName())
-        .addModifiers(PUBLIC)
-        .addParameter(keyField.typeName, keyField.keyName.toLowerCase())
-        .addStatement(
-            getSetterStatement(),
-            preference,
-            EDIT_METHOD,
-            keyField.keyName,
-            keyField.keyName.toLowerCase(),
-            APPLY_METHOD)
-        .addStatement(getOnChangedStatement())
-        .build();
+    MethodSpec.Builder builder =
+        MethodSpec.methodBuilder(getSetterPrefixName())
+            .addModifiers(PUBLIC)
+            .addParameter(keyField.typeName, keyField.keyName.toLowerCase());
+    if (isEncryption()) {
+      builder.addStatement(
+          getSetterEncryptStatement(),
+          preference,
+          EDIT_METHOD,
+          keyField.keyName,
+          AESEncryption.class,
+          keyField.keyName.toLowerCase(),
+          getEncryptionKey(),
+          APPLY_METHOD);
+    } else {
+      builder.addStatement(
+          getSetterStatement(),
+          preference,
+          EDIT_METHOD,
+          keyField.keyName,
+          keyField.keyName.toLowerCase(),
+          APPLY_METHOD);
+    }
+    builder.addStatement(getOnChangedStatement());
+    return builder.build();
   }
 
   private MethodSpec generateObjectGetter() {
     ClassName converterClazz = ClassName.get(keyField.converterPackage, keyField.converter);
     String typeName = keyField.typeName.box().toString();
     if (typeName.contains("<")) typeName = typeName.substring(0, typeName.indexOf("<"));
-    return MethodSpec.methodBuilder(getGetterPrefixName())
-        .addModifiers(PUBLIC)
-        .addAnnotation(Nullable.class)
-        .addStatement(
-            "$T $N = new $T($N.class)",
-            converterClazz,
-            INSTANCE_CONVERTER,
-            converterClazz,
-            typeName)
-        .addStatement(
-            "return ($T)" + getObjectGetterStatement(),
-            keyField.typeName.box(),
-            INSTANCE_CONVERTER,
-            preference,
-            keyField.keyName,
-            keyField.value)
-        .returns(keyField.typeName)
-        .build();
+    MethodSpec.Builder builder =
+        MethodSpec.methodBuilder(getGetterPrefixName())
+            .addModifiers(PUBLIC)
+            .addAnnotation(Nullable.class)
+            .addStatement(
+                "$T $N = new $T($N.class)",
+                converterClazz,
+                INSTANCE_CONVERTER,
+                converterClazz,
+                typeName);
+    if (isEncryption()) {
+      builder.addStatement(
+          "return ($T)" + getObjectEncryptedGetterStatement(),
+          keyField.typeName.box(),
+          INSTANCE_CONVERTER,
+          AESEncryption.class,
+          preference,
+          keyField.keyName,
+          keyField.value,
+          keyField.value,
+          getEncryptionKey());
+    } else {
+      builder.addStatement(
+          "return ($T)" + getObjectGetterStatement(),
+          keyField.typeName.box(),
+          INSTANCE_CONVERTER,
+          preference,
+          keyField.keyName,
+          keyField.value);
+    }
+    builder.returns(keyField.typeName);
+    return builder.build();
   }
 
   private MethodSpec generateObjectSetter() {
     ClassName converterClazz = ClassName.get(keyField.converterPackage, keyField.converter);
     String typeName = keyField.typeName.box().toString();
     if (typeName.contains("<")) typeName = typeName.substring(0, typeName.indexOf("<"));
-    return MethodSpec.methodBuilder(getSetterPrefixName())
-        .addModifiers(PUBLIC)
-        .addParameter(keyField.typeName, keyField.keyName.toLowerCase())
-        .addStatement(
-            "$T $N = new $T($N.class)",
-            converterClazz,
-            INSTANCE_CONVERTER,
-            converterClazz,
-            typeName)
-        .addStatement(
-            getSetterStatement(),
-            preference,
-            EDIT_METHOD,
-            keyField.keyName,
-            INSTANCE_CONVERTER + ".convertObject(" + keyField.keyName.toLowerCase() + ")",
-            APPLY_METHOD)
-        .addStatement(getOnChangedStatement())
-        .build();
+    MethodSpec.Builder builder =
+        MethodSpec.methodBuilder(getSetterPrefixName())
+            .addModifiers(PUBLIC)
+            .addParameter(keyField.typeName, keyField.keyName.toLowerCase())
+            .addStatement(
+                "$T $N = new $T($N.class)",
+                converterClazz,
+                INSTANCE_CONVERTER,
+                converterClazz,
+                typeName);
+    if (isEncryption()) {
+      builder.addStatement(
+          getSetterEncryptStatement(),
+          preference,
+          EDIT_METHOD,
+          keyField.keyName,
+          AESEncryption.class,
+          INSTANCE_CONVERTER + ".convertObject(" + keyField.keyName.toLowerCase() + ")",
+          getEncryptionKey(),
+          APPLY_METHOD);
+    } else {
+      builder.addStatement(
+          getSetterStatement(),
+          preference,
+          EDIT_METHOD,
+          keyField.keyName,
+          INSTANCE_CONVERTER + ".convertObject(" + keyField.keyName.toLowerCase() + ")",
+          APPLY_METHOD);
+    }
+    builder.addStatement(getOnChangedStatement());
+    return builder.build();
   }
 
   private MethodSpec generateObjectKeyNameSpec() {
@@ -185,11 +238,19 @@ public class PreferenceFieldMethodGenerator {
   }
 
   private String getGetterTypeMethodName() {
-    return GETTER_PREFIX + StringUtils.toUpperCamel(this.keyField.typeStringName);
+    if (isEncryption()) {
+      return GETTER_PREFIX + StringUtils.toUpperCamel("String");
+    } else {
+      return GETTER_PREFIX + StringUtils.toUpperCamel(this.keyField.typeStringName);
+    }
   }
 
   private String getSetterTypeMethodName() {
-    return SETTER_PREFIX + StringUtils.toUpperCamel(this.keyField.typeStringName);
+    if (isEncryption()) {
+      return SETTER_PREFIX + StringUtils.toUpperCamel("String");
+    } else {
+      return SETTER_PREFIX + StringUtils.toUpperCamel(this.keyField.typeStringName);
+    }
   }
 
   private String getGetterStatement() {
@@ -210,6 +271,16 @@ public class PreferenceFieldMethodGenerator {
         return "$N." + getGetterTypeMethodName() + "($S, $Lf)";
       else return "$N." + getGetterTypeMethodName() + "($S, $L)";
     }
+  }
+
+  private String getEncryptedGetterStatement() {
+    if (annotatedEntityClazz.getterFunctionsList.containsKey(keyField.keyName)) {
+      String superMethodName =
+          annotatedEntityClazz.getterFunctionsList.get(keyField.keyName).getSimpleName().toString();
+      return wrapperClassFormatting(
+          String.format("super.%s($T.decrypt($N.getString($S, $S), $S, $S))", superMethodName));
+    }
+    return wrapperClassFormatting("$T.decrypt($N.getString($S, $S), $S, $S)");
   }
 
   private String getObjectGetterStatement() {
@@ -234,12 +305,33 @@ public class PreferenceFieldMethodGenerator {
     }
   }
 
+  private String getObjectEncryptedGetterStatement() {
+    if (annotatedEntityClazz.getterFunctionsList.containsKey(keyField.keyName)) {
+      String superMethodName =
+          annotatedEntityClazz.getterFunctionsList.get(keyField.keyName).getSimpleName().toString();
+      return String.format(
+          "super.%s($N.convertType($T.decrypt($N.getString($S, $S), $S, $S)))", superMethodName);
+    }
+    return "$N.convertType($T.decrypt($N.getString($S, $S), $S, $S))";
+  }
+
   private String getSetterStatement() {
     if (annotatedEntityClazz.setterFunctionsList.containsKey(keyField.keyName)) {
       return String.format(
           "$N.$N." + getSetterTypeMethodName() + "($S, super.%s($N)).$N",
           annotatedEntityClazz.setterFunctionsList.get(keyField.keyName).getSimpleName());
     } else return "$N.$N." + getSetterTypeMethodName() + "($S, $N).$N";
+  }
+
+  private String getSetterEncryptStatement() {
+    if (annotatedEntityClazz.setterFunctionsList.containsKey(keyField.keyName)) {
+      return String.format(
+          "$N.$N."
+              + getSetterTypeMethodName()
+              + "($S, $T.encrypt(String.valueOf(super.%s($N)), $S)).$N",
+          annotatedEntityClazz.setterFunctionsList.get(keyField.keyName).getSimpleName());
+    } else
+      return "$N.$N." + getSetterTypeMethodName() + "($S, $T.encrypt(String.valueOf($N), $S)).$N";
   }
 
   private String getOnChangedStatement() {
@@ -254,5 +346,24 @@ public class PreferenceFieldMethodGenerator {
         + "("
         + keyField.keyName.toLowerCase()
         + ")";
+  }
+
+  private boolean isEncryption() {
+    return annotatedEntityClazz.isEncryption;
+  }
+
+  private String getEncryptionKey() {
+    return annotatedEntityClazz.encryptionKey;
+  }
+
+  private String wrapperClassFormatting(String statement) {
+    if (keyField.value instanceof Boolean) {
+      return String.format("Boolean.valueOf(%s).booleanValue()", statement);
+    } else if (keyField.value instanceof Integer) {
+      return String.format("Integer.valueOf(%s).intValue()", statement);
+    } else if (keyField.value instanceof Float) {
+      return String.format("Float.valueOf(%s).floatValue()", statement);
+    }
+    return statement;
   }
 }

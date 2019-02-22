@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import com.google.common.base.Strings;
 import com.google.common.base.VerifyException;
 import com.skydoves.preferenceroom.DefaultPreference;
+import com.skydoves.preferenceroom.EncryptEntity;
 import com.skydoves.preferenceroom.PreferenceEntity;
 import com.skydoves.preferenceroom.PreferenceFunction;
 import com.squareup.javapoet.MethodSpec;
@@ -46,6 +47,8 @@ public class PreferenceEntityAnnotatedClass {
   public final String entityName;
   public final List<PreferenceKeyField> keyFields;
   public boolean isDefaultPreference = false;
+  public boolean isEncryption = false;
+  public String encryptionKey = null;
 
   public final List<String> keyNameFields;
   public final Map<String, PreferenceKeyField> keyFieldMap;
@@ -62,6 +65,7 @@ public class PreferenceEntityAnnotatedClass {
       throws VerifyException {
     PreferenceEntity preferenceEntity = annotatedElement.getAnnotation(PreferenceEntity.class);
     DefaultPreference defaultPreference = annotatedElement.getAnnotation(DefaultPreference.class);
+    EncryptEntity encryptEntity = annotatedElement.getAnnotation(EncryptEntity.class);
     PackageElement packageElement = elementUtils.getPackageOf(annotatedElement);
     this.packageName =
         packageElement.isUnnamed() ? null : packageElement.getQualifiedName().toString();
@@ -79,6 +83,10 @@ public class PreferenceEntityAnnotatedClass {
     this.getterFunctionsList = new HashMap<>();
 
     if (defaultPreference != null) isDefaultPreference = true;
+    if (encryptEntity != null) {
+      isEncryption = true;
+      encryptionKey = encryptEntity.value();
+    }
 
     if (Strings.isNullOrEmpty(entityName)) {
       throw new VerifyException("You should entity PreferenceRoom class value.");
