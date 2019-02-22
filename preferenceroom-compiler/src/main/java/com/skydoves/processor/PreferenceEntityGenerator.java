@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.lang.model.util.Elements;
 
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "SpellCheckingInspection"})
 public class PreferenceEntityGenerator {
 
   private final PreferenceEntityAnnotatedClass annotatedClazz;

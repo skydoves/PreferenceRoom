@@ -16,12 +16,12 @@
 
 package com.skydoves.preferenceroom;
 
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.CLASS;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.RetentionPolicy.CLASS;
 
 /**
  * Marks a field as an SharedPreference key. This field will be mapped as the SharedPreference key
