@@ -18,8 +18,8 @@ Also supports simple preference dependency injection with free from reflection. 
 And add below dependencies to your module's `build.gradle` file.
 ```gradle
 dependencies {
-    implementation "com.github.skydoves:preferenceroom:1.1.5"
-    annotationProcessor "com.github.skydoves:preferenceroom-processor:1.1.5"
+    implementation "com.github.skydoves:preferenceroom:1.1.6"
+    annotationProcessor "com.github.skydoves:preferenceroom-processor:1.1.6"
 }
 ```
 
@@ -28,7 +28,7 @@ dependencies {
 * [KeyName](https://github.com/skydoves/PreferenceRoom#keyname)
 * [TypeConverter](https://github.com/skydoves/PreferenceRoom#typeconverter)
 * [PreferenceFunction](https://github.com/skydoves/PreferenceRoom#preferencefunction) 
-([security](https://github.com/skydoves/PreferenceRoom#security))
+* [EncryptEntity](https://github.com/skydoves/PreferenceRoom#encryptentity)
 #### [2.PreferenceComponent](https://github.com/skydoves/PreferenceRoom#preferencecomponent)
 #### [3.Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection)
 #### [4.Usage in Kotlin](https://github.com/skydoves/PreferenceRoom#usage-in-kotlin)
@@ -225,10 +225,20 @@ public String getUserNickFunction(String nickname) {
 }
 ```
 
-### Security
+### EncryptEntity
 SharedPreferences data are not safe from hacking even if private-mode.<br>
-When saving private-user data on SharedPreference, we can save by encrypting and decrypt algorithm with PreferenceFunction.
+There is a simple way to encrypt whole entity using `@EncryptEntity` annotation.<br>
+It is based on AES128 encryption. So we should set the key value along __16 size__ length.<br>
+If `put` method invoked, the value will be encrypted automatically.<br>
+And if `get` method invoked, it will return the decrypted value.
 
+```java
+@EncryptEntity("1234567890ABCDFG")
+@PreferenceEntity("UserProfile")
+public class Profile {
+}
+```
+Or we can encrypt or decrypt using our own security algorithm with`PreferenceFunction`.
 ```java
 @PreferenceFunction(keyname = "uuid")
 public String putUuidFunction(String uuid) {
