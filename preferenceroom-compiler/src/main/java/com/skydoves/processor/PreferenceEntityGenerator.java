@@ -80,7 +80,8 @@ public class PreferenceEntityGenerator {
         .addMethods(getFieldMethodSpecs())
         .addMethod(getClearMethodSpec())
         .addMethod(getKeyNameListMethodSpec())
-        .addMethod(getEntityNameMethodSpec());
+        .addMethod(getEntityNameMethodSpec())
+        .addMethods(getAddOnChangedListenerSpecs());
 
     return builder.build();
   }
@@ -181,9 +182,9 @@ public class PreferenceEntityGenerator {
   private List<TypeSpec> getOnChangedTypeSpecs() {
     List<TypeSpec> typeSpecs = new ArrayList<>();
     this.annotatedClazz.keyFields.forEach(
-        annotatedFields -> {
+        annotatedField -> {
           PreferenceChangeListenerGenerator changeListenerGenerator =
-              new PreferenceChangeListenerGenerator(annotatedFields);
+              new PreferenceChangeListenerGenerator(annotatedField);
           typeSpecs.add(changeListenerGenerator.generateInterface());
         });
     return typeSpecs;
@@ -192,12 +193,34 @@ public class PreferenceEntityGenerator {
   private List<FieldSpec> getOnChangedFieldSpecs() {
     List<FieldSpec> fieldSpecs = new ArrayList<>();
     this.annotatedClazz.keyFields.forEach(
-        annotatedFields -> {
+        annotatedField -> {
           PreferenceChangeListenerGenerator changeListenerGenerator =
-              new PreferenceChangeListenerGenerator(annotatedFields);
+              new PreferenceChangeListenerGenerator(annotatedField);
           fieldSpecs.add(changeListenerGenerator.generateField(getClazzName()));
         });
     return fieldSpecs;
+  }
+
+  private List<MethodSpec> getAddOnChangedListenerSpecs() {
+    List<MethodSpec> methodSpecs = new ArrayList<>();
+    this.annotatedClazz.keyFields.forEach(
+        annotatedField -> {
+          String onChangeListener =
+              annotatedField.keyName + PreferenceChangeListenerGenerator.CHANGED_LISTENER_POSTFIX;
+          PreferenceChangeListenerGenerator changeListenerGenerator =
+              new PreferenceChangeListenerGenerator(annotatedField);
+          MethodSpec.Builder builder =
+              MethodSpec.methodBuilder("add" + StringUtils.toUpperCamel(onChangeListener))
+                  .addModifiers(PUBLIC)
+                  .addParameter(
+                      ParameterSpec.builder(
+                              changeListenerGenerator.getInterfaceType(getClazzName()), "listener")
+                          .build())
+                  .addStatement(onChangeListener + ".add(listener)")
+                  .returns(void.class);
+          methodSpecs.add(builder.build());
+        });
+    return methodSpecs;
   }
 
   private ClassName getClassType() {
