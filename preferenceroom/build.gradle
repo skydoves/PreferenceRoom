@@ -1,5 +1,6 @@
 apply plugin: 'java-library'
 apply plugin: 'com.novoda.bintray-release'
+apply from: '../dependencies.gradle'
 apply from: '../metadata.gradle'
 
 publish {
@@ -18,7 +19,7 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 dependencies {
-    api "androidx.annotation:annotation:$annotation_version"
+    api "androidx.annotation:annotation:$versions.androidxAnnotation"
 }
 
 apply from: '../spotless.gradle'

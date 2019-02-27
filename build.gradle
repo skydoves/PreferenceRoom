@@ -1,29 +1,15 @@
 buildscript {
-    ext {
-        accompat_version = '1.1.0-alpha02'
-        material_version = '1.1.0-alpha03'
-        kotlin_version = '1.3.20'
-        gson_version = '2.8.2'
-        anko_version = '0.10.4'
-        stetho_version = '1.5.0'
-        support_version = '28.0.0'
-        autoService_version = '1.0-rc4'
-        javaPoet_version = '1.11.1'
-        annotation_version = '1.0.1'
-        spotless_vsersion = '3.17.0'
-        bintray_version = '0.9'
-    }
+    apply from: './dependencies.gradle'
 
     repositories {
         google()
         jcenter()
     }
-
     dependencies {
-        classpath "com.android.tools.build:gradle:3.3.1"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "com.diffplug.spotless:spotless-plugin-gradle:$spotless_vsersion"
-        classpath "com.novoda:bintray-release:$bintray_version"
+        classpath "com.android.tools.build:gradle:$versions.gradleBuildTool"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+        classpath "com.diffplug.spotless:spotless-plugin-gradle:$versions.spotlessGradle"
+        classpath "com.novoda:bintray-release:$versions.bintrayRelease"
     }
 }
 

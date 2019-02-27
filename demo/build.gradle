@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply from: '../dependencies.gradle'
 
 android {
     compileSdkVersion 28
@@ -24,14 +25,13 @@ android {
 }
 
 dependencies {
-    testImplementation "junit:junit:4.12"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
+    testImplementation "junit:junit:$versions.junit"
 
-    implementation "androidx.appcompat:appcompat:$accompat_version"
-    implementation "com.google.android.material:material:$material_version"
+    implementation "androidx.appcompat:appcompat:$versions.androidxAppcomapt"
+    implementation "com.google.android.material:material:$versions.googleMaterial"
 
-    implementation "com.google.code.gson:gson:$gson_version"
-    implementation "com.facebook.stetho:stetho:$stetho_version"
+    implementation "com.google.code.gson:gson:$versions.gson"
+    implementation "com.facebook.stetho:stetho:$versions.stetho"
 
     implementation project(':preferenceroom')
     annotationProcessor project(':preferenceroom-compiler')
