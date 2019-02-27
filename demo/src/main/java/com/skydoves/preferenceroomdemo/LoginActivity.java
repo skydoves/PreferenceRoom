@@ -60,12 +60,12 @@ public class LoginActivity extends AppCompatActivity {
             }
           }
         });
-    userProfile.nicknameOnChangedListener =
+    userProfile.addNicknameOnChangedListener(
         new Preference_UserProfile.NicknameOnChangedListener() {
           @Override
           public void onChanged(String nickname) {
             Toast.makeText(getBaseContext(), "onChanged :" + nickname, Toast.LENGTH_SHORT).show();
           }
-        };
+        });
   }
 }

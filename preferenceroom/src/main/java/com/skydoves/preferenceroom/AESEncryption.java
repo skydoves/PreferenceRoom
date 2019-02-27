@@ -19,8 +19,6 @@ package com.skydoves.preferenceroom;
 import androidx.annotation.Nullable;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 @SuppressWarnings({"GetInstance", "SpellCheckingInspection", "unused"})
 public class AESEncryption {
@@ -35,20 +33,18 @@ public class AESEncryption {
     } catch (Exception e) {
       return input;
     }
-    BASE64Encoder encoder = new BASE64Encoder();
     if (crypted == null) return null;
-    return encoder.encode(crypted);
+    return Base64.encodeToString(crypted, Base64.DEFAULT);
   }
 
   public static @Nullable String decrypt(String input, String defaultValue, String key) {
     if (input == null || key == null) return defaultValue;
     byte[] output;
     try {
-      BASE64Decoder decoder = new BASE64Decoder();
       SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), "AES");
       Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
       cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
-      output = cipher.doFinal(decoder.decodeBuffer(input));
+      output = cipher.doFinal(Base64.decode(input, Base64.DEFAULT));
     } catch (Exception e) {
       return defaultValue;
     }
