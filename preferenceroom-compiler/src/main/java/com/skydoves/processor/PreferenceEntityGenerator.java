@@ -81,7 +81,9 @@ public class PreferenceEntityGenerator {
         .addMethod(getClearMethodSpec())
         .addMethod(getKeyNameListMethodSpec())
         .addMethod(getEntityNameMethodSpec())
-        .addMethods(getAddOnChangedListenerSpecs());
+        .addMethods(getAddOnChangedListenerSpecs())
+        .addMethods(getRemoveOnChangedListenerSpecs())
+        .addMethods(getClearOnChangedListenerSpecs());
 
     return builder.build();
   }
@@ -217,6 +219,44 @@ public class PreferenceEntityGenerator {
                               changeListenerGenerator.getInterfaceType(getClazzName()), "listener")
                           .build())
                   .addStatement(onChangeListener + ".add(listener)")
+                  .returns(void.class);
+          methodSpecs.add(builder.build());
+        });
+    return methodSpecs;
+  }
+
+  private List<MethodSpec> getRemoveOnChangedListenerSpecs() {
+    List<MethodSpec> methodSpecs = new ArrayList<>();
+    this.annotatedClazz.keyFields.forEach(
+        annotatedField -> {
+          String onChangeListener =
+              annotatedField.keyName + PreferenceChangeListenerGenerator.CHANGED_LISTENER_POSTFIX;
+          PreferenceChangeListenerGenerator changeListenerGenerator =
+              new PreferenceChangeListenerGenerator(annotatedField);
+          MethodSpec.Builder builder =
+              MethodSpec.methodBuilder("remove" + StringUtils.toUpperCamel(onChangeListener))
+                  .addModifiers(PUBLIC)
+                  .addParameter(
+                      ParameterSpec.builder(
+                              changeListenerGenerator.getInterfaceType(getClazzName()), "listener")
+                          .build())
+                  .addStatement(onChangeListener + ".remove(listener)")
+                  .returns(void.class);
+          methodSpecs.add(builder.build());
+        });
+    return methodSpecs;
+  }
+
+  private List<MethodSpec> getClearOnChangedListenerSpecs() {
+    List<MethodSpec> methodSpecs = new ArrayList<>();
+    this.annotatedClazz.keyFields.forEach(
+        annotatedField -> {
+          String onChangeListener =
+              annotatedField.keyName + PreferenceChangeListenerGenerator.CHANGED_LISTENER_POSTFIX;
+          MethodSpec.Builder builder =
+              MethodSpec.methodBuilder("clear" + StringUtils.toUpperCamel(onChangeListener) + "s")
+                  .addModifiers(PUBLIC)
+                  .addStatement(onChangeListener + ".clear()")
                   .returns(void.class);
           methodSpecs.add(builder.build());
         });
