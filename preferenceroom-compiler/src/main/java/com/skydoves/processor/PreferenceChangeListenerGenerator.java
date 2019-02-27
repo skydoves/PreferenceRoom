@@ -24,7 +24,9 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.util.List;
 import javax.lang.model.element.Modifier;
 
 @SuppressWarnings("WeakerAccess")
@@ -49,8 +51,12 @@ public class PreferenceChangeListenerGenerator {
   }
 
   public FieldSpec generateField(String className) {
-    return FieldSpec.builder(getInterfaceType(className), getFieldName(), Modifier.PUBLIC)
+    return FieldSpec.builder(
+            ParameterizedTypeName.get(ClassName.get(List.class), getInterfaceType(className)),
+            getFieldName(),
+            Modifier.PRIVATE)
         .addAnnotation(Nullable.class)
+        .initializer("new ArrayList()")
         .build();
   }
 
@@ -62,7 +68,7 @@ public class PreferenceChangeListenerGenerator {
         .build();
   }
 
-  private String getClazzName() {
+  public String getClazzName() {
     return StringUtils.toUpperCamel(keyField.keyName) + CHANGED_LISTENER_POSTFIX;
   }
 

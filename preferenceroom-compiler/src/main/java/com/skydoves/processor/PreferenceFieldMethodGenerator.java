@@ -337,11 +337,17 @@ public class PreferenceFieldMethodGenerator {
   private String getOnChangedStatement() {
     String onChangeListener =
         keyField.keyName + PreferenceChangeListenerGenerator.CHANGED_LISTENER_POSTFIX;
+    PreferenceChangeListenerGenerator generator = new PreferenceChangeListenerGenerator(keyField);
     return "if("
         + onChangeListener
         + " != null) "
+        + "for ("
+        + generator.getClazzName()
+        + " "
+        + "listener : "
         + onChangeListener
-        + "."
+        + ") "
+        + "listener."
         + PreferenceChangeListenerGenerator.CHANGED_ABSTRACT_METHOD
         + "("
         + keyField.keyName.toLowerCase()
