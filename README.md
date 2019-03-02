@@ -398,6 +398,13 @@ You will see stored preferences by PreferenceRoom. Clicking a file displays the 
 ## References
 - [How to manage SharedPreferences on Android project more efficiently](https://medium.com/@skydoves/how-to-manage-sharedpreferences-on-android-project-5e6d5e28fee6)
 
+## Find this library useful? :heart:
+Support it by joining __[stargazers](https://github.com/skydoves/PreferenceRoom/stargazers)__ for this repository. :star:
+
+## Supports :coffee:
+If you feel like support me a coffee for my efforts, I would greatly appreciate it. <br><br>
+<a href="https://www.buymeacoffee.com/skydoves" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+
 # License
 ```xml
 Copyright 2017 skydoves
