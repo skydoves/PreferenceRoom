@@ -42,27 +42,27 @@ dependencies {
 Entity's default name is determined by class name.<br>
 
 ```java
-@PreferenceEntity(name = "UserProfile")
+@PreferenceEntity("UserProfile")
 public class Profile {
     protected final boolean login = false;
-    @KeyName(name = "nickname") protected final String userNickName = null;
-    @KeyName(name = "visits") protected final int visitCount = 1;
+    @KeyName("nickname") protected final String userNickName = null;
+    @KeyName("visits") protected final int visitCount = 1;
 
-    @KeyName(name = "userPet")
-    @TypeConverter(converter = PetConverter.class)
+    @KeyName("userPet")
+    @TypeConverter(PetConverter.class)
     protected Pet userPetInfo;
 
-    @PreferenceFunction(keyname = "nickname")
+    @PreferenceFunction("nickname")
     public String putUserNickFunction(String nickname) {
         return "Hello, " + nickname;
     }
 
-    @PreferenceFunction(keyname = "nickname")
+    @PreferenceFunction("nickname")
     public String getUserNickFunction(String nickname) {
         return nickname + "!!!";
     }
 
-    @PreferenceFunction(keyname = "visits")
+    @PreferenceFunction("visits")
     public int putVisitCountFunction(int count) {
         return ++count;
     }
@@ -102,9 +102,9 @@ But manage more efficiently using [PreferenceComponent](https://github.com/skydo
 We can set SharedPreference as DefaultSharedPreferences using `@DefaultPreference` annotation like below.
 ```java
 @DefaultPreference
-@PreferenceEntity(name = "ProfileWithDefault")
+@PreferenceEntity("ProfileWithDefault")
 public class UserProfilewithDefaultPreference {
-    @KeyName(name = "nickname")
+    @KeyName("nickname")
     protected final String userNickName = "skydoves";
 
     /**
@@ -126,7 +126,7 @@ So we can connect with PreferenceActivity, PreferenceFragment or etc.
 `@KeyName` annotation is used in an entity. <br>
 `@KeyName`'s name value determines Sharedpreference's key name.
 ```java
-@KeyName(name = "visits") // keyname will be Visits.
+@KeyName("visits") // keyname will be Visits.
 protected final int visitCount = 1;
 ```
 
@@ -135,8 +135,8 @@ protected final int visitCount = 1;
 You can put and get Objects using TypeConverter.<br>
 `@TypeConverter`'s converter value determines Converter.<br>
 ```java
-@KeyName(name = "userPet")
-@TypeConverter(converter = PetConverter.class)
+@KeyName("userPet")
+@TypeConverter(PetConverter.class)
 protected Pet userPetInfo;
 ```
 
@@ -197,12 +197,12 @@ public class BaseGsonConverter<T> extends PreferenceTypeConverter<T> {
 
 and using like this.
 ```java
-@KeyName(name = "userinfo")
-@TypeConverter(converter = BaseGsonConverter.class)
+@KeyName("userinfo")
+@TypeConverter(BaseGsonConverter.class)
 protected PrivateInfo privateInfo;
 
-@KeyName(name = "userPet")
-@TypeConverter(converter = BaseGsonConverter.class)
+@KeyName("userPet")
+@TypeConverter(BaseGsonConverter.class)
 protected Pet userPetInfo;
 ```
 
@@ -214,12 +214,12 @@ Function's name should start with `put` or `get` prefix. <br>
 `put_functionname_` will processes getter function and `get_functionname_` will processes getter function.
 
 ```java
-@PreferenceFunction(keyname = "nickname")
+@PreferenceFunction("nickname")
 public String putUserNickFunction(String nickname) {
     return "Hello, " + nickname;
 }
 
-@PreferenceFunction(keyname = "nickname")
+@PreferenceFunction("nickname")
 public String getUserNickFunction(String nickname) {
     return nickname + "!!!";
 }
@@ -240,12 +240,12 @@ public class Profile {
 ```
 Or we can encrypt or decrypt using our own security algorithm with`PreferenceFunction`.
 ```java
-@PreferenceFunction(keyname = "uuid")
+@PreferenceFunction("uuid")
 public String putUuidFunction(String uuid) {
    return SecurityUtils.encrypt(uuid);
 }
 
-@PreferenceFunction(keyname = "uuid")
+@PreferenceFunction("uuid")
 public String getUuidFunction(String uuid) {
     return SecurityUtils.decrypt(uuid);
 }
@@ -324,20 +324,20 @@ First, create an entity.
 The most important thing is we shuold use `open` modifier at entity classes and PreferenceFunctions.
 And field's modifier should be `@JvmField val`.
 ```java
-@PreferenceEntity(name = "UserDevice")
+@PreferenceEntity("UserDevice")
 open class Device {
-    @KeyName(name = "version")
+    @KeyName("version")
     @JvmField val deviceVersion: String? = null
 
-    @KeyName(name = "uuid")
+    @KeyName("uuid")
     @JvmField val userUUID: String? = null
 
-    @PreferenceFunction(keyname = "uuid")
+    @PreferenceFunction("uuid")
     open fun putUuidFunction(uuid: String?): String? {
         return SecurityUtils.encrypt(uuid)
     }
 
-    @PreferenceFunction(keyname = "uuid")
+    @PreferenceFunction( "uuid")
     open fun getUuidFunction(uuid: String?): String? {
         return SecurityUtils.decrypt(uuid)
     }
