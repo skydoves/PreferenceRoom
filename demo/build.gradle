@@ -33,9 +33,9 @@ dependencies {
     implementation "com.google.code.gson:gson:$versions.gson"
     implementation "com.facebook.stetho:stetho:$versions.stetho"
 
-    implementation project(':preferenceroom')
-    annotationProcessor project(':preferenceroom-compiler')
-    androidTestAnnotationProcessor project(':preferenceroom-compiler')
+    implementation project(":preferenceroom")
+    annotationProcessor project(":preferenceroom-compiler")
+    androidTestAnnotationProcessor project(":preferenceroom-compiler")
 }
 
 apply from: '../spotless.gradle'

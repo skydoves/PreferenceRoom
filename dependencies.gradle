@@ -1,9 +1,9 @@
 ext.versions = [
     minSdk             : 15,
     compileSdk         : 28,
-    versionName        : '1.1.7',
+    versionName        : '1.1.8',
 
-    gradleBuildTool    : '3.4.0',
+    gradleBuildTool    : '3.3.0',
     spotlessGradle     : '3.17.0',
     bintrayRelease     : '0.9',
 
@@ -11,8 +11,8 @@ ext.versions = [
     anko               : '0.10.4',
     gson               : '2.8.2',
     androidxAnnotation : '1.0.1',
-    androidxAppcompat  : '1.1.0-alpha04',
-    googleMaterial     : '1.1.0-alpha05',
+    androidxAppcompat  : '1.1.0-beta01',
+    googleMaterial     : '1.1.0-alpha07',
     autoService        : '1.0-rc4',
     javapoet           : '1.11.1',
     powermenu          : '2.0.8',
