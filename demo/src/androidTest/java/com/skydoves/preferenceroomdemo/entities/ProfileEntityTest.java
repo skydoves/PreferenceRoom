@@ -16,15 +16,15 @@
 
 package com.skydoves.preferenceroomdemo.entities;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import com.google.gson.Gson;
 import com.skydoves.preferenceroomdemo.models.Pet;
 import com.skydoves.preferenceroomdemo.models.PrivateInfo;
@@ -42,7 +42,7 @@ public class ProfileEntityTest {
 
   @Before
   public void getProfileEntityInstance() {
-    Context appContext = InstrumentationRegistry.getTargetContext();
+    Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
     profile = Preference_UserProfile.getInstance(appContext);
     preferences = appContext.getSharedPreferences(profile.getEntityName(), Context.MODE_PRIVATE);
   }

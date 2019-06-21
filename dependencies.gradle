@@ -18,5 +18,7 @@ ext.versions = [
     powermenu          : '2.0.8',
 
     junit              : '4.12',
+    runner             : '1.2.0',
+    junitExt           : '1.1.1',
     stetho             : '1.5.1'
 ]

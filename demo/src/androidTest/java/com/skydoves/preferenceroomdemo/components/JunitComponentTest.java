@@ -16,7 +16,7 @@
 
 package com.skydoves.preferenceroomdemo.components;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import com.skydoves.preferenceroom.InjectPreference;
@@ -26,7 +26,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-/** Developed by skydoves on 2017-11-29. Copyright (c) 2017 skydoves rights reserved. */
 @RunWith(JUnit4.class)
 public class JunitComponentTest {
 
