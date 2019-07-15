@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>com.github.skydoves</groupId>
+  <artifactId>preferenceroom-processor</artifactId>
+  <version>1.1.8</version>
+  <packaging>jar</packaging>
+  <name>PreferenceRoom</name>
+  <description>Android processor library for managing SharedPreferences persistence efficiently and structurally.</description>
+  <url>http://github.com/skydoves/preferenceroom/</url>
+  
+  <issueManagement>
+    <system>GitHub Issues</system>
+    <url>http://github.com/skydoves/preferenceroom/issues</url>
+  </issueManagement>
+  
+  <licenses>
+    <license>
+      <name>Apache 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <organization>
+    <name>skydoves</name>
+    <url>https://github.com/skydoves</url>
+  </organization>
+  
+  <dependencies>
+    <dependency>
+      <groupId>com.github.skydoves</groupId>
+      <artifactId>preferenceroom</artifactId>
+      <version>1.1.8</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.auto.service</groupId>
+      <artifactId>auto-service</artifactId>
+      <version>1.0-rc4</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup</groupId>
+      <artifactId>javapoet</artifactId>
+      <version>1.11.1</version>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+</project>
