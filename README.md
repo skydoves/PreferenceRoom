@@ -12,9 +12,9 @@ It supports setter & getter custom functions with security algorithm and could p
 Also supports simple preference dependency injection with free from reflection. Fully supported in kotlin project. 
 
 ## What projects using this library?
-| [GithubFollows](https://github.com/skydoves/githubfollows)<br>(Open Source) | [All-In-One](https://github.com/skydoves/all-in-one)<br>(Open Source) | [Battle Comics](https://play.google.com/store/apps/details?id=com.whalegames.app)<br>(Product)
-| :---------------: | :---------------: | :---------------: |
-| ![Octocat](https://user-images.githubusercontent.com/24237865/61508303-38343180-aa24-11e9-8b26-43dd5332be98.png) | ![allinone](https://user-images.githubusercontent.com/24237865/61508304-38ccc800-aa24-11e9-8d43-c245b7278f5f.png) | ![battleent](https://user-images.githubusercontent.com/24237865/61508305-38ccc800-aa24-11e9-9d02-2b936e33f8cd.png)
+| [GithubFollows](https://github.com/skydoves/githubfollows)<br>(Open Source) | [All-In-One](https://github.com/skydoves/all-in-one)<br>(Open Source) | [Battle Comics](https://play.google.com/store/apps/details?id=com.whalegames.app)<br>(Product) | Epoptia <br> [(Open Source)](https://github.com/tsironis13/EpoptiaKioskModeApp), [(Product)](http://epoptia.com/cloud-mes-manufacturing-execution-system/)
+| :---------------: | :---------------: | :---------------: | :---------------: |
+| ![Octocat](https://user-images.githubusercontent.com/24237865/61508303-38343180-aa24-11e9-8b26-43dd5332be98.png) | ![allinone](https://user-images.githubusercontent.com/24237865/61508304-38ccc800-aa24-11e9-8d43-c245b7278f5f.png) | ![battleent](https://user-images.githubusercontent.com/24237865/61508305-38ccc800-aa24-11e9-9d02-2b936e33f8cd.png) | ![epoptia](https://user-images.githubusercontent.com/24237865/61509215-7f242600-aa28-11e9-97fc-be53960d079b.png)
 
 
 ## Download
