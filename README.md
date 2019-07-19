@@ -11,15 +11,23 @@ PreferenceRoom integrates scattered SharedPreferences as an entity.<br>
 It supports setter & getter custom functions with security algorithm and could put & get objects. 
 Also supports simple preference dependency injection with free from reflection. Fully supported in kotlin project. 
 
+## What projects using this library?
+| [GithubFollows](https://github.com/skydoves/githubfollows)<br>(Open Source) | [All-In-One](https://github.com/skydoves/all-in-one)<br>(Open Source) | [Battl Comics](https://play.google.com/store/apps/details?id=com.whalegames.app)<br>(Product)
+| :---------------: | :---------------: | :---------------: |
+| ![Octocat](https://user-images.githubusercontent.com/24237865/61508303-38343180-aa24-11e9-8b26-43dd5332be98.png) | ![allinone](https://user-images.githubusercontent.com/24237865/61508304-38ccc800-aa24-11e9-8d43-c245b7278f5f.png) | ![battleent](https://user-images.githubusercontent.com/24237865/61508305-38ccc800-aa24-11e9-9d02-2b936e33f8cd.png)
+
+
 ## Download
 [![Download](https://api.bintray.com/packages/devmagician/maven/preferenceroom/images/download.svg)](https://bintray.com/devmagician/maven/preferenceroom/_latestVersion)
 
 ### Gradle
-And add below dependencies to your module's `build.gradle` file.
+Add below dependencies to your module's `build.gradle` file.
 ```gradle
 dependencies {
     implementation "com.github.skydoves:preferenceroom:1.1.8"
     annotationProcessor "com.github.skydoves:preferenceroom-processor:1.1.8"
+    // kotlin project
+    kapt "com.github.skydoves:preferenceroom-processor:1.1.8"
 }
 ```
 
