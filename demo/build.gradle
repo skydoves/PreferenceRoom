@@ -2,20 +2,14 @@ apply plugin: 'com.android.application'
 apply from: '../dependencies.gradle'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.skydoves.preferenceroomdemo"
         minSdkVersion 15
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner  "com.skydoves.preferenceroomdemo.JunitTestRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
     }
     testOptions {
         unitTests {
@@ -29,9 +23,7 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$versions.runner"
     androidTestImplementation "androidx.test.ext:junit:$versions.junitExt"
 
-    implementation "androidx.appcompat:appcompat:$versions.androidxAppcompat"
     implementation "com.google.android.material:material:$versions.googleMaterial"
-
     implementation "com.google.code.gson:gson:$versions.gson"
     implementation "com.facebook.stetho:stetho:$versions.stetho"
 

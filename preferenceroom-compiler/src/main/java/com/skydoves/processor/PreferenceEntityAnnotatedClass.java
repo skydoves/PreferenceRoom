@@ -93,9 +93,7 @@ public class PreferenceEntityAnnotatedClass {
     }
 
     Map<String, String> checkMap = new HashMap<>();
-    annotatedElement
-        .getEnclosedElements()
-        .stream()
+    annotatedElement.getEnclosedElements().stream()
         .filter(variable -> variable instanceof VariableElement)
         .map(variable -> (VariableElement) variable)
         .forEach(
@@ -119,9 +117,7 @@ public class PreferenceEntityAnnotatedClass {
 
     checkOverrideMethods();
 
-    annotatedElement
-        .getEnclosedElements()
-        .stream()
+    annotatedElement.getEnclosedElements().stream()
         .filter(
             function ->
                 !function.getKind().isField()
@@ -169,9 +165,7 @@ public class PreferenceEntityAnnotatedClass {
   }
 
   private void checkOverrideMethods() {
-    annotatedElement
-        .getEnclosedElements()
-        .stream()
+    annotatedElement.getEnclosedElements().stream()
         .filter(element -> element instanceof ExecutableElement)
         .map(element -> (ExecutableElement) element)
         .forEach(

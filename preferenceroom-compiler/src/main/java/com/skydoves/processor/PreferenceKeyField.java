@@ -62,9 +62,7 @@ public class PreferenceKeyField {
     else this.keyName = StringUtils.toUpperCamel(this.clazzName);
 
     if (this.isObjectField) {
-      variableElement
-          .getAnnotationMirrors()
-          .stream()
+      variableElement.getAnnotationMirrors().stream()
           .filter(
               annotationMirror ->
                   TypeName.get(annotationMirror.getAnnotationType())

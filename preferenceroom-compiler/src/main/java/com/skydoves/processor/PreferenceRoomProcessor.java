@@ -88,9 +88,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
       return true;
     }
 
-    roundEnv
-        .getElementsAnnotatedWith(PreferenceEntity.class)
-        .stream()
+    roundEnv.getElementsAnnotatedWith(PreferenceEntity.class).stream()
         .map(annotatedType -> (TypeElement) annotatedType)
         .forEach(
             annotatedType -> {
@@ -102,9 +100,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
               }
             });
 
-    roundEnv
-        .getElementsAnnotatedWith(PreferenceComponent.class)
-        .stream()
+    roundEnv.getElementsAnnotatedWith(PreferenceComponent.class).stream()
         .map(annotatedType -> (TypeElement) annotatedType)
         .forEach(
             annotatedType -> {
@@ -116,9 +112,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
               }
             });
 
-    roundEnv
-        .getElementsAnnotatedWith(InjectPreference.class)
-        .stream()
+    roundEnv.getElementsAnnotatedWith(InjectPreference.class).stream()
         .filter(variable -> variable instanceof VariableElement)
         .map(variable -> (VariableElement) variable)
         .forEach(
@@ -166,10 +160,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
   private void processInjector(PreferenceComponentAnnotatedClass annotatedClass)
       throws VerifyException {
     try {
-      annotatedClass
-          .annotatedElement
-          .getEnclosedElements()
-          .stream()
+      annotatedClass.annotatedElement.getEnclosedElements().stream()
           .filter(element -> element instanceof ExecutableElement)
           .map(element -> (ExecutableElement) element)
           .forEach(

@@ -20,8 +20,8 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 dependencies {
     implementation project(":preferenceroom")
-    implementation "com.google.auto.service:auto-service:$versions.autoService"
     implementation "com.squareup:javapoet:$versions.javapoet"
+    api "com.google.auto.service:auto-service:$versions.autoService"
 }
 
 apply from: '../spotless.gradle'

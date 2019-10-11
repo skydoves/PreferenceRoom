@@ -60,9 +60,7 @@ public class PreferenceComponentAnnotatedClass {
     this.keyNames = new ArrayList<>();
     this.generatedClazzList = new ArrayList<>();
 
-    annotatedElement
-        .getEnclosedElements()
-        .stream()
+    annotatedElement.getEnclosedElements().stream()
         .filter(element -> element instanceof ExecutableElement)
         .map(element -> (ExecutableElement) element)
         .forEach(
@@ -82,9 +80,7 @@ public class PreferenceComponentAnnotatedClass {
             });
 
     Set<String> entitySet = new HashSet<>();
-    annotatedElement
-        .getAnnotationMirrors()
-        .stream()
+    annotatedElement.getAnnotationMirrors().stream()
         .filter(
             annotationMirror ->
                 TypeName.get(annotationMirror.getAnnotationType())

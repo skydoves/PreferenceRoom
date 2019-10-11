@@ -156,10 +156,7 @@ public class PreferenceComponentGenerator {
 
   private List<MethodSpec> getSuperMethodSpecs() {
     List<MethodSpec> methodSpecs = new ArrayList<>();
-    this.annotatedClazz
-        .annotatedElement
-        .getEnclosedElements()
-        .stream()
+    this.annotatedClazz.annotatedElement.getEnclosedElements().stream()
         .filter(element -> element instanceof ExecutableElement)
         .map(element -> (ExecutableElement) element)
         .forEach(

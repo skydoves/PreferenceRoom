@@ -76,9 +76,7 @@ public class InjectorGenerator {
                     .addAnnotation(NonNull.class)
                     .build());
 
-    injectedElement
-        .getEnclosedElements()
-        .stream()
+    injectedElement.getEnclosedElements().stream()
         .filter(variable -> variable instanceof VariableElement)
         .map(variable -> (VariableElement) variable)
         .forEach(
