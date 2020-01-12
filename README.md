@@ -11,10 +11,10 @@ PreferenceRoom integrates scattered SharedPreferences as an entity.<br>
 It supports setter & getter custom functions with security algorithm and could put & get objects. 
 Also supports simple preference dependency injection with free from reflection. Fully supported in kotlin project. 
 
-## What projects using this library?
-| [GithubFollows](https://github.com/skydoves)<br>[Open Source](https://github.com/skydoves/githubfollows) | [All-In-One](https://github.com/skydoves)<br>[Open Source](https://github.com/skydoves/all-in-one) | [Battle Comics](http://www.battlecomics.co.kr/)<br>[Product](https://play.google.com/store/apps/details?id=com.whalegames.app) | [Epoptia](http://epoptia.com/cloud-mes-manufacturing-execution-system/) <br> [Open Source](https://github.com/tsironis13/EpoptiaKioskModeApp)
-| :---------------: | :---------------: | :---------------: | :---------------: |
-| ![Octocat](https://user-images.githubusercontent.com/24237865/61508303-38343180-aa24-11e9-8b26-43dd5332be98.png) | ![allinone](https://user-images.githubusercontent.com/24237865/61508304-38ccc800-aa24-11e9-8d43-c245b7278f5f.png) | ![battleent](https://user-images.githubusercontent.com/24237865/61508305-38ccc800-aa24-11e9-9d02-2b936e33f8cd.png) | ![epoptia](https://user-images.githubusercontent.com/24237865/61509215-7f242600-aa28-11e9-97fc-be53960d079b.png)
+## What companies and projects are using this library?
+| [GithubFollows](https://github.com/skydoves)<br>[Open Source](https://github.com/skydoves/githubfollows) | [All-In-One](https://github.com/skydoves)<br>[Open Source](https://github.com/skydoves/all-in-one) | [Battle Comics](http://www.battlecomics.co.kr/)<br>[Product](https://play.google.com/store/apps/details?id=com.whalegames.app) | [Epoptia](http://epoptia.com/cloud-mes-manufacturing-execution-system/) <br> [Open Source](https://github.com/tsironis13/EpoptiaKioskModeApp) | [Sensemore](https://sensemore.io/)
+| :---------------: | :---------------: | :---------------: | :---------------: | :---------------: |
+| ![Octocat](https://user-images.githubusercontent.com/24237865/61508303-38343180-aa24-11e9-8b26-43dd5332be98.png) | ![allinone](https://user-images.githubusercontent.com/24237865/61508304-38ccc800-aa24-11e9-8d43-c245b7278f5f.png) | ![battleent](https://user-images.githubusercontent.com/24237865/61508305-38ccc800-aa24-11e9-9d02-2b936e33f8cd.png) | ![epoptia](https://user-images.githubusercontent.com/24237865/61509215-7f242600-aa28-11e9-97fc-be53960d079b.png) | ![Sensemore](https://user-images.githubusercontent.com/24237865/71539660-ee605780-2982-11ea-964d-389604da8fac.png)
 
 
 ## Download
