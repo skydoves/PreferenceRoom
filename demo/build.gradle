@@ -19,10 +19,6 @@ android {
 }
 
 dependencies {
-    testImplementation "junit:junit:$versions.junit"
-    androidTestImplementation "androidx.test:runner:$versions.runner"
-    androidTestImplementation "androidx.test.ext:junit:$versions.junitExt"
-
     implementation "com.google.android.material:material:$versions.googleMaterial"
     implementation "com.google.code.gson:gson:$versions.gson"
     implementation "com.facebook.stetho:stetho:$versions.stetho"
@@ -30,6 +26,10 @@ dependencies {
     implementation project(":preferenceroom")
     annotationProcessor project(":preferenceroom-compiler")
     androidTestAnnotationProcessor project(":preferenceroom-compiler")
+
+    testImplementation "junit:junit:$versions.junit"
+    androidTestImplementation "androidx.test:runner:$versions.runner"
+    androidTestImplementation "androidx.test.ext:junit:$versions.junitExt"
 }
 
 apply from: '../spotless.gradle'

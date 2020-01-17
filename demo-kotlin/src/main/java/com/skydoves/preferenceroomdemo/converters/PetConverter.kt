@@ -27,17 +27,13 @@ import com.skydoves.preferenceroomdemo.models.Pet
 
 class PetConverter(clazz: Class<Pet>) : PreferenceTypeConverter<Pet>(clazz) {
 
-    private val gson: Gson
+  private val gson: Gson = Gson()
 
-    init {
-        this.gson = Gson()
-    }
+  override fun convertObject(pet: Pet): String {
+    return gson.toJson(pet)
+  }
 
-    override fun convertObject(pet: Pet): String {
-        return gson.toJson(pet)
-    }
-
-    override fun convertType(string: String): Pet {
-        return gson.fromJson(string, Pet::class.java)
-    }
+  override fun convertType(string: String): Pet {
+    return gson.fromJson(string, Pet::class.java)
+  }
 }

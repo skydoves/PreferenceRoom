@@ -22,7 +22,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
     implementation "com.google.android.material:material:$versions.googleMaterial"
     implementation "com.google.code.gson:gson:$versions.gson"
-    implementation "org.jetbrains.anko:anko:$versions.anko"
     implementation "com.facebook.stetho:stetho:$versions.stetho"
 
     implementation project(":preferenceroom")

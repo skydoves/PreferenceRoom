@@ -28,15 +28,15 @@ import com.skydoves.preferenceroomdemo.components.PreferenceComponent_UserProfil
 
 class MyApplication : Application() {
 
-    override fun onCreate() {
-        super.onCreate()
-        // initialize Stetho for debugging local data
-        Stetho.initializeWithDefaults(this)
+  override fun onCreate() {
+    super.onCreate()
+    // initialize Stetho for debugging local data
+    Stetho.initializeWithDefaults(this)
 
-        /**
-         * initialize instances of preference component and entities.
-         * [com.skydoves.preferenceroomdemo.components.UserProfileComponent]
-         */
-        PreferenceComponent_UserProfileComponent.init(this)
-    }
+    /**
+     * initialize instances of preference component and entities.
+     * [com.skydoves.preferenceroomdemo.components.UserProfileComponent]
+     */
+    PreferenceComponent_UserProfileComponent.init(this)
+  }
 }

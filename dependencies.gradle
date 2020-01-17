@@ -1,25 +1,24 @@
 ext.versions = [
-    minSdk             : 15,
-    compileSdk         : 29,
-    versionName        : '1.1.8',
+    minSdk         : 15,
+    compileSdk     : 29,
+    versionName    : '1.1.8',
 
-    gradleBuildTool    : '3.3.0',
-    spotlessGradle     : '3.24.2',
-    bintrayRelease     : '0.9.1',
+    gradleBuildTool: '3.3.0',
+    spotlessGradle : '3.26.1',
+    bintrayRelease : '0.9.1',
 
-    kotlin             : '1.3.50',
-    autoService        : '1.0-rc4',
-    javapoet           : '1.11.1',
+    kotlin         : '1.3.61',
+    autoService    : '1.0-rc6',
+    javapoet       : '1.12.0',
+    androidxAnnotation : '1.0.1',
 
     // for demo
-    anko               : '0.10.4',
-    gson               : '2.8.2',
-    androidxAnnotation : '1.0.1',
-    androidxAppcompat  : '1.1.0-beta01',
-    googleMaterial     : '1.1.0-alpha07',
+    gson           : '2.8.2',
+    googleMaterial : '1.2.0-alpha03',
 
-    junit              : '4.12',
-    runner             : '1.2.0',
-    junitExt           : '1.1.1',
-    stetho             : '1.5.1'
+    // unit test
+    junit          : '4.12',
+    runner         : '1.2.0',
+    junitExt       : '1.1.1',
+    stetho         : '1.5.1'
 ]
