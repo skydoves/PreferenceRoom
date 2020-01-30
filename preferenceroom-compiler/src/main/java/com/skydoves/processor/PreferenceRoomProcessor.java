@@ -16,8 +16,6 @@
 
 package com.skydoves.processor;
 
-import static javax.tools.Diagnostic.Kind.ERROR;
-
 import com.google.auto.service.AutoService;
 import com.google.common.base.VerifyException;
 import com.skydoves.preferenceroom.DefaultPreference;
@@ -47,6 +45,10 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
+import net.ltgt.gradle.incap.IncrementalAnnotationProcessor;
+
+import static javax.tools.Diagnostic.Kind.ERROR;
+import static net.ltgt.gradle.incap.IncrementalAnnotationProcessorType.ISOLATING;
 
 @SuppressWarnings("unused")
 @AutoService(Processor.class)
@@ -89,43 +91,43 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
     }
 
     roundEnv.getElementsAnnotatedWith(PreferenceEntity.class).stream()
-        .map(annotatedType -> (TypeElement) annotatedType)
-        .forEach(
-            annotatedType -> {
-              try {
-                checkValidEntityType(annotatedType);
-                processEntity(annotatedType);
-              } catch (IllegalAccessException e) {
-                showErrorLog(e.getMessage(), annotatedType);
-              }
-            });
+      .map(annotatedType -> (TypeElement) annotatedType)
+      .forEach(
+        annotatedType -> {
+          try {
+            checkValidEntityType(annotatedType);
+            processEntity(annotatedType);
+          } catch (IllegalAccessException e) {
+            showErrorLog(e.getMessage(), annotatedType);
+          }
+        });
 
     roundEnv.getElementsAnnotatedWith(PreferenceComponent.class).stream()
-        .map(annotatedType -> (TypeElement) annotatedType)
-        .forEach(
-            annotatedType -> {
-              try {
-                checkValidComponentType(annotatedType);
-                processComponent(annotatedType);
-              } catch (IllegalAccessException e) {
-                showErrorLog(e.getMessage(), annotatedType);
-              }
-            });
+      .map(annotatedType -> (TypeElement) annotatedType)
+      .forEach(
+        annotatedType -> {
+          try {
+            checkValidComponentType(annotatedType);
+            processComponent(annotatedType);
+          } catch (IllegalAccessException e) {
+            showErrorLog(e.getMessage(), annotatedType);
+          }
+        });
 
     roundEnv.getElementsAnnotatedWith(InjectPreference.class).stream()
-        .filter(variable -> variable instanceof VariableElement)
-        .map(variable -> (VariableElement) variable)
-        .forEach(
-            variable -> {
-              try {
-                if (!variable.getModifiers().contains(Modifier.PUBLIC)) {
-                  throw new IllegalAccessException(
-                      "annotated with @InjectPreference field's modifier should be public");
-                }
-              } catch (IllegalAccessException e) {
-                showErrorLog(e.getMessage(), variable);
-              }
-            });
+      .filter(variable -> variable instanceof VariableElement)
+      .map(variable -> (VariableElement) variable)
+      .forEach(
+        variable -> {
+          try {
+            if (!variable.getModifiers().contains(Modifier.PUBLIC)) {
+              throw new IllegalAccessException(
+                "annotated with @InjectPreference field's modifier should be public");
+            }
+          } catch (IllegalAccessException e) {
+            showErrorLog(e.getMessage(), variable);
+          }
+        });
 
     annotatedComponentList.forEach(this::processInjector);
 
@@ -135,7 +137,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
   private void processEntity(TypeElement annotatedType) throws VerifyException {
     try {
       PreferenceEntityAnnotatedClass annotatedClazz =
-          new PreferenceEntityAnnotatedClass(annotatedType, processingEnv.getElementUtils());
+        new PreferenceEntityAnnotatedClass(annotatedType, processingEnv.getElementUtils());
       checkDuplicatedPreferenceEntity(annotatedClazz);
       generateProcessEntity(annotatedClazz);
     } catch (VerifyException e) {
@@ -147,8 +149,8 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
   private void processComponent(TypeElement annotatedType) throws VerifyException {
     try {
       PreferenceComponentAnnotatedClass annotatedClazz =
-          new PreferenceComponentAnnotatedClass(
-              annotatedType, processingEnv.getElementUtils(), annotatedEntityNameMap);
+        new PreferenceComponentAnnotatedClass(
+          annotatedType, processingEnv.getElementUtils(), annotatedEntityNameMap);
       checkDuplicatedPreferenceComponent(annotatedClazz);
       generateProcessComponent(annotatedClazz);
     } catch (VerifyException e) {
@@ -158,19 +160,19 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
   }
 
   private void processInjector(PreferenceComponentAnnotatedClass annotatedClass)
-      throws VerifyException {
+    throws VerifyException {
     try {
       annotatedClass.annotatedElement.getEnclosedElements().stream()
-          .filter(element -> element instanceof ExecutableElement)
-          .map(element -> (ExecutableElement) element)
-          .forEach(
-              method -> {
-                MethodSpec methodSpec = MethodSpec.overriding(method).build();
-                ParameterSpec parameterSpec = methodSpec.parameters.get(0);
-                TypeElement injectedElement =
-                    processingEnv.getElementUtils().getTypeElement(parameterSpec.type.toString());
-                generateProcessInjector(annotatedClass, injectedElement);
-              });
+        .filter(element -> element instanceof ExecutableElement)
+        .map(element -> (ExecutableElement) element)
+        .forEach(
+          method -> {
+            MethodSpec methodSpec = MethodSpec.overriding(method).build();
+            ParameterSpec parameterSpec = methodSpec.parameters.get(0);
+            TypeElement injectedElement =
+              processingEnv.getElementUtils().getTypeElement(parameterSpec.type.toString());
+            generateProcessInjector(annotatedClass, injectedElement);
+          });
     } catch (VerifyException e) {
       showErrorLog(e.getMessage(), annotatedClass.annotatedElement);
       e.printStackTrace();
@@ -180,11 +182,11 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
   private void generateProcessEntity(PreferenceEntityAnnotatedClass annotatedClass) {
     try {
       TypeSpec annotatedClazz =
-          (new PreferenceEntityGenerator(annotatedClass, processingEnv.getElementUtils()))
-              .generate();
+        (new PreferenceEntityGenerator(annotatedClass, processingEnv.getElementUtils()))
+          .generate();
       JavaFile.builder(annotatedClass.packageName, annotatedClazz)
-          .build()
-          .writeTo(processingEnv.getFiler());
+        .build()
+        .writeTo(processingEnv.getFiler());
     } catch (IOException e) {
       // ignore ;)
     }
@@ -193,26 +195,26 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
   private void generateProcessComponent(PreferenceComponentAnnotatedClass annotatedClass) {
     try {
       TypeSpec annotatedClazz =
-          (new PreferenceComponentGenerator(
-                  annotatedClass, annotatedEntityMap, processingEnv.getElementUtils()))
-              .generate();
+        (new PreferenceComponentGenerator(
+          annotatedClass, annotatedEntityMap, processingEnv.getElementUtils()))
+          .generate();
       JavaFile.builder(annotatedClass.packageName, annotatedClazz)
-          .build()
-          .writeTo(processingEnv.getFiler());
+        .build()
+        .writeTo(processingEnv.getFiler());
     } catch (IOException e) {
       // ignore >.<
     }
   }
 
   private void generateProcessInjector(
-      PreferenceComponentAnnotatedClass annotatedClass, TypeElement injectedElement) {
+    PreferenceComponentAnnotatedClass annotatedClass, TypeElement injectedElement) {
     try {
       InjectorGenerator injectorGenerator =
-          new InjectorGenerator(annotatedClass, injectedElement, processingEnv.getElementUtils());
+        new InjectorGenerator(annotatedClass, injectedElement, processingEnv.getElementUtils());
       TypeSpec injectorSpec = injectorGenerator.generate();
       JavaFile.builder(injectorGenerator.packageName, injectorSpec)
-          .build()
-          .writeTo(processingEnv.getFiler());
+        .build()
+        .writeTo(processingEnv.getFiler());
     } catch (IOException e) {
       // ignore ^v^
     }
@@ -231,12 +233,12 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
   private void checkValidComponentType(TypeElement annotatedType) throws IllegalAccessException {
     if (!annotatedType.getKind().isInterface()) {
       throw new IllegalAccessException(
-          "Only interfaces can be annotated with @PreferenceComponent");
+        "Only interfaces can be annotated with @PreferenceComponent");
     }
   }
 
   private void checkDuplicatedPreferenceEntity(PreferenceEntityAnnotatedClass annotatedClazz)
-      throws VerifyException {
+    throws VerifyException {
     if (annotatedEntityMap.containsKey(annotatedClazz.entityName)) {
       throw new VerifyException("@PreferenceRoom key value is duplicated.");
     } else {
@@ -246,10 +248,10 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
   }
 
   private void checkDuplicatedPreferenceComponent(
-      PreferenceComponentAnnotatedClass annotatedClazz) {
-    if (annotatedComponentList.contains(annotatedClazz))
+    PreferenceComponentAnnotatedClass annotatedClazz) {
+    if (annotatedComponentList.contains(annotatedClazz)) {
       throw new VerifyException("@PreferenceComponent is duplicated.");
-    else {
+    } else {
       annotatedComponentList.add(annotatedClazz);
     }
   }
