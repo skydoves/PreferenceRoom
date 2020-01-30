@@ -7,15 +7,16 @@ ext.versions = [
     spotlessGradle    : '3.26.1',
     bintrayRelease    : '0.9.1',
 
-    kotlin            : '1.3.61',
+    androidxAnnotation: '1.0.1',
     autoService       : '1.0-rc6',
     javapoet          : '1.12.0',
+    guava             : '28.2-jre',
     incap             : '0.2',
-    androidxAnnotation: '1.0.1',
 
     // for demo
+    kotlin            : '1.3.61',
     gson              : '2.8.2',
-    googleMaterial    : '1.2.0-alpha03',
+    googleMaterial    : '1.2.0-alpha04',
 
     // unit test
     junit             : '4.12',
