@@ -17,6 +17,7 @@
 package com.skydoves.processor;
 
 import static javax.tools.Diagnostic.Kind.ERROR;
+import static net.ltgt.gradle.incap.IncrementalAnnotationProcessorType.AGGREGATING;
 
 import com.google.auto.service.AutoService;
 import com.google.common.base.VerifyException;
@@ -47,9 +48,11 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
+import net.ltgt.gradle.incap.IncrementalAnnotationProcessor;
 
 @SuppressWarnings("unused")
 @AutoService(Processor.class)
+@IncrementalAnnotationProcessor(AGGREGATING)
 public class PreferenceRoomProcessor extends AbstractProcessor {
 
   private Map<String, String> annotatedEntityNameMap;
@@ -247,9 +250,9 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
 
   private void checkDuplicatedPreferenceComponent(
       PreferenceComponentAnnotatedClass annotatedClazz) {
-    if (annotatedComponentList.contains(annotatedClazz))
+    if (annotatedComponentList.contains(annotatedClazz)) {
       throw new VerifyException("@PreferenceComponent is duplicated.");
-    else {
+    } else {
       annotatedComponentList.add(annotatedClazz);
     }
   }
