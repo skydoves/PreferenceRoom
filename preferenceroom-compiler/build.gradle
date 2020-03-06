@@ -1,5 +1,8 @@
 apply plugin: 'java-library'
+apply plugin: 'org.jetbrains.kotlin.jvm'
+apply plugin: 'org.jetbrains.kotlin.kapt'
 apply plugin: 'com.novoda.bintray-release'
+
 apply from: '../dependencies.gradle'
 apply from: '../metadata.gradle'
 
@@ -22,11 +25,11 @@ dependencies {
     implementation project(":preferenceroom")
     implementation "com.squareup:javapoet:$versions.javapoet"
     implementation "com.google.auto.service:auto-service-annotations:$versions.autoService"
-    annotationProcessor "com.google.auto.service:auto-service:$versions.autoService"
+    kapt "com.google.auto.service:auto-service:$versions.autoService"
     api "com.google.guava:guava:$versions.guava"
 
-    implementation "net.ltgt.gradle.incap:incap:$versions.incap"
-    annotationProcessor "net.ltgt.gradle.incap:incap-processor:$versions.incap"
+    compileOnly "net.ltgt.gradle.incap:incap:$versions.incap"
+    kapt "net.ltgt.gradle.incap:incap-processor:$versions.incap"
 }
 
 apply from: '../spotless.gradle'

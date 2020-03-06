@@ -17,7 +17,7 @@
 package com.skydoves.processor;
 
 import static javax.tools.Diagnostic.Kind.ERROR;
-import static net.ltgt.gradle.incap.IncrementalAnnotationProcessorType.AGGREGATING;
+import static net.ltgt.gradle.incap.IncrementalAnnotationProcessorType.ISOLATING;
 
 import com.google.auto.service.AutoService;
 import com.google.common.base.VerifyException;
@@ -52,7 +52,7 @@ import net.ltgt.gradle.incap.IncrementalAnnotationProcessor;
 
 @SuppressWarnings("unused")
 @AutoService(Processor.class)
-@IncrementalAnnotationProcessor(AGGREGATING)
+@IncrementalAnnotationProcessor(ISOLATING)
 public class PreferenceRoomProcessor extends AbstractProcessor {
 
   private Map<String, String> annotatedEntityNameMap;

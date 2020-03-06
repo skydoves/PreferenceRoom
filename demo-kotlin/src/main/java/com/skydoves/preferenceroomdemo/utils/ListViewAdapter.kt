@@ -52,17 +52,18 @@ class ListViewAdapter(context: Context, private val layout: Int) : BaseAdapter()
   }
 
   override fun getView(index: Int, view: View?, viewGroup: ViewGroup): View {
-    var view = view
-    if (view == null)
-      view = this.inflater.inflate(layout, viewGroup, false)
+    var itemView = view
+    if (itemView == null) {
+      itemView = this.inflater.inflate(layout, viewGroup, false)
+    }
 
     val itemProfile = profileList[index]
 
-    val title = view!!.findViewById<TextView>(R.id.item_profile_title)
+    val title = itemView!!.findViewById<TextView>(R.id.item_profile_title)
     title.text = itemProfile.title
 
-    val content = view.findViewById<TextView>(R.id.item_profile_content)
+    val content = itemView.findViewById<TextView>(R.id.item_profile_content)
     content.text = itemProfile.content
-    return view
+    return itemView
   }
 }

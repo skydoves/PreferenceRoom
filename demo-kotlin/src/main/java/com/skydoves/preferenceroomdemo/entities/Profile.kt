@@ -83,7 +83,6 @@ open class Profile {
    */
   @PreferenceFunction("visits")
   open fun putVisitCountFunction(count: Int): Int {
-    var count = count
-    return ++count
+    return count + 1
   }
 }
