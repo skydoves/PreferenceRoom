@@ -166,6 +166,7 @@ public class PreferenceRoomProcessor extends AbstractProcessor {
       annotatedClass.annotatedElement.getEnclosedElements().stream()
           .filter(element -> element instanceof ExecutableElement)
           .map(element -> (ExecutableElement) element)
+          .filter(method -> method.getParameters().size() == 1)
           .forEach(
               method -> {
                 MethodSpec methodSpec = MethodSpec.overriding(method).build();

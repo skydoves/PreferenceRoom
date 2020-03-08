@@ -144,7 +144,7 @@ public class PreferenceEntityAnnotatedClass {
               }
 
               MethodSpec methodSpec = MethodSpec.overriding((ExecutableElement) function).build();
-              if (methodSpec.parameters.size() > 1 || methodSpec.parameters.size() == 0) {
+              if (methodSpec.parameters.size() != 1) {
                 throw new VerifyException("PreferenceFunction should has one parameter");
               } else if (!methodSpec
                   .parameters

@@ -32,9 +32,9 @@ import com.skydoves.preferenceroomdemo.entities.Profile
  */
 @PreferenceComponent(entities = [Profile::class, Device::class])
 interface UserProfileComponent {
-    /**
-     * declare dependency injection targets.
-     */
-    fun inject(target: MainActivity)
-    fun inject(target: LoginActivity)
+  /**
+   * declare dependency injection targets.
+   */
+  fun inject(target: MainActivity)
+  fun inject(target: LoginActivity)
 }

@@ -66,7 +66,8 @@ public class PreferenceComponentAnnotatedClass {
         .forEach(
             method -> {
               MethodSpec methodSpec = MethodSpec.overriding(method).build();
-              if (methodSpec.returnType != TypeName.get(Void.TYPE)) {
+              if (methodSpec.returnType != TypeName.get(Void.TYPE)
+                  && methodSpec.parameters.size() == 1) {
                 throw new VerifyException(
                     String.format(
                         "return type should be void : '%s' method with return type '%s'",
@@ -74,7 +75,7 @@ public class PreferenceComponentAnnotatedClass {
               } else if (methodSpec.parameters.size() > 1) {
                 throw new VerifyException(
                     String.format(
-                        "length of parameter should be 1 : '%s' method with parameters '%s'",
+                        "length of parameter should be 1 or 0 : '%s' method with parameters '%s'",
                         methodSpec.name, methodSpec.parameters.toString()));
               }
             });
@@ -98,9 +99,9 @@ public class PreferenceComponentAnnotatedClass {
 
     entitySet.forEach(
         value -> {
-          if (!annotatedEntityTypeMap.containsKey(value))
+          if (!annotatedEntityTypeMap.containsKey(value)) {
             throw new VerifyException(String.format("%s is not a preference entity.", value));
-          else {
+          } else {
             keyNames.add(annotatedEntityTypeMap.get(value));
             generatedClazzList.add(ENTITY_PREFIX + annotatedEntityTypeMap.get(value));
           }

@@ -22,6 +22,7 @@ import static javax.lang.model.element.Modifier.STATIC;
 
 import androidx.annotation.NonNull;
 import com.google.common.base.VerifyException;
+import com.skydoves.preferenceroom.Encoder;
 import com.skydoves.preferenceroom.PreferenceRoom;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -69,7 +70,8 @@ public class PreferenceComponentGenerator {
         .addMethod(getConstructorSpec())
         .addMethod(getInitializeSpec())
         .addMethod(getInstanceSpec())
-        .addMethods(getSuperMethodSpecs())
+        .addMethods(getSuperEntityMethodSpecs())
+        .addMethods(getSuperInjectionMethodSpecs())
         .addMethods(getEntityInstanceSpecs())
         .addMethod(getEntityNameListSpec())
         .build();
@@ -154,11 +156,44 @@ public class PreferenceComponentGenerator {
     return methodSpecs;
   }
 
-  private List<MethodSpec> getSuperMethodSpecs() {
+  private List<MethodSpec> getSuperEntityMethodSpecs() {
     List<MethodSpec> methodSpecs = new ArrayList<>();
     this.annotatedClazz.annotatedElement.getEnclosedElements().stream()
         .filter(element -> element instanceof ExecutableElement)
         .map(element -> (ExecutableElement) element)
+        .filter(method -> method.getParameters().size() == 0)
+        .forEach(
+            method -> {
+              String encodedString = Encoder.encodeUtf8(method.getReturnType() + ".class");
+              if (!annotatedClazz.entities.contains(encodedString)) {
+                throw new VerifyException(
+                    String.format("'%s' method can return only an entity type.", method));
+              }
+
+              annotatedEntityMap.values().stream()
+                  .filter(
+                      clazz ->
+                          method
+                              .getReturnType()
+                              .toString()
+                              .equals(clazz.annotatedElement.toString()))
+                  .forEach(
+                      clazz -> {
+                        String instance = getEntityInstanceFieldName(clazz.entityName);
+                        MethodSpec.Builder builder = MethodSpec.overriding(method);
+                        MethodSpec methodSpec = builder.addStatement("return $N", instance).build();
+                        methodSpecs.add(methodSpec);
+                      });
+            });
+    return methodSpecs;
+  }
+
+  private List<MethodSpec> getSuperInjectionMethodSpecs() {
+    List<MethodSpec> methodSpecs = new ArrayList<>();
+    this.annotatedClazz.annotatedElement.getEnclosedElements().stream()
+        .filter(element -> element instanceof ExecutableElement)
+        .map(element -> (ExecutableElement) element)
+        .filter(method -> method.getParameters().size() == 1)
         .forEach(
             method -> {
               ClassName preferenceRoom = ClassName.get(PreferenceRoom.class);

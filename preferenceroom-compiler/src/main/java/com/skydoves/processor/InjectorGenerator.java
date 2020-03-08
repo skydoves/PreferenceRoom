@@ -20,6 +20,7 @@ import static javax.lang.model.element.Modifier.PUBLIC;
 
 import androidx.annotation.NonNull;
 import com.google.common.base.VerifyException;
+import com.skydoves.preferenceroom.Encoder;
 import com.skydoves.preferenceroom.InjectPreference;
 import com.skydoves.preferenceroom.PreferenceRoomImpl;
 import com.squareup.javapoet.ClassName;
@@ -27,9 +28,6 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
@@ -84,9 +82,8 @@ public class InjectorGenerator {
               if (variable.getAnnotation(InjectPreference.class) != null) {
                 String annotatedFieldName = TypeName.get(variable.asType()).toString();
                 if (annotatedFieldName.contains(".") || annotatedFieldName.contains("\\.")) {
-                  ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(annotatedFieldName);
-                  String arr = StandardCharsets.UTF_8.decode(byteBuffer).toString();
-                  String[] typedArray = arr.split("\\.");
+                  String encodedString = Encoder.encodeUtf8(annotatedFieldName);
+                  String[] typedArray = encodedString.split("\\.");
                   annotatedFieldName = typedArray[typedArray.length - 1];
                 }
 
