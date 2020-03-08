@@ -38,7 +38,7 @@ dependencies {
 - [PreferenceFunction](https://github.com/skydoves/PreferenceRoom#preferencefunction) 
 - [EncryptEntity](https://github.com/skydoves/PreferenceRoom#encryptentity)
 #### [2.PreferenceComponent](https://github.com/skydoves/PreferenceRoom#preferencecomponent)
-#### [3.Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection)
+#### [3.Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection) (Use with [dagger](https://github.com/skydoves/PreferenceRoom/releases) )
 #### [4.Usage in Kotlin](https://github.com/skydoves/PreferenceRoom#usage-in-kotlin)
 #### [5.Proguard-Rules](https://github.com/skydoves/PreferenceRoom#proguard-rules)
 #### [6.Debugging with Stetho](https://github.com/skydoves/PreferenceRoom#debugging-with-stetho)
@@ -285,7 +285,7 @@ Preference_UserDevice userDevice = PreferenceComponent_UserProfileComponent.getI
 
 ## Dependency Injection
 ![di](https://user-images.githubusercontent.com/24237865/33241294-bfaf9b5a-d306-11e7-816a-2be938fafdf8.png) <br>
-`PreferenceRoom` supports simple dependency injection process with free from reflection using `@InjectPreference` annotation. <br>
+`PreferenceRoom` supports simple dependency injection process with free from reflection using `@InjectPreference` annotation. But If you want to use with dagger, check [this](https://github.com/skydoves/PreferenceRoom/releases) reference.
 
 Firstly we should declare some target classes which to be injected preference instances in `PreferenceComponent`. <br>
 ```java
