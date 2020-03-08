@@ -1,7 +1,7 @@
 ext.versions = [
     minSdk            : 15,
     compileSdk        : 29,
-    versionName       : '1.1.9',
+    versionName       : '1.2.0',
 
     gradleBuildTool   : '3.5.3',
     spotlessGradle    : '3.26.1',
