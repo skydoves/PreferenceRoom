@@ -38,8 +38,8 @@ dependencies {
 - [PreferenceFunction](https://github.com/skydoves/PreferenceRoom#preferencefunction) 
 - [EncryptEntity](https://github.com/skydoves/PreferenceRoom#encryptentity)
 #### [2.PreferenceComponent](https://github.com/skydoves/PreferenceRoom#preferencecomponent)
-#### [3.Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection) (Use with [dagger](https://github.com/skydoves/PreferenceRoom/releases) )
-#### [4.Usage in Kotlin](https://github.com/skydoves/PreferenceRoom#usage-in-kotlin)
+#### [3.Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection) (Use with [dagger](https://github.com/skydoves/PreferenceRoom/releases))
+#### [4.Usage in Kotlin](https://github.com/skydoves/PreferenceRoom#usage-in-kotlin) ([Incremental annotation processing](https://github.com/skydoves/PreferenceRoom/incremental-annotation-processing))
 #### [5.Proguard-Rules](https://github.com/skydoves/PreferenceRoom#proguard-rules)
 #### [6.Debugging with Stetho](https://github.com/skydoves/PreferenceRoom#debugging-with-stetho)
 
@@ -363,7 +363,17 @@ override fun onCreate(savedInstanceState: Bundle?) {
     PreferenceComponent_UserProfileComponent.getInstance().inject(this) // inject dependency injection to MainActivity.
 ```
 
-#### Non Existent Type Correction
+### Incremetal annotation processing
+Starting from version `1.3.30`, kapt supports incremental annotation processing as an experimental feature. Currently, annotation processing can be incremental only if all annotation processors being used are incremental.<br>
+Incremental annotation processing is enabled by default starting from version `1.3.50`.<br>
+`PreferenceRoom` supports incremental annotation processing since version `1.1.9` and here is a Before/After example result of the enabled.
+
+Before (23.758s) | After (18.779s) | 
+| :---------------: | :---------------: | 
+| <img src="https://user-images.githubusercontent.com/24237865/76435566-7b4f7480-63fa-11ea-999f-25133c577d07.png" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/24237865/76435569-7d193800-63fa-11ea-9d75-dd0a3e9de68c.png" align="center" width="100%"/> |
+
+
+### Non Existent Type Correction
 If you encounter `NonExistentClass` error at compile time, you should add below codes on your build.gradle. <br>
 Default, Kapt replaces every unknown type (including types for the generated classes) to NonExistentClass, but you can change this behavior. Add the additional flag to the build.gradle file to enable error type inferring in stubs:
 ```xml
