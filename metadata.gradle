@@ -1,12 +1,13 @@
 apply plugin: 'com.novoda.bintray-release'
 
 ext {
-  metadata = [userOrg       : 'devmagician',
-              groupId       : 'com.github.skydoves',
-              publishVersion: versions.versionName,
-              desc          : 'This is PreferenceRoom by skydoves',
-              website       : 'https://github.com/skydoves/PreferenceRoom',
-              issueTracker  : '${website}/issues',
-              repository    : 'https://github.com/skydoves/PreferenceRoom.git',
-              licences      : ['Apache-2.0']]
+    metadata = [
+            userOrg       : 'devmagician',
+            groupId       : 'com.github.skydoves',
+            publishVersion: versions.versionName,
+            desc          : 'This is PreferenceRoom by skydoves',
+            website       : 'https://github.com/skydoves/PreferenceRoom',
+            issueTracker  : '${website}/issues',
+            repository    : 'https://github.com/skydoves/PreferenceRoom.git',
+            licences      : ['Apache-2.0']]
 }
