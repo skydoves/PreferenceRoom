@@ -39,7 +39,7 @@ dependencies {
 - [EncryptEntity](https://github.com/skydoves/PreferenceRoom#encryptentity)
 #### [2.PreferenceComponent](https://github.com/skydoves/PreferenceRoom#preferencecomponent)
 #### [3.Dependency Injection](https://github.com/skydoves/PreferenceRoom#dependency-injection) (Use with [dagger](https://github.com/skydoves/PreferenceRoom/releases))
-#### [4.Usage in Kotlin](https://github.com/skydoves/PreferenceRoom#usage-in-kotlin) ([Incremental annotation processing](https://github.com/skydoves/PreferenceRoom/incremental-annotation-processing))
+#### [4.Usage in Kotlin](https://github.com/skydoves/PreferenceRoom#usage-in-kotlin) ([Incremental annotation processing](https://github.com/skydoves/PreferenceRoom#incremetal-annotation-processing))
 #### [5.Proguard-Rules](https://github.com/skydoves/PreferenceRoom#proguard-rules)
 #### [6.Debugging with Stetho](https://github.com/skydoves/PreferenceRoom#debugging-with-stetho)
 
