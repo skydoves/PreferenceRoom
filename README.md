@@ -24,10 +24,10 @@ Also supports simple preference dependency injection with free from reflection. 
 Add below dependencies to your module's `build.gradle` file.
 ```gradle
 dependencies {
-    implementation "com.github.skydoves:preferenceroom:1.2.0"
-    annotationProcessor "com.github.skydoves:preferenceroom-processor:1.2.0"
+    implementation "com.github.skydoves:preferenceroom:1.2.1"
+    annotationProcessor "com.github.skydoves:preferenceroom-processor:1.2.1"
     // in kotlin project use kapt instead of annotationProcessor
-    kapt "com.github.skydoves:preferenceroom-processor:1.2.0"
+    kapt "com.github.skydoves:preferenceroom-processor:1.2.1"
 }
 ```
 
