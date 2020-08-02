@@ -124,7 +124,7 @@ public class PreferenceComponentGenerator {
             ParameterSpec.builder(getContextPackageType(), CONSTRUCTOR_CONTEXT)
                 .addAnnotation(NonNull.class)
                 .build())
-        .addStatement("if($N != null) return $N", FIELD_INSTANCE, FIELD_INSTANCE)
+        .addStatement("if ($N != null) return $N", FIELD_INSTANCE, FIELD_INSTANCE)
         .addStatement("$N = new $N($N)", FIELD_INSTANCE, getClazzName(), CONSTRUCTOR_CONTEXT)
         .addStatement("return $N", FIELD_INSTANCE)
         .returns(getClassType())

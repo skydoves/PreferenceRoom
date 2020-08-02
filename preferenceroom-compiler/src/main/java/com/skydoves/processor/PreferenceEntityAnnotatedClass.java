@@ -171,21 +171,22 @@ public class PreferenceEntityAnnotatedClass {
         .forEach(
             method -> {
               if (keyNameFields.contains(
-                  method.getSimpleName().toString().replace(SETTER_PREFIX, "")))
+                  method.getSimpleName().toString().replace(SETTER_PREFIX, ""))) {
                 throw new VerifyException(
                     getMethodNameVerifyErrorMessage(method.getSimpleName().toString()));
-              else if (keyNameFields.contains(
-                  method.getSimpleName().toString().replace(GETTER_PREFIX, "")))
+              } else if (keyNameFields.contains(
+                  method.getSimpleName().toString().replace(GETTER_PREFIX, ""))) {
                 throw new VerifyException(
                     getMethodNameVerifyErrorMessage(method.getSimpleName().toString()));
-              else if (keyNameFields.contains(
-                  method.getSimpleName().toString().replace(HAS_PREFIX, "")))
+              } else if (keyNameFields.contains(
+                  method.getSimpleName().toString().replace(HAS_PREFIX, ""))) {
                 throw new VerifyException(
                     getMethodNameVerifyErrorMessage(method.getSimpleName().toString()));
-              else if (keyNameFields.contains(
-                  method.getSimpleName().toString().replace(REMOVE_PREFIX, "")))
+              } else if (keyNameFields.contains(
+                  method.getSimpleName().toString().replace(REMOVE_PREFIX, ""))) {
                 throw new VerifyException(
                     getMethodNameVerifyErrorMessage(method.getSimpleName().toString()));
+              }
             });
   }
 

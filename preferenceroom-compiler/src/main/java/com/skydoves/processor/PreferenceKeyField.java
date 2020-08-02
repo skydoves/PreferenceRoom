@@ -54,12 +54,14 @@ public class PreferenceKeyField {
     this.value = variableElement.getConstantValue();
     setTypeStringName();
 
-    if (annotation_keyName != null)
+    if (annotation_keyName != null) {
       this.keyName =
           Strings.isNullOrEmpty(annotation_keyName.value())
               ? StringUtils.toUpperCamel(this.clazzName)
               : annotation_keyName.value();
-    else this.keyName = StringUtils.toUpperCamel(this.clazzName);
+    } else {
+      this.keyName = StringUtils.toUpperCamel(this.clazzName);
+    }
 
     if (this.isObjectField) {
       variableElement.getAnnotationMirrors().stream()
@@ -85,25 +87,30 @@ public class PreferenceKeyField {
 
     if (variableElement.getModifiers().contains(Modifier.PRIVATE)) {
       throw new IllegalAccessException(
-          String.format("Field \'%s\' should not be private.", variableElement.getSimpleName()));
+          String.format("Field '%s' should not be private.", variableElement.getSimpleName()));
     } else if (!this.isObjectField && !variableElement.getModifiers().contains(Modifier.FINAL)) {
       throw new IllegalAccessException(
-          String.format("Field \'%s\' should be final.", variableElement.getSimpleName()));
+          String.format("Field '%s' should be final.", variableElement.getSimpleName()));
     }
   }
 
   private void setTypeStringName() throws IllegalAccessException {
-    if (this.typeName.equals(TypeName.BOOLEAN)) this.typeStringName = "Boolean";
-    else if (this.typeName.equals(TypeName.INT)) this.typeStringName = "Int";
-    else if (this.typeName.equals(TypeName.FLOAT)) this.typeStringName = "Float";
-    else if (this.typeName.equals(TypeName.LONG)) this.typeStringName = "Long";
-    else if (this.typeName.equals(TypeName.get(String.class))) this.typeStringName = "String";
-    else if (variableElement.getAnnotation(TypeConverter.class) == null)
+    if (this.typeName.equals(TypeName.BOOLEAN)) {
+      this.typeStringName = "Boolean";
+    } else if (this.typeName.equals(TypeName.INT)) {
+      this.typeStringName = "Int";
+    } else if (this.typeName.equals(TypeName.FLOAT)) {
+      this.typeStringName = "Float";
+    } else if (this.typeName.equals(TypeName.LONG)) {
+      this.typeStringName = "Long";
+    } else if (this.typeName.equals(TypeName.get(String.class))) {
+      this.typeStringName = "String";
+    } else if (variableElement.getAnnotation(TypeConverter.class) == null) {
       throw new IllegalAccessException(
           String.format(
-              "Field \'%s\' can not use %s type. \nObjects should be annotated with '@TypeConverter'.",
+              "Field '%s' can not use %s type. \nObjects should be annotated with '@TypeConverter'.",
               variableElement.getSimpleName(), this.typeName.toString()));
-    else {
+    } else {
       this.typeStringName = "String";
       this.isObjectField = true;
     }

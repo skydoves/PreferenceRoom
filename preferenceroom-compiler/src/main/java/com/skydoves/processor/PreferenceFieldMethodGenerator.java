@@ -257,19 +257,23 @@ public class PreferenceFieldMethodGenerator {
     if (annotatedEntityClazz.getterFunctionsList.containsKey(keyField.keyName)) {
       String superMethodName =
           annotatedEntityClazz.getterFunctionsList.get(keyField.keyName).getSimpleName().toString();
-      if (keyField.value instanceof String)
-        return String.format("super.%s($N.getString($S, $S))", superMethodName);
-      else if (keyField.value instanceof Float)
+      if (keyField.value instanceof String) {
+        return String.format("super.%s(\n$N.getString($S, $S))", superMethodName);
+      } else if (keyField.value instanceof Float) {
         return String.format(
-            "super.%s($N." + getGetterTypeMethodName() + "($S, $Lf))", superMethodName);
-      else
+            "super.%s(\n$N." + getGetterTypeMethodName() + "($S, $Lf))", superMethodName);
+      } else {
         return String.format(
-            "super.%s($N." + getGetterTypeMethodName() + "($S, $L))", superMethodName);
+            "super.%s(\n$N." + getGetterTypeMethodName() + "($S, $L))", superMethodName);
+      }
     } else {
-      if (keyField.value instanceof String) return "$N.getString($S, $S)";
-      else if (keyField.value instanceof Float)
+      if (keyField.value instanceof String) {
+        return "$N.getString($S, $S)";
+      } else if (keyField.value instanceof Float) {
         return "$N." + getGetterTypeMethodName() + "($S, $Lf)";
-      else return "$N." + getGetterTypeMethodName() + "($S, $L)";
+      } else {
+        return "$N." + getGetterTypeMethodName() + "($S, $L)";
+      }
     }
   }
 
@@ -278,30 +282,34 @@ public class PreferenceFieldMethodGenerator {
       String superMethodName =
           annotatedEntityClazz.getterFunctionsList.get(keyField.keyName).getSimpleName().toString();
       return wrapperClassFormatting(
-          String.format("super.%s($T.decrypt($N.getString($S, $S), $S, $S))", superMethodName));
+          String.format("super.%s(\n$T.decrypt(\n$N.getString($S, $S), $S, $S))", superMethodName));
     }
-    return wrapperClassFormatting("$T.decrypt($N.getString($S, $S), $S, $S)");
+    return wrapperClassFormatting("$T.decrypt(\n$N.getString($S, $S), $S, $S)");
   }
 
   private String getObjectGetterStatement() {
     if (annotatedEntityClazz.getterFunctionsList.containsKey(keyField.keyName)) {
       String superMethodName =
           annotatedEntityClazz.getterFunctionsList.get(keyField.keyName).getSimpleName().toString();
-      if (keyField.value instanceof String)
-        return String.format("super.%s($N.convertType($N.getString($S, $S)))", superMethodName);
-      else if (keyField.value instanceof Float)
+      if (keyField.value instanceof String) {
+        return String.format("super.%s(\n$N.convertType($N.getString($S, $S)))", superMethodName);
+      } else if (keyField.value instanceof Float) {
         return String.format(
-            "super.%s($N.convertType($N." + getGetterTypeMethodName() + "($S, $Lf)))",
+            "super.%s(\n$N.convertType($N." + getGetterTypeMethodName() + "($S, $Lf)))",
             superMethodName);
-      else
+      } else {
         return String.format(
-            "super.%s($N.convertType($N." + getGetterTypeMethodName() + "($S, $L))",
+            "super.%s(\n$N.convertType($N." + getGetterTypeMethodName() + "($S, $L))",
             superMethodName);
+      }
     } else {
-      if (keyField.value instanceof String) return "$N.convertType($N.getString($S, $S))";
-      else if (keyField.value instanceof Float)
-        return "$N.convertType($N." + getGetterTypeMethodName() + "($S, $Lf))";
-      else return "$N.convertType($N." + getGetterTypeMethodName() + "($S, $L))";
+      if (keyField.value instanceof String) {
+        return "$N.convertType($N.getString($S, $S))";
+      } else if (keyField.value instanceof Float) {
+        return "$N.convertType(\n$N." + getGetterTypeMethodName() + "($S, $Lf))";
+      } else {
+        return "$N.convertType(\n$N." + getGetterTypeMethodName() + "($S, $L))";
+      }
     }
   }
 
@@ -310,9 +318,9 @@ public class PreferenceFieldMethodGenerator {
       String superMethodName =
           annotatedEntityClazz.getterFunctionsList.get(keyField.keyName).getSimpleName().toString();
       return String.format(
-          "super.%s($N.convertType($T.decrypt($N.getString($S, $S), $S, $S)))", superMethodName);
+          "super.%s(\n$N.convertType($T.decrypt($N.getString($S, $S), $S, $S)))", superMethodName);
     }
-    return "$N.convertType($T.decrypt($N.getString($S, $S), $S, $S))";
+    return "$N.convertType(\n$T.decrypt($N.getString($S, $S), $S, $S))";
   }
 
   private String getSetterStatement() {
@@ -320,7 +328,9 @@ public class PreferenceFieldMethodGenerator {
       return String.format(
           "$N.$N." + getSetterTypeMethodName() + "($S, super.%s($N)).$N",
           annotatedEntityClazz.setterFunctionsList.get(keyField.keyName).getSimpleName());
-    } else return "$N.$N." + getSetterTypeMethodName() + "($S, $N).$N";
+    } else {
+      return "$N.$N." + getSetterTypeMethodName() + "($S, $N).$N";
+    }
   }
 
   private String getSetterEncryptStatement() {
@@ -328,19 +338,20 @@ public class PreferenceFieldMethodGenerator {
       return String.format(
           "$N.$N."
               + getSetterTypeMethodName()
-              + "($S, $T.encrypt(String.valueOf(super.%s($N)), $S)).$N",
+              + "($S, $T.encrypt(\nString.valueOf(super.%s($N)), $S)).$N",
           annotatedEntityClazz.setterFunctionsList.get(keyField.keyName).getSimpleName());
-    } else
-      return "$N.$N." + getSetterTypeMethodName() + "($S, $T.encrypt(String.valueOf($N), $S)).$N";
+    } else {
+      return "$N.$N." + getSetterTypeMethodName() + "($S, $T.encrypt(\nString.valueOf($N), $S)).$N";
+    }
   }
 
   private String getOnChangedStatement() {
     String onChangeListener =
         keyField.keyName + PreferenceChangeListenerGenerator.CHANGED_LISTENER_POSTFIX;
     PreferenceChangeListenerGenerator generator = new PreferenceChangeListenerGenerator(keyField);
-    return "if("
+    return "if ("
         + onChangeListener
-        + " != null) "
+        + " != null)\n"
         + "for ("
         + generator.getClazzName()
         + " "
