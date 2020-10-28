@@ -5,7 +5,7 @@ ext.versions = [
 
     gradleBuildTool   : '3.5.3',
     spotlessGradle    : '5.7.0',
-    bintrayRelease    : '0.9.2',
+    bintrayPlugin     : '1.8.5',
 
     androidxAnnotation: '1.0.1',
     autoService       : '1.0-rc6',

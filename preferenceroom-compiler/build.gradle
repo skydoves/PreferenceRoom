@@ -1,22 +1,7 @@
 apply plugin: 'java-library'
 apply plugin: 'org.jetbrains.kotlin.jvm'
 apply plugin: 'org.jetbrains.kotlin.kapt'
-apply plugin: 'com.novoda.bintray-release'
-
 apply from: '../dependencies.gradle'
-apply from: '../metadata.gradle'
-
-publish {
-    artifactId = 'preferenceroom-processor'
-    userOrg = metadata.userOrg
-    groupId = metadata.groupId
-    publishVersion = metadata.publishVersion
-    desc = metadata.desc
-    website = metadata.website
-    issueTracker = metadata.issueTracker
-    repository = metadata.repository
-    licences = metadata.licences
-}
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -32,4 +17,9 @@ dependencies {
     kapt "net.ltgt.gradle.incap:incap-processor:$versions.incap"
 }
 
+ext.repository = [
+    name: "preferenceroom-processor",
+]
+
 apply from: '../spotless.gradle'
+apply from: '../publish.gradle'
