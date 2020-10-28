@@ -79,4 +79,10 @@ public class Profile {
   public int putVisitCountFunction(int count) {
     return ++count;
   }
+
+  @PreferenceFunction("userPet")
+  public Pet getUserPetPetFunction(Pet pet) {
+    pet.setName("dove");
+    return pet;
+  }
 }
