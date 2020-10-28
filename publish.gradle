@@ -13,7 +13,7 @@ bintray {
     user = property_user
     key = property_key
 
-    publications = ["releasePreferenceRoom"]
+    publications = ["release"]
     publish = true
     override = true
     dryRun = false
@@ -46,7 +46,7 @@ bintray {
 afterEvaluate {
     publishing {
         publications {
-            releasePreferenceRoom(MavenPublication) {
+            release(MavenPublication) {
                 from components.java
 
                 group = "com.github.skydoves"
