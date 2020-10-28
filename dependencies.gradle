@@ -1,6 +1,6 @@
 ext.versions = [
     minSdk            : 15,
-    compileSdk        : 29,
+    compileSdk        : 30,
     versionName       : '1.2.1',
 
     gradleBuildTool   : '3.5.3',
@@ -8,10 +8,10 @@ ext.versions = [
     bintrayPlugin     : '1.8.5',
 
     androidxAnnotation: '1.0.1',
-    autoService       : '1.0-rc6',
+    autoService       : '1.0-rc7',
     javapoet          : '1.13.0',
     guava             : '28.2-jre',
-    incap             : '0.2',
+    incap             : '0.3',
 
     // for demo
     kotlin            : '1.4.10',
