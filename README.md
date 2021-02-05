@@ -18,10 +18,18 @@ Also supports simple preference dependency injection with free from reflection. 
 
 
 ## Download
-[![Download](https://api.bintray.com/packages/devmagician/maven/preferenceroom/images/download.svg)](https://bintray.com/devmagician/maven/preferenceroom/_latestVersion)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.skydoves/preferenceroom.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.skydoves%22%20AND%20a:%22preferenceroom%22)
 
 ### Gradle
-Add below dependencies to your module's `build.gradle` file.
+Add below codes to your **root** `build.gradle` file (not your module build.gradle file).
+```gradle
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+```
+And add a dependency code to your **module**'s `build.gradle` file.
 ```gradle
 dependencies {
     implementation "com.github.skydoves:preferenceroom:1.2.1"
