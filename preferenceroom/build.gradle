@@ -8,9 +8,5 @@ dependencies {
     api "androidx.annotation:annotation:$versions.androidxAnnotation"
 }
 
-ext.repository = [
-    name: "preferenceroom",
-]
-
+apply plugin: "com.vanniktech.maven.publish"
 apply from: '../spotless.gradle'
-apply from: '../publish.gradle'

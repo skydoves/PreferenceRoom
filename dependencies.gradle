@@ -3,18 +3,20 @@ ext.versions = [
     compileSdk        : 30,
     versionName       : '1.2.1',
 
-    gradleBuildTool   : '3.5.3',
-    spotlessGradle    : '5.7.0',
-    bintrayPlugin     : '1.8.5',
+    gradleBuildTool   : '4.1.1',
+    spotlessGradle    : '5.9.0',
+    ktlintGradle      : '0.40.0',
+    dokkaGradle       : '1.4.20',
+    mavenPublish      : '0.13.0',
 
-    androidxAnnotation: '1.0.1',
+    androidxAnnotation: '1.1.0',
     autoService       : '1.0-rc7',
     javapoet          : '1.13.0',
     guava             : '28.2-jre',
     incap             : '0.3',
 
     // for demo
-    kotlin            : '1.4.10',
+    kotlin            : '1.4.20',
     gson              : '2.8.5',
     googleMaterial    : '1.3.0-alpha02',
 

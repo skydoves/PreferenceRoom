@@ -17,9 +17,5 @@ dependencies {
     kapt "net.ltgt.gradle.incap:incap-processor:$versions.incap"
 }
 
-ext.repository = [
-    name: "preferenceroom-processor",
-]
-
+apply plugin: "com.vanniktech.maven.publish"
 apply from: '../spotless.gradle'
-apply from: '../publish.gradle'
