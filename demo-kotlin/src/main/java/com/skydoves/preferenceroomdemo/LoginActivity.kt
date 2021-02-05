@@ -22,11 +22,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.skydoves.preferenceroom.InjectPreference
 import com.skydoves.preferenceroomdemo.components.PreferenceComponent_UserProfileComponent
+import com.skydoves.preferenceroomdemo.databinding.ActivityLoginBinding
 import com.skydoves.preferenceroomdemo.entities.Preference_UserProfile
 import com.skydoves.preferenceroomdemo.models.PrivateInfo
-import kotlinx.android.synthetic.main.activity_login.login_button
-import kotlinx.android.synthetic.main.activity_login.login_editText_age
-import kotlinx.android.synthetic.main.activity_login.login_editText_nick
 
 /**
  * Developed by skydoves on 2017-11-26.
@@ -39,16 +37,19 @@ class LoginActivity : AppCompatActivity() {
    * UserProfile entity.
    * [com.skydoves.preferenceroomdemo.entities.Profile]
    */
-  @InjectPreference lateinit var userProfile: Preference_UserProfile
+  @InjectPreference
+  lateinit var userProfile: Preference_UserProfile
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_login)
+
+    val binding = ActivityLoginBinding.inflate(layoutInflater)
+    setContentView(binding.root)
     PreferenceComponent_UserProfileComponent.getInstance().inject(this)
 
-    login_button.setOnClickListener {
-      val inputNick = login_editText_nick.text.toString()
-      val inputAge = login_editText_age.text.toString()
+    binding.loginButton.setOnClickListener {
+      val inputNick = binding.loginEditTextNick.text.toString()
+      val inputAge = binding.loginEditTextAge.text.toString()
       when (inputNick.isNotEmpty() && inputAge.isNotEmpty()) {
         true -> {
           userProfile.putLogin(true)

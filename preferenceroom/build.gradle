@@ -1,19 +1,5 @@
 apply plugin: 'java-library'
-apply plugin: 'com.novoda.bintray-release'
 apply from: '../dependencies.gradle'
-apply from: '../metadata.gradle'
-
-publish {
-    artifactId = 'preferenceroom'
-    userOrg = metadata.userOrg
-    groupId = metadata.groupId
-    publishVersion = metadata.publishVersion
-    desc = metadata.desc
-    website = metadata.website
-    issueTracker = metadata.issueTracker
-    repository = metadata.repository
-    licences = metadata.licences
-}
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -22,4 +8,5 @@ dependencies {
     api "androidx.annotation:annotation:$versions.androidxAnnotation"
 }
 
+apply plugin: "com.vanniktech.maven.publish"
 apply from: '../spotless.gradle'

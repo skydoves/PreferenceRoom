@@ -24,9 +24,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import com.skydoves.preferenceroom.InjectPreference
 import com.skydoves.preferenceroomdemo.components.PreferenceComponent_UserProfileComponent
+import com.skydoves.preferenceroomdemo.databinding.ActivityMainBinding
 import com.skydoves.preferenceroomdemo.models.ItemProfile
 import com.skydoves.preferenceroomdemo.utils.ListViewAdapter
-import kotlinx.android.synthetic.main.content_scrolling.content_listView
 
 /**
  * Developed by skydoves on 2017-11-26.
@@ -39,13 +39,18 @@ class MainActivity : AppCompatActivity() {
    * UserProfile Component.
    * [com.skydoves.preferenceroomdemo.components.UserProfileComponent]
    */
-  @InjectPreference lateinit var component: PreferenceComponent_UserProfileComponent
+  @InjectPreference
+  lateinit var component: PreferenceComponent_UserProfileComponent
 
   private val adapter by lazy { ListViewAdapter(this, R.layout.item_profile) }
 
+  private lateinit var binding: ActivityMainBinding
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
+
+    binding = ActivityMainBinding.inflate(layoutInflater)
+    setContentView(binding.root)
     PreferenceComponent_UserProfileComponent.getInstance()
       .inject(this) // inject dependency injection to MainActivity.
 
@@ -59,8 +64,8 @@ class MainActivity : AppCompatActivity() {
   private fun initializeUI() {
     when (component.UserProfile().login) {
       true -> {
-        ViewCompat.setNestedScrollingEnabled(content_listView, true)
-        content_listView.adapter = adapter
+        ViewCompat.setNestedScrollingEnabled(binding.contentScrolling.contentListView, true)
+        binding.contentScrolling.contentListView.adapter = adapter
 
         adapter.addItem(ItemProfile("message", component.UserProfile().nickname!!))
         adapter.addItem(ItemProfile("nick value", component.UserProfile().userinfo!!.name))

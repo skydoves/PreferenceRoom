@@ -1,20 +1,22 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply from: '../dependencies.gradle'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion versions.compileSdk
     defaultConfig {
         applicationId "com.skydoves.preferenceroomdemo"
-        minSdkVersion 15
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.compileSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
     }
     kapt {
         correctErrorTypes = true
+    }
+    buildFeatures {
+        viewBinding true
     }
 }
 
