@@ -299,7 +299,7 @@ public class PreferenceFieldMethodGenerator {
             superMethodName);
       } else {
         return String.format(
-            "super.%s(\n$N.convertType($N." + getGetterTypeMethodName() + "($S, $L))",
+            "super.%s(\n$N.convertType($N." + getGetterTypeMethodName() + "($S, $L)))",
             superMethodName);
       }
     } else {
