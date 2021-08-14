@@ -32,10 +32,10 @@ allprojects {
 And add a dependency code to your **module**'s `build.gradle` file.
 ```gradle
 dependencies {
-    implementation "com.github.skydoves:preferenceroom:1.2.1"
-    annotationProcessor "com.github.skydoves:preferenceroom-processor:1.2.1"
+    implementation "com.github.skydoves:preferenceroom:1.2.2"
+    annotationProcessor "com.github.skydoves:preferenceroom-processor:1.2.2"
     // in kotlin project use kapt instead of annotationProcessor
-    kapt "com.github.skydoves:preferenceroom-processor:1.2.1"
+    kapt "com.github.skydoves:preferenceroom-processor:1.2.2"
 }
 ```
 
