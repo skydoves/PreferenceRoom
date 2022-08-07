@@ -41,4 +41,4 @@ jobs:
            ${{ runner.os }}-gradle-
 
     - name: Build with Gradle
-      run: chmod +x ./gradlew :demo-kotlin:assembleDebug
+      run: ./gradlew :demo-kotlin:assembleDebug
