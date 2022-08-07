@@ -1,27 +1,29 @@
 # PreferenceRoom 
+
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![API](https://img.shields.io/badge/API-11%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=11)
-[![Build Status](https://travis-ci.org/skydoves/PreferenceRoom.svg?branch=master)](https://travis-ci.org/skydoves/PreferenceRoom)
+[![Android CI](https://github.com/skydoves/PreferenceRoom/actions/workflows/android.yml/badge.svg)](https://github.com/skydoves/PreferenceRoom/actions/workflows/android.yml)
 [![Android Weekly](https://img.shields.io/badge/Android%20Weekly-%23335-orange.svg)](https://androidweekly.net/issues/issue-335)
 <br>
-Android processor library for managing  SharedPreferences persistence efficiently and structurally.<br>
-PreferenceRoom is inspired by [Architecture Components Room Persistence](https://developer.android.com/topic/libraries/architecture/room.html)
-and [dagger](https://github.com/square/dagger). <br>
-PreferenceRoom integrates scattered SharedPreferences as an entity.<br>
-It supports setter & getter custom functions with security algorithm and could put & get objects. 
-Also supports simple preference dependency injection with free from reflection. Fully supported in kotlin project. 
 
-## What companies and projects are using this library?
+PreferenceRoom is an android annotation processor library to manage `SharedPreferences` more efficiently and structurally.
+PreferenceRoom was inspired by [Architecture Components Room Persistence](https://developer.android.com/topic/libraries/architecture/room.html)
+and [dagger](https://github.com/square/dagger).
+PreferenceRoom integrates scattered `SharedPreferences` as a single entity and it supports custom setter/getter functions with security algorithm.
+Also this library provides simple dependency injection system, which is free from reflection, and fully-supported in kotlin project. 
+
+
+## Who's using this library?
+
 | [GithubFollows](https://github.com/skydoves)<br>[Open Source](https://github.com/skydoves/githubfollows) | [All-In-One](https://github.com/skydoves)<br>[Open Source](https://github.com/skydoves/all-in-one) | [Battle Comics](http://www.battlecomics.co.kr/)<br>[Product](https://play.google.com/store/apps/details?id=com.whalegames.app) | [Epoptia](http://epoptia.com/cloud-mes-manufacturing-execution-system/) <br> [Open Source](https://github.com/tsironis13/EpoptiaKioskModeApp) | [Sensemore](https://sensemore.io/)
 | :---------------: | :---------------: | :---------------: | :---------------: | :---------------: |
 | ![Octocat](https://user-images.githubusercontent.com/24237865/61508303-38343180-aa24-11e9-8b26-43dd5332be98.png) | ![allinone](https://user-images.githubusercontent.com/24237865/61508304-38ccc800-aa24-11e9-8d43-c245b7278f5f.png) | ![battleent](https://user-images.githubusercontent.com/24237865/61508305-38ccc800-aa24-11e9-9d02-2b936e33f8cd.png) | ![epoptia](https://user-images.githubusercontent.com/24237865/61509215-7f242600-aa28-11e9-97fc-be53960d079b.png) | ![Sensemore](https://user-images.githubusercontent.com/24237865/71539660-ee605780-2982-11ea-964d-389604da8fac.png)
-
 
 ## Download
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.skydoves/preferenceroom.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.skydoves%22%20AND%20a:%22preferenceroom%22)
 
 ### Gradle
-Add below codes to your **root** `build.gradle` file (not your module build.gradle file).
+Add the codes below to your **root** `build.gradle` file (not your module build.gradle file).
 ```gradle
 allprojects {
     repositories {
@@ -29,7 +31,8 @@ allprojects {
     }
 }
 ```
-And add a dependency code to your **module**'s `build.gradle` file.
+And add the dependency below to your **module**'s `build.gradle` file.
+
 ```gradle
 dependencies {
     implementation "com.github.skydoves:preferenceroom:1.2.2"
