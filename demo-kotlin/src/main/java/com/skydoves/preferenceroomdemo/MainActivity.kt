@@ -19,6 +19,7 @@ package com.skydoves.preferenceroomdemo
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
@@ -62,22 +63,21 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun initializeUI() {
-    when (component.UserProfile().login) {
-      true -> {
-        ViewCompat.setNestedScrollingEnabled(binding.contentScrolling.contentListView, true)
-        binding.contentScrolling.contentListView.adapter = adapter
+    if (component.UserProfile().login) {
+      val listView = binding.root.findViewById<ListView>(R.id.content_list_view)
+      ViewCompat.setNestedScrollingEnabled(listView, true)
+      listView.adapter = adapter
 
-        adapter.addItem(ItemProfile("message", component.UserProfile().nickname!!))
-        adapter.addItem(ItemProfile("nick value", component.UserProfile().userinfo!!.name))
-        adapter.addItem(ItemProfile("age", component.UserProfile().userinfo!!.age.toString() + ""))
-        adapter.addItem(ItemProfile("visits", component.UserProfile().visits.toString() + ""))
+      adapter.addItem(ItemProfile("message", component.UserProfile().nickname!!))
+      adapter.addItem(ItemProfile("nick value", component.UserProfile().userinfo!!.name))
+      adapter.addItem(ItemProfile("age", component.UserProfile().userinfo!!.age.toString() + ""))
+      adapter.addItem(ItemProfile("visits", component.UserProfile().visits.toString() + ""))
 
-        /**
-         * increment visits count.
-         * show [com.skydoves.preferenceroomdemo.entities.Profile] putVisitCountFunction()
-         */
-        component.UserProfile().putVisits(component.UserProfile().visits)
-      }
+      /**
+       * increment visits count.
+       * show [com.skydoves.preferenceroomdemo.entities.Profile] putVisitCountFunction()
+       */
+      component.UserProfile().putVisits(component.UserProfile().visits)
     }
 
     component.UserDevice().uuid?.let {

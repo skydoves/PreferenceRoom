@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/background"
+  android:fillViewport="true"
+  app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+  <LinearLayout
+    android:id="@+id/parent_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background"
-    android:fillViewport="true"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <ListView
+      android:id="@+id/content_list_view"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      tools:itemCount="10"
+      tools:listitem="@layout/item_profile" />
 
-        <ListView
-            android:id="@+id/content_listView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item_profile"
-            tools:itemCount="10"/>
+    <Button
+      android:id="@+id/content_button"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="20dp"
+      android:background="@color/colorPrimary"
+      android:text="set profile"
+      android:textColor="@android:color/white" />
 
-        <Button
-            android:id="@+id/content_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:background="@color/colorPrimary"
-            android:textColor="@android:color/white"
-            android:text="set profile"/>
-
-    </LinearLayout>
+  </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

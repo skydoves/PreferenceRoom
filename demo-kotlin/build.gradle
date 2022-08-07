@@ -4,30 +4,29 @@ apply plugin: 'kotlin-kapt'
 apply from: '../dependencies.gradle'
 
 android {
-    compileSdkVersion versions.compileSdk
-    defaultConfig {
-        applicationId "com.skydoves.preferenceroomdemo"
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.compileSdk
-        versionCode versions.versionCode
-        versionName versions.versionName
-    }
-    kapt {
-        correctErrorTypes = true
-    }
-    buildFeatures {
-        viewBinding true
-    }
+  compileSdkVersion versions.compileSdk
+  defaultConfig {
+    applicationId "com.skydoves.preferenceroomdemo"
+    minSdkVersion versions.minSdk
+    targetSdkVersion versions.compileSdk
+    versionCode versions.versionCode
+    versionName versions.versionName
+  }
+  kapt {
+    correctErrorTypes = true
+  }
+  buildFeatures {
+    viewBinding true
+  }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
-    implementation "com.google.android.material:material:$versions.googleMaterial"
-    implementation "com.google.code.gson:gson:$versions.gson"
-    implementation "com.facebook.stetho:stetho:$versions.stetho"
+  implementation "com.google.android.material:material:$versions.googleMaterial"
+  implementation "com.google.code.gson:gson:$versions.gson"
+  implementation "com.facebook.stetho:stetho:$versions.stetho"
 
-    implementation project(":preferenceroom")
-    kapt project(":preferenceroom-compiler")
+  implementation project(":preferenceroom")
+  kapt project(":preferenceroom-compiler")
 }
 
 apply from: '../spotless.gradle'
