@@ -209,7 +209,9 @@ public class Base64 {
       state = 0;
       value = 0;
     }
-    /** @return an overestimate for the number of bytes {@code len} bytes could decode to. */
+    /**
+     * @return an overestimate for the number of bytes {@code len} bytes could decode to.
+     */
     public int maxOutputSize(int len) {
       return len * 3 / 4 + 10;
     }
@@ -507,7 +509,9 @@ public class Base64 {
       tailLen = 0;
       count = do_newline ? LINE_GROUPS : -1;
     }
-    /** @return an overestimate for the number of bytes {@code len} bytes could encode to. */
+    /**
+     * @return an overestimate for the number of bytes {@code len} bytes could encode to.
+     */
     public int maxOutputSize(int len) {
       return len * 8 / 5 + 10;
     }
