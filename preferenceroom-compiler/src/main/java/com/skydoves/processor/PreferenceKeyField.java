@@ -80,7 +80,7 @@ public class PreferenceKeyField {
                             for (int i = 0; i < split.length - 1; i++)
                               builder.append(split[i] + ".");
                             this.converterPackage =
-                                builder.toString().substring(0, builder.toString().length() - 1);
+                                builder.substring(0, builder.toString().length() - 1);
                             this.converter = split[split.length - 1];
                           }));
     }
@@ -109,7 +109,7 @@ public class PreferenceKeyField {
       throw new IllegalAccessException(
           String.format(
               "Field '%s' can not use %s type. \nObjects should be annotated with '@TypeConverter'.",
-              variableElement.getSimpleName(), this.typeName.toString()));
+              variableElement.getSimpleName(), this.typeName));
     } else {
       this.typeStringName = "String";
       this.isObjectField = true;

@@ -76,7 +76,7 @@ public class PreferenceComponentAnnotatedClass {
                 throw new VerifyException(
                     String.format(
                         "length of parameter should be 1 or 0 : '%s' method with parameters '%s'",
-                        methodSpec.name, methodSpec.parameters.toString()));
+                        methodSpec.name, methodSpec.parameters));
               }
             });
 
